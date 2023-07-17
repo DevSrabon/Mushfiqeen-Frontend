@@ -15,10 +15,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
     marginTop: StatusBar.currentHeight,
-    paddingHorizontal: 10,
     backgroundColor: "#000000",
-    // backgroundColor: "#1d2226",
-    color: "white",
   },
 });
 
