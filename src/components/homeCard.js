@@ -3,7 +3,15 @@ import React from "react";
 import colors from "../theme/Colors";
 import icons from "../../assets/icons";
 import { AntDesign } from "@expo/vector-icons";
-import { Row, SubRow, SubTitle, Title } from "../components";
+import {
+  Row,
+  SubRow,
+  SubTitle,
+  Title,
+  HorizantalBar,
+  TextSmall,
+  IconContainer,
+} from "../components";
 
 const HomeCard = () => {
   return (
@@ -21,11 +29,10 @@ const HomeCard = () => {
           </View>
         </SubRow>
         <SubRow>
-          <AntDesign name="plussquareo" size={20} color={colors.primary} />
+          <AntDesign name="plussquareo" size={16} color={colors.primary} />
           <Title style={{ color: colors.primary }}>Follow</Title>
         </SubRow>
       </Row>
-      <View style={styles.horizontalLine} />
       <View
         style={{
           height: 250,
@@ -50,8 +57,34 @@ const HomeCard = () => {
           গ্রামকে দেখে চলছে, প্রজারা রাজাদেরকে দেখে চলে এটাই হলো প্রচলিত নিয়ম।
         </SubTitle>
       </View>
-      <Row></Row>
-      <View style={styles.horizontalLine} />
+      <Row>
+        <SubRow>
+          <AntDesign
+            name="like1"
+            size={12}
+            color={colors.primary}
+            style={styles.icon}
+          />
+          <TextSmall>299</TextSmall>
+        </SubRow>
+        <SubRow style={{ gap: 3 }}>
+          <TextSmall style={{ color: colors.primary }}>299</TextSmall>
+          <TextSmall>Comments</TextSmall>
+          <View
+            style={{
+              borderColor: colors.white,
+              borderWidth: 3,
+              borderRadius: 25,
+              alignSelf: "center",
+            }}
+          />
+          <TextSmall style={{ color: colors.primary }}>2</TextSmall>
+          <TextSmall>Share</TextSmall>
+        </SubRow>
+      </Row>
+
+      <HorizantalBar />
+      <IconContainer />
     </View>
   );
 };
@@ -66,12 +99,13 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 50,
-  },
-  horizontalLine: {
     alignSelf: "center",
-    borderBottomColor: colors.white,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    width: "95%",
+  },
+  icon: {
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 25,
+    padding: 3,
   },
 });
 
