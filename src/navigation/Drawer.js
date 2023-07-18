@@ -12,18 +12,11 @@ import {
   DrawerItemList,
   createDrawerNavigator,
 } from "@react-navigation/drawer";
-
-// import User from "./assets/user.png";
-
 import Backups from "./screens/Backups";
-import Categories from "./screens/Categories";
-import Contact from "./screens/Contact";
-import Customize from "./screens/Customize";
-import GetPremium from "./screens/GetPremium";
-import Home from "./screens/Home";
-import RateApp from "./screens/RateApp";
-import Settings from "./screens/Settings";
 import Timer from "./screens/Timer";
+import Categories from "./screens/Categories";
+import Customize from "./screens/Customize";
+import Home from "../screen/Home";
 
 const Drawer = createDrawerNavigator();
 
@@ -128,7 +121,7 @@ const DrawerNav = () => {
           }}
           component={Categories}
         />
-        <Drawer.Screen
+        {/* <Drawer.Screen
           name="Customize"
           options={{
             drawerLabel: "Customize",
@@ -208,7 +201,7 @@ const DrawerNav = () => {
             ),
           }}
           component={Contact}
-        />
+        /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );
