@@ -6,16 +6,13 @@ import {
   MaterialCommunityIcons,
   FontAwesome,
 } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   DrawerItemList,
   createDrawerNavigator,
 } from "@react-navigation/drawer";
-import Backups from "./screens/Backups";
 import Timer from "./screens/Timer";
 import Categories from "./screens/Categories";
-import Customize from "./screens/Customize";
 import Home from "../screen/Home";
 
 const Drawer = createDrawerNavigator();
