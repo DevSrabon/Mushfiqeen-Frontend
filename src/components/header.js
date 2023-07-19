@@ -1,4 +1,4 @@
-import { View, StyleSheet, Animated, Text } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 import React, { useEffect, useRef } from "react";
 
 const Header = (props) => {
