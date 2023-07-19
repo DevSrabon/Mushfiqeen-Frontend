@@ -7,30 +7,28 @@ import BottomNavigator from "./BottomNavigator";
 const Stack = createNativeStackNavigator();
 
 const StackNav = () => {
-    return (
-        <NavigationContainer>
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName={"Home"}
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="login" component={Login} />
+        <Stack.Screen name="signup" component={Signup} />
+
+        <Stack.Screen name="Home">
+          {() => (
             <Stack.Navigator
-                initialRouteName={"Home"}
-                screenOptions={{ headerShown: false }}
+              initialRouteName="home"
+              screenOptions={{ headerShown: false }}
             >
-               
-                <Stack.Screen name="login" component={Login} />
-                <Stack.Screen name="signup" component={Signup} />
-
-
-                <Stack.Screen name="Home">
-                    {() => (
-                        <Stack.Navigator
-                            initialRouteName="home"
-                            screenOptions={{ headerShown: false }}
-                        >
-                            <Stack.Screen name="home" component={BottomNavigator} />
-                        </Stack.Navigator>
-                    )}
-                </Stack.Screen>
+              <Stack.Screen name="home" component={BottomNavigator} />
             </Stack.Navigator>
-        </NavigationContainer>
-    )
-}
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default StackNav;
