@@ -17,8 +17,6 @@ export default function App() {
   return (
     <>
       <StackNav />
-      {/* <DrawerNav /> */}
-      {/* <Home /> */}
     </>
   );
 }
