@@ -3,8 +3,8 @@ import { View, Text, Image } from "react-native";
 import {
   SimpleLineIcons,
   MaterialIcons,
-  MaterialCommunityIcons,
-  FontAwesome,
+  // MaterialCommunityIcons,
+  // FontAwesome,
 } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -14,6 +14,7 @@ import {
 import Timer from "./screens/Timer";
 import Categories from "./screens/Categories";
 import Home from "../screen/Home";
+import colors from "../theme/Colors";
 
 const Drawer = createDrawerNavigator();
 
@@ -31,7 +32,7 @@ const DrawerNav = () => {
                   width: "100%",
                   justifyContent: "center",
                   alignItems: "center",
-                  borderBottomColor: "#f4f4f4",
+                  borderBottomColor: colors.bg,
                   borderBottomWidth: 1,
                 }}
               >
