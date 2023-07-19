@@ -1,6 +1,7 @@
 import { useFonts } from "expo-font";
 import DrawerNav from "./src/navigation/Drawer";
 import Home from "./src/screen/Home";
+import StackNav from "./src/navigation/StackNav";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -15,6 +16,7 @@ export default function App() {
   }
   return (
     <>
+      <StackNav />
       {/* <DrawerNav /> */}
       <Home />
     </>
