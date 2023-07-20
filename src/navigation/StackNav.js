@@ -1,9 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+
+import { Login, Post, PostDetails, Signup } from "../screen";
+
 import { useAuth } from "../contexts/useAuth";
-import Login from "../screen/Login";
-import Signup from "../screen/Signup";
+
+
 import BottomNavigator from "./BottomNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +41,7 @@ const StackNav = () => {
         </Stack.Navigator>
       )}
       
+
     </NavigationContainer>
   );
 };

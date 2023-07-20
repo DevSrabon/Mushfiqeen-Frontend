@@ -1,8 +1,8 @@
 const colors = {
   bg: "#1d2226",
-  primary: "#2C9600",
-  lightBg: "#525251",
-  lightGray: "#C3C4C2",
-  white: "#F8F8F8",
+  primary: "#0E98FF",
+  lightBg: "#5E5E5E",
+  lightGray: "#949494",
+  white: "#FFFFFF",
 };
 export default colors;
