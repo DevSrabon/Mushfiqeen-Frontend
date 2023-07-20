@@ -3,8 +3,10 @@ import React from "react";
 import { AntDesign, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import TextSmall from "./textSmall";
 import colors from "../theme/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const IconContainer = () => {
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -20,7 +22,10 @@ const IconContainer = () => {
         <TextSmall>Like</TextSmall>
       </Pressable>
 
-      <Pressable style={{ alignItems: "center" }}>
+      <Pressable
+        style={{ alignItems: "center" }}
+        onPress={() => navigation.navigate("postDetails")}
+      >
         <FontAwesome5 name="comment-dots" size={18} color={colors.white} />
         <TextSmall>Comment</TextSmall>
       </Pressable>
