@@ -125,10 +125,16 @@ const styles = StyleSheet.create({
   labelFocusContainer: {
     position: "absolute",
     left: 16,
+    // paddingHorizontal: 7,
     paddingVertical: 1,
     backgroundColor: "#efedf8",
     borderWidth: 1,
     borderRadius: 5,
+  },
+  label: {
+    // fontFamily: "Medium",
+    // fontSize: 10,
+    // color: "#747980",
   },
 
   textInput: {
