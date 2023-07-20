@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [refetch, setRefetch] = useState(false);
   const [userData, setUserData] = useState(null);
   console.log("🚀 ~ file: useAuth.js:9 ~ AuthProvider ~ userData:", userData);
   const [token, setToken] = useState(null);
@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
     fetchUserData();
   }, [token]);
 
-  const authInfo = { user, setUser, userData, setToken };
+  const authInfo = { refetch, setRefetch, userData, setToken };
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
