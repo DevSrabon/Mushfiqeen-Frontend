@@ -1,6 +1,5 @@
 import { useFonts } from "expo-font";
-import DrawerNav from "./src/navigation/Drawer";
-import Home from "./src/screen/Home";
+import AuthProvider from "./src/contexts/useAuth";
 import StackNav from "./src/navigation/StackNav";
 
 export default function App() {
@@ -16,7 +15,9 @@ export default function App() {
   }
   return (
     <>
-      <StackNav />
+      <AuthProvider>
+        <StackNav />
+      </AuthProvider>
     </>
   );
 }
