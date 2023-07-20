@@ -1,4 +1,5 @@
-import { Text, Platform, View } from "react-native";
+import React, { useRef, useState } from "react";
+import { Animated, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import colors from "../theme/Colors";
@@ -6,119 +7,143 @@ import { Home, Post, Bayan, Chat } from "../screen";
 
 const Tab = createBottomTabNavigator();
 
-const screenOptions = {
-  tabBarShowLabel: false,
-  headerShown: false,
-  tabBarStyle: {
-    position: "absolute",
-    height: 60,
-    background: "#1d2226",
-  },
-};
 export default function BottomNavigator() {
-  return (
-    <Tab.Navigator
-      backBehavior="Main"
-      initialRouteName="Main"
-      screenOptions={{
-        tabBarInactiveTintColor: colors.lightGray,
-        tabBarActiveTintColor: colors.white,
-        tabBarStyle: {
-          position: "absolute",
-          backgroundColor: colors.bg,
-        },
-        tabBarLabelStyle: {
-          bottom: 5,
-          fontFamily: "Regular",
-        },
-        headerShown: false,
-      }}
-    >
-      <Tab.Screen
-        name="home"
-        component={Home}
-        options={{
-          title: "Home",
-          tabBarIcon: ({ focused, color }) => (
-            <Entypo
-              name={"home"}
-              size={24}
-              color={focused ? colors.white : colors.lightGray}
-            />
-          ),
-        }}
-      />
+    const [isFocused, setIsFocused] = useState("home");
+    const navRef = useRef(new Animated.Value(0)).current;
 
-      <Tab.Screen
-        name="post"
-        component={Post}
-        options={{
-          title: "Post",
-          tabBarIcon: ({ focused, color }) => (
-            <MaterialIcons
-              name={"post-add"}
-              size={24}
-              color={focused ? colors.white : colors.lightGray}
-            />
-          ),
-        }}
-      />
+    const handleTabPress = (tabName, route, navigation) => {
+        if (isFocused !== tabName) {
+            setIsFocused(tabName);
+            Animated.spring(navRef, {
+                toValue: 1,
+                useNativeDriver: true,
+            }).start();
 
-      <Tab.Screen
-        name="bayan"
-        component={Bayan}
-        options={{
-          title: "Bayan",
-          tabBarIcon: ({ focused, color }) => (
-            <Entypo
-              name={"sound"}
-              size={24}
-              color={focused ? colors.white : colors.lightGray}
-            />
-          ),
-        }}
-      />
-      {/* <Tab.Screen
-        name="bayan"
-        component={Bayan}
-        options={{
-          title: "Bayan",
-          tabBarIcon: ({ focused }) => {
-            return (
-              <View>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
+        }
+    };
+
+    return (
+        <Tab.Navigator
+            backBehavior="Main"
+            initialRouteName="Home"
+            screenOptions={({ route }) => ({
+                tabBarInactiveTintColor: colors.lightGray,
+                tabBarActiveTintColor: colors.white,
+                tabBarStyle: {
+                    position: "absolute",
                     backgroundColor: colors.bg,
-                    width: Platform.OS == "ios" ? 50 : 60,
-                    height: Platform.OS == "ios" ? 50 : 60,
-                    top: Platform.OS == "ios" ? -10 : -20,
-                    borderRadius: Platform.OS == "ios" ? 25 : 30,
-                  }}
-                >
-                  <Entypo name="sound" size={24} color="#fff" />
-                </View>
-              </View>
-            );
-          },
-        }}
-      /> */}
+                },
+                tabBarLabelStyle: {
+                    bottom: 5,
+                    fontFamily: "SemiBold",
+                },
+                headerShown: false,
+                tabBarIcon: ({ focused }) => {
+                    const tabName = route.name;
+                    const isCurrentTabFocused = tabName === isFocused;
 
-      <Tab.Screen
-        name="chat"
-        component={Chat}
-        options={{
-          title: "Chat",
-          tabBarIcon: ({ focused, color }) => (
-            <MaterialIcons
-              name={"chat"}
-              size={24}
-              color={focused ? colors.white : colors.lightGray}
+                    const scale = navRef.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [1, isCurrentTabFocused ? 1.2 : 1],
+                    });
+
+                    const translateY = navRef.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, isCurrentTabFocused ? -20 : 0],
+                    });
+
+                    const backgroundColor = navRef.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [colors.bg, isCurrentTabFocused ? colors.primary : colors.bg],
+                    });
+
+                    return (
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                            onPress={() => handleTabPress(tabName, route)}
+                        >
+                            <Animated.View
+                                style={{
+                                    transform: [{ scale }, { translateY }],
+                                    backgroundColor,
+                                    borderRadius: 20,
+                                    padding: 5,
+                                }}
+                            >
+                                {tabName === "Home" && (
+                                    <Entypo
+                                        name="home"
+                                        size={24}
+                                        color={focused ? colors.white : colors.lightGray}
+                                    />
+                                )}
+                                {tabName === "post" && (
+                                    <MaterialIcons
+                                        name="post-add"
+                                        size={24}
+                                        color={focused ? colors.white : colors.lightGray}
+                                    />
+                                )}
+                                {tabName === "bayan" && (
+                                    <Entypo
+                                        name="sound"
+                                        size={24}
+                                        color={focused ? colors.white : colors.lightGray}
+                                    />
+                                )}
+                                {tabName === "chat" && (
+                                    <MaterialIcons
+                                        name="chat"
+                                        size={24}
+                                        color={focused ? colors.white : colors.lightGray}
+                                    />
+                                )}
+                            </Animated.View>
+                        </TouchableOpacity>
+                    );
+                },
+            })}
+        >
+            <Tab.Screen
+                name="Home"
+                component={Home}
+                listeners={({ navigation, route }) => ({
+                    tabPress: (e) => {
+                        handleTabPress("Home", "Home", navigation);
+                    },
+                })}
             />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
+            <Tab.Screen
+                name="post"
+                component={Post}
+                listeners={({ navigation, route }) => ({
+                    tabPress: (e) => {
+                        handleTabPress("post", "post", navigation);
+                    },
+                })}
+            />
+            <Tab.Screen
+                component={Bayan}
+                name="bayan"
+                listeners={({ navigation, route }) => ({
+                    tabPress: (e) => {
+                        handleTabPress("bayan", "bayan", navigation);
+                    },
+                })}
+            />
+            <Tab.Screen
+                name="chat"
+                component={Chat}
+                listeners={({ navigation, route }) => ({
+                    tabPress: (e) => {
+                        handleTabPress("chat", navigation);
+                    },
+                })}
+            />
+        </Tab.Navigator>
+    );
 }
