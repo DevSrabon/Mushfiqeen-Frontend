@@ -7,8 +7,7 @@ import PostDetails from "./PostDetails";
 const Home = () => {
   return (
     <Container>
-      {/* <HomeCard /> */}
-      <PostDetails />
+      <HomeCard />
     </Container>
   );
 };

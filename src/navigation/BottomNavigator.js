@@ -29,7 +29,7 @@ export default function BottomNavigator() {
         },
         tabBarLabelStyle: {
           bottom: 5,
-          fontFamily: "SemiBold",
+          fontFamily: "Regular",
         },
         headerShown: false,
       }}

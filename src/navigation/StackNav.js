@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Login, Signup } from "../screen";
+import { Login, Post, PostDetails, Signup } from "../screen";
 import BottomNavigator from "./BottomNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -15,6 +15,8 @@ const StackNav = () => {
       >
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={Signup} />
+        <Stack.Screen name="post" component={Post} />
+        <Stack.Screen name="postDetails" component={PostDetails} />
 
         <Stack.Screen name="Home">
           {() => (
