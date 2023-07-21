@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import {
   DrawerItemList,
@@ -14,6 +14,36 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
+      screenOptions={({ navigation }) => ({
+        headerLeft: () => (
+          <Pressable onPress={navigation.toggleDrawer}>
+            <Image
+              size={32}
+              source={icons.user}
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 50,
+                marginLeft: 10,
+              }}
+            />
+          </Pressable>
+        ),
+        drawerStyle: {
+          backgroundColor: colors.bg,
+          width: 250,
+        },
+        headerStyle: {
+          backgroundColor: colors.bg,
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+        drawerLabelStyle: {
+          color: colors.white,
+        },
+      })}
       drawerContent={(props) => {
         return (
           <>
@@ -61,22 +91,22 @@ const DrawerNavigation = () => {
           </>
         );
       }}
-      screenOptions={{
-        drawerStyle: {
-          backgroundColor: colors.bg,
-          width: 250,
-        },
-        headerStyle: {
-          backgroundColor: colors.bg,
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
-        drawerLabelStyle: {
-          color: colors.white,
-        },
-      }}
+      // screenOptions={{
+      //   drawerStyle: {
+      //     backgroundColor: colors.bg,
+      //     width: 250,
+      //   },
+      //   headerStyle: {
+      //     backgroundColor: colors.bg,
+      //   },
+      //   headerTintColor: "#fff",
+      //   headerTitleStyle: {
+      //     fontWeight: "bold",
+      //   },
+      //   drawerLabelStyle: {
+      //     color: colors.white,
+      //   },
+      // }}
     >
       <Drawer.Screen
         name="profile"
