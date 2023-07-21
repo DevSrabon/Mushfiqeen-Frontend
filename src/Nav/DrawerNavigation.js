@@ -1,47 +1,48 @@
-import "react-native-gesture-handler";
-import { View, Text } from "react-native";
-import { SimpleLineIcons, MaterialIcons } from "@expo/vector-icons";
+import { View, Text, Image } from "react-native";
+import React from "react";
 import {
   DrawerItemList,
   createDrawerNavigator,
 } from "@react-navigation/drawer";
+import { SimpleLineIcons, MaterialIcons } from "@expo/vector-icons";
 import colors from "../theme/Colors";
-import { Home, Profile, Settings } from "../screen";
+import icons from "../../assets/icons";
+import { Profile, Settings } from "../screen";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNav = () => {
+const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
-      initialRouteName={"Home"}
       drawerContent={(props) => {
         return (
           <>
             <View
               style={{
+                marginTop: 30,
                 height: 200,
                 width: "100%",
                 justifyContent: "center",
-                alignItems: "center",
-                borderBottomColor: colors.bg,
-                borderBottomWidth: 1,
-                borderColor: colors.white,
+                alignItems: "flex-start",
+                paddingLeft: 10,
+                // borderBottomColor: colors.bg,
+                // borderBottomWidth: 1,
               }}
             >
-              {/* <Image
-                source={User}
+              <Image
+                source={icons.user}
                 style={{
-                  height: 130,
-                  width: 130,
-                  borderRadius: 65,
+                  height: 70,
+                  width: 70,
+                  borderRadius: 50,
                 }}
-              /> */}
+              />
               <Text
                 style={{
                   fontSize: 22,
                   marginVertical: 6,
-                  fontWeight: "bold",
-                  color: "#111",
+                  fontFamily: "SemiBold",
+                  color: colors.white,
                 }}
               >
                 Test user
@@ -49,7 +50,8 @@ const DrawerNav = () => {
               <Text
                 style={{
                   fontSize: 16,
-                  color: "#111",
+                  fontFamily: "Medium",
+                  color: colors.white,
                 }}
               >
                 Main Manager
@@ -61,36 +63,28 @@ const DrawerNav = () => {
       }}
       screenOptions={{
         drawerStyle: {
-          backgroundColor: "#fff",
+          backgroundColor: colors.bg,
           width: 250,
         },
         headerStyle: {
-          backgroundColor: "#f4511e",
+          backgroundColor: colors.bg,
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
         },
         drawerLabelStyle: {
-          color: "#111",
+          color: colors.white,
         },
       }}
     >
-      <Drawer.Screen
-        name="home"
-        options={{
-          headerShown: true,
-          drawerLabel: "",
-        }}
-        component={Home}
-      />
       <Drawer.Screen
         name="profile"
         options={{
           drawerLabel: "Profile",
           title: "Profile",
           drawerIcon: () => (
-            <SimpleLineIcons name="home" size={20} color="#808080" />
+            <SimpleLineIcons name="home" size={20} color={colors.white} />
           ),
         }}
         component={Profile}
@@ -102,7 +96,7 @@ const DrawerNav = () => {
           drawerLabel: "Settings",
           title: "Settings",
           drawerIcon: () => (
-            <MaterialIcons name="settings" size={20} color="#808080" />
+            <MaterialIcons name="settings" size={20} color={colors.white} />
           ),
         }}
         component={Settings}
@@ -111,4 +105,4 @@ const DrawerNav = () => {
   );
 };
 
-export default DrawerNav;
+export default DrawerNavigation;

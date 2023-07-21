@@ -12,8 +12,9 @@ import {
   TextSmall,
   IconContainer,
   Reactions,
+  Comments,
+  Container,
 } from "../components";
-import Container from "../components/container";
 
 const PostDetails = () => {
   return (
@@ -90,6 +91,7 @@ const PostDetails = () => {
         <HorizantalBar />
         <IconContainer />
         <Reactions />
+        <Comments />
       </View>
     </Container>
   );

@@ -6,3 +6,5 @@ export { default as HorizantalBar } from "./horizontalBar";
 export { default as TextSmall } from "./textSmall";
 export { default as IconContainer } from "./iconContainer";
 export { default as Reactions } from "./reactions";
+export { default as Comments } from "./comments";
+export { default as Container } from "./container";

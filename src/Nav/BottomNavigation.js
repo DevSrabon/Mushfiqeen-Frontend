@@ -5,11 +5,10 @@ import colors from "../theme/Colors";
 import { Home, Post, Bayan, Chat } from "../screen";
 
 const Tab = createBottomTabNavigator();
-export default function BottomNavigator() {
+
+const BottomNavigation = () => {
   return (
     <Tab.Navigator
-      backBehavior="Main"
-      initialRouteName="Main"
       screenOptions={{
         tabBarInactiveTintColor: colors.lightGray,
         tabBarActiveTintColor: colors.white,
@@ -85,4 +84,6 @@ export default function BottomNavigator() {
       />
     </Tab.Navigator>
   );
-}
+};
+
+export default BottomNavigation;

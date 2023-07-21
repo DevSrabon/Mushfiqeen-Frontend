@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Pressable } from "react-native";
 import React from "react";
 import colors from "../theme/Colors";
 import icons from "../../assets/icons";
@@ -12,8 +12,10 @@ import {
   TextSmall,
   IconContainer,
 } from "../components";
+import { useNavigation } from "@react-navigation/core";
 
 const HomeCard = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Row>

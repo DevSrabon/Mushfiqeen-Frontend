@@ -1,13 +1,13 @@
 import { View, Text } from "react-native";
 import React from "react";
-import BottomNavigation from "../Nav/BottomNavigation";
+import DrawerNavigation from "./DrawerNavigation";
 
-const Profile = () => {
+const Parent = () => {
   return (
     <View style={{ flex: 1 }}>
-      <BottomNavigation />
+      <DrawerNavigation />
     </View>
   );
 };
 
-export default Profile;
+export default Parent;
