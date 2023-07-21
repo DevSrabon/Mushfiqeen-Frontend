@@ -1,12 +1,34 @@
-import { View, Pressable } from "react-native";
-import React from "react";
+import { View, Pressable,StyleSheet } from "react-native";
 import { AntDesign, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import TextSmall from "./textSmall";
 import colors from "../theme/Colors";
 import { useNavigation } from "@react-navigation/native";
+import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue ,withSpring} from "react-native-reanimated";
 
 const IconContainer = () => {
   const navigation = useNavigation();
+
+  const liked = useSharedValue(0);
+  const outlineStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+        },
+      ],
+    };
+  });
+
+  const fillStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: liked.value,
+        },
+      ],
+    };
+  });
+
   return (
     <View
       style={{
@@ -17,8 +39,22 @@ const IconContainer = () => {
         paddingHorizontal: 30,
       }}
     >
-      <Pressable style={{ alignItems: "center" }}>
-        <AntDesign name="like2" size={18} color={colors.white} />
+      <Pressable onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))} style={{ alignItems: "center" }}>
+      <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}>
+
+        <AntDesign
+          name={"like2"}
+          size={18}
+          color={colors.white}
+        />
+      </Animated.View>
+      <Animated.View style={fillStyle}>
+        <AntDesign
+          name={"like1"}
+          size={18}
+          color={colors.primary}
+        />
+      </Animated.View>
         <TextSmall>Like</TextSmall>
       </Pressable>
 
