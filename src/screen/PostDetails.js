@@ -1,9 +1,10 @@
 import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View, StatusBar } from "react-native";
 import icons from "../../assets/icons";
 import {
+  Comments,
   HorizantalBar,
   IconContainer,
   Reactions,
@@ -34,8 +35,8 @@ const PostDetails = () => {
     fetchData();
   }, [refetch]);
   return (
-    <ScrollView>
-      <Container>
+    <Container style={{ marginTop: StatusBar.currentHeight }}>
+      <ScrollView>
         <View>
           {posts?.map((post) => (
             <View key={post?._id} style={styles.container}>
@@ -98,11 +99,12 @@ const PostDetails = () => {
               <HorizantalBar />
               <IconContainer />
               <Reactions />
+              <Comments />
             </View>
           ))}
         </View>
-      </Container>
-    </ScrollView>
+      </ScrollView>
+    </Container>
   );
 };
 const styles = StyleSheet.create({

@@ -1,6 +1,5 @@
 import { useFonts } from "expo-font";
 import AuthProvider from "./src/contexts/useAuth";
-import StackNav from "./src/navigation/StackNav";
 import StackNavigation from "./src/Nav/StackNavigation";
 
 export default function App() {
