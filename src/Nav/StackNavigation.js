@@ -4,14 +4,16 @@ import React from "react";
 import Parent from "./Parent";
 import { Login, PostDetails, Signup } from "../screen";
 import { useAuth } from "../contexts/useAuth";
+import { Loading } from "../components";
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
-  const { userData } = useAuth();
+  const { userData, token, loading } = useAuth();
+  if (loading) return <Loading />;
   return (
     <NavigationContainer>
-      {userData ? (
+      {token ? (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="parent" component={Parent} />
           <Stack.Screen name="postDetails" component={PostDetails} />

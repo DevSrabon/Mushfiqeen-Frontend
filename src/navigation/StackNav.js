@@ -1,26 +1,36 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Login, Post, PostDetails, Profile, Settings, Signup } from "../screen";
+
+import { Login, Signup } from "../screen";
+
 import { useAuth } from "../contexts/useAuth";
+
+import Loading from "../components/loading";
 import BottomNavigator from "./BottomNavigator";
-import DrawerNav from "./Drawer";
 
 const Stack = createNativeStackNavigator();
 
 const StackNav = () => {
-  const { userData } = useAuth();
+  const { userData, token, loading } = useAuth();
+  if (loading) return <Loading />;
   return (
     <NavigationContainer>
-      {userData ? (
+      {token ? (
         <Stack.Navigator
-          // initialRouteName={"Home"}
+          initialRouteName={"Home"}
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="bottom" component={BottomNavigator} />
-          {/* <Stack.Screen name="drawer" component={DrawerNav} /> */}
-          <Stack.Screen name="post" component={Post} />
-          <Stack.Screen name="postDetails" component={PostDetails} />
+          <Stack.Screen name="Home">
+            {() => (
+              <Stack.Navigator
+                initialRouteName="home"
+                screenOptions={{ headerShown: false }}
+              >
+                <Stack.Screen name="home" component={BottomNavigator} />
+              </Stack.Navigator>
+            )}
+          </Stack.Screen>
         </Stack.Navigator>
       ) : (
         <Stack.Navigator

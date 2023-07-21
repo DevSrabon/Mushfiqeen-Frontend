@@ -1,5 +1,5 @@
-import { View, StyleSheet, Animated } from "react-native";
 import React, { useEffect, useRef } from "react";
+import { Animated, StyleSheet, View } from "react-native";
 
 const Header = (props) => {
   const springValues = useRef([]);
@@ -31,7 +31,7 @@ const Header = (props) => {
             {
               fontFamily: "SemiBold",
               fontSize: 24,
-              color: "#312E49",
+              color: "#fff",
             },
           ]}
         >

@@ -1,12 +1,44 @@
-import { View, Pressable } from "react-native";
-import React from "react";
-import { AntDesign, FontAwesome5, FontAwesome } from "@expo/vector-icons";
-import TextSmall from "./textSmall";
-import colors from "../theme/Colors";
+import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Pressable, View } from "react-native";
+import {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
+import colors from "../theme/Colors";
+import TextSmall from "./textSmall";
 
-const IconContainer = () => {
+const IconContainer = ({ onLikes, userData, post }) => {
   const navigation = useNavigation();
+
+  const isLiked = post?.likers?.some((obj) =>
+    Object.values(obj).includes(userData?.data?._id)
+  );
+
+  const liked = useSharedValue(0);
+  const outlineStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+        },
+      ],
+    };
+  });
+
+  const fillStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: liked.value,
+        },
+      ],
+    };
+  });
+
   return (
     <View
       style={{
@@ -17,8 +49,31 @@ const IconContainer = () => {
         paddingHorizontal: 30,
       }}
     >
-      <Pressable style={{ alignItems: "center" }}>
-        <AntDesign name="like2" size={18} color={colors.white} />
+      <Pressable
+        onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}
+        style={{ alignItems: "center" }}
+      >
+        {/* <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}> */}
+
+        {/* </Animated.View> */}
+        {/* <Animated.View style={fillStyle}> */}
+        {isLiked ? (
+          <AntDesign
+            name={"like1"}
+            size={18}
+            color={colors.primary}
+            onPress={() => onLikes()}
+          />
+        ) : (
+          <AntDesign
+            name={"like2"}
+            size={18}
+            color={colors.white}
+            onPress={() => onLikes()}
+          />
+        )}
+
+        {/* </Animated.View> */}
         <TextSmall>Like</TextSmall>
       </Pressable>
 
