@@ -1,4 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
+import axios from "axios";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
@@ -11,9 +12,32 @@ import {
   TextSmall,
   Title,
 } from "../components";
+import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
 const HomeCard = ({ post }) => {
+  const { userData, setRefetch } = useAuth();
+
+  const onLikes = async () => {
+    console.log("=================clicked");
+    try {
+      await axios.put(
+        `https://musfiqeen-backend.vercel.app/api/v1/posts/likes/${post?._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${userData?.accessToken}`,
+          },
+        }
+      );
+      setRefetch(true);
+      console.log("Like updated successfully");
+    } catch (error) {
+      console.error("Error updating like:", error);
+    } finally {
+      setRefetch(false);
+    }
+  };
   return (
     <View style={styles.container}>
       <Row>
@@ -50,7 +74,7 @@ const HomeCard = ({ post }) => {
             color={colors.primary}
             style={styles.icon}
           />
-          <TextSmall>299</TextSmall>
+          <TextSmall>{post?.likes}</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
           <TextSmall style={{ color: colors.primary }}>299</TextSmall>
@@ -69,7 +93,7 @@ const HomeCard = ({ post }) => {
       </Row>
 
       <HorizantalBar />
-      <IconContainer />
+      <IconContainer onLikes={onLikes} userData={userData} post={post} />
     </View>
   );
 };
