@@ -26,7 +26,7 @@ const Home = () => {
       <FlatList
         data={posts}
         renderItem={({ item }) => <HomeCard post={item} key={item?._id} />}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item?._id}
         showsVerticalScrollIndicator={false}
       />
       {/* <HomeCard /> */}
