@@ -8,5 +8,6 @@ export { default as IconContainer } from "./iconContainer";
 export { default as Reactions } from "./reactions";
 export { default as Comments } from "./comments";
 export { default as Container } from "./container";
+export { default as SubContainer } from "./subContainer";
 export { default as Loading } from "./loading";
 export { default as NormalText } from "./normalText";
