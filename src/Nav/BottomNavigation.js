@@ -1,13 +1,13 @@
-import React, { useRef, useState } from "react";
 import { Animated, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import colors from "../theme/Colors";
 import { Home, Post, Bayan, Chat } from "../screen";
+import { useRef, useState } from "react";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomNavigator() {
+const BottomNavigation = () => {
   const [isFocused, setIsFocused] = useState("home");
   const navRef = useRef(new Animated.Value(0)).current;
 
@@ -23,8 +23,8 @@ export default function BottomNavigator() {
 
   return (
     <Tab.Navigator
-      backBehavior="Main"
-      initialRouteName="Home"
+      // backBehavior="Main"
+      initialRouteName="home"
       screenOptions={({ route }) => ({
         tabBarInactiveTintColor: colors.lightGray,
         tabBarActiveTintColor: colors.white,
@@ -76,7 +76,7 @@ export default function BottomNavigator() {
                   padding: 5,
                 }}
               >
-                {tabName === "Home" && (
+                {tabName === "home" && (
                   <Entypo
                     name="home"
                     size={24}
@@ -111,11 +111,11 @@ export default function BottomNavigator() {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="home"
         component={Home}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            handleTabPress("Home", "Home", navigation);
+            handleTabPress("home", "home", navigation);
           },
         })}
       />
@@ -148,4 +148,6 @@ export default function BottomNavigator() {
       />
     </Tab.Navigator>
   );
-}
+};
+
+export default BottomNavigation;
