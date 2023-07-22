@@ -1,39 +1,47 @@
-import { Animated, TouchableOpacity } from "react-native";
+import React, { useRef, useState } from "react";
+import { Animated, TouchableOpacity, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import colors from "../theme/Colors";
 import { Home, Post, Bayan, Chat } from "../screen";
-import { useRef, useState } from "react";
 
 const Tab = createBottomTabNavigator();
 
-const BottomNavigation = () => {
+export default function BottomNavigator() {
   const [isFocused, setIsFocused] = useState("home");
   const navRef = useRef(new Animated.Value(0)).current;
 
-  const handleTabPress = (tabName, route, navigation) => {
+  const navigation = useNavigation();
+
+  const handleTabPress = (tabName, route) => {
     if (isFocused !== tabName) {
       setIsFocused(tabName);
       Animated.spring(navRef, {
         toValue: 1,
         useNativeDriver: true,
       }).start();
+
+      navigation.navigate(route);
     }
   };
 
   return (
     <Tab.Navigator
       // backBehavior="Main"
-      initialRouteName="home"
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarInactiveTintColor: colors.lightGray,
         tabBarActiveTintColor: colors.white,
+        tabBarActiveBackgroundColor: colors.bg,
         tabBarStyle: {
           position: "absolute",
           backgroundColor: colors.bg,
+
+
         },
         tabBarLabelStyle: {
-          bottom: 5,
+          fontSize: 12,
           fontFamily: "SemiBold",
         },
         headerShown: false,
@@ -48,13 +56,15 @@ const BottomNavigation = () => {
 
           const translateY = navRef.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, isCurrentTabFocused ? -20 : 0],
+            outputRange: [0, isCurrentTabFocused ? -10 : 0],
           });
 
           const backgroundColor = navRef.interpolate({
             inputRange: [0, 1],
             outputRange: [
-              colors.bg,
+              // colors.bg,
+              // isCurrentTabFocused ? colors.primary : colors.bg,
+              isCurrentTabFocused ? colors.primary : colors.bg,
               isCurrentTabFocused ? colors.primary : colors.bg,
             ],
           });
@@ -66,7 +76,7 @@ const BottomNavigation = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={() => handleTabPress(tabName, route)}
+              onPress={() => handleTabPress(tabName, route.name)}
             >
               <Animated.View
                 style={{
@@ -76,33 +86,45 @@ const BottomNavigation = () => {
                   padding: 5,
                 }}
               >
-                {tabName === "home" && (
+                {tabName === "Home" && (
+
                   <Entypo
                     name="home"
                     size={24}
                     color={focused ? colors.white : colors.lightGray}
                   />
+
+
                 )}
                 {tabName === "post" && (
-                  <MaterialIcons
-                    name="post-add"
-                    size={24}
-                    color={focused ? colors.white : colors.lightGray}
-                  />
+                  <>
+                    <MaterialIcons
+                      name="post-add"
+                      size={24}
+                      color={focused ? colors.white : colors.lightGray}
+                    />
+
+                  </>
                 )}
                 {tabName === "bayan" && (
-                  <Entypo
-                    name="sound"
-                    size={24}
-                    color={focused ? colors.white : colors.lightGray}
-                  />
+                  <>
+                    <Entypo
+                      name="sound"
+                      size={24}
+                      color={focused ? colors.white : colors.lightGray}
+                    />
+
+                  </>
                 )}
                 {tabName === "chat" && (
-                  <MaterialIcons
-                    name="chat"
-                    size={24}
-                    color={focused ? colors.white : colors.lightGray}
-                  />
+                  <>
+                    <MaterialIcons
+                      name="chat"
+                      size={24}
+                      color={focused ? colors.white : colors.lightGray}
+                    />
+
+                  </>
                 )}
               </Animated.View>
             </TouchableOpacity>
@@ -111,11 +133,11 @@ const BottomNavigation = () => {
       })}
     >
       <Tab.Screen
-        name="home"
+        name="Home"
         component={Home}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            handleTabPress("home", "home", navigation);
+            handleTabPress("Home", "Home", navigation);
           },
         })}
       />
@@ -148,6 +170,4 @@ const BottomNavigation = () => {
       />
     </Tab.Navigator>
   );
-};
-
-export default BottomNavigation;
+}
