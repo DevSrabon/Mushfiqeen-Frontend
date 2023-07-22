@@ -6,7 +6,6 @@ import {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
 } from "react-native-reanimated";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
@@ -49,10 +48,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
         paddingHorizontal: 30,
       }}
     >
-      <Pressable
-        onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}
-        style={{ alignItems: "center" }}
-      >
+      <View style={{ alignItems: "center" }}>
         {/* <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}> */}
 
         {/* </Animated.View> */}
@@ -75,7 +71,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
 
         {/* </Animated.View> */}
         <TextSmall>Like</TextSmall>
-      </Pressable>
+      </View>
 
       <Pressable
         style={{ alignItems: "center" }}
