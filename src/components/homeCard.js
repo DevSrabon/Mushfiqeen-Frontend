@@ -19,7 +19,6 @@ const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
 
   const onLikes = async () => {
-    console.log("=================clicked");
     try {
       await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/likes/${post?._id}`,
@@ -77,7 +76,9 @@ const HomeCard = ({ post }) => {
           <TextSmall>{post?.likes}</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
-          <TextSmall style={{ color: colors.primary }}>299</TextSmall>
+          <TextSmall style={{ color: colors.primary }}>
+            {post?.commentsLength}
+          </TextSmall>
           <TextSmall>Comments</TextSmall>
           <View
             style={{

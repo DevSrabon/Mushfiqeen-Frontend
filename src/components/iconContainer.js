@@ -6,7 +6,6 @@ import {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
 } from "react-native-reanimated";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
@@ -14,9 +13,7 @@ import TextSmall from "./textSmall";
 const IconContainer = ({ onLikes, userData, post }) => {
   const navigation = useNavigation();
 
-  const isLiked = post?.likers?.some((obj) =>
-    Object.values(obj).includes(userData?.data?._id)
-  );
+  const isLiked = post?.likers?.includes(userData?.data?._id);
 
   const liked = useSharedValue(0);
   const outlineStyle = useAnimatedStyle(() => {
@@ -49,10 +46,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
         paddingHorizontal: 30,
       }}
     >
-      <TouchableOpacity
-        onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}
-        style={{ alignItems: "center" }}
-      >
+      <View style={{ alignItems: "center" }}>
         {/* <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}> */}
 
         {/* </Animated.View> */}
@@ -75,11 +69,13 @@ const IconContainer = ({ onLikes, userData, post }) => {
 
         {/* </Animated.View> */}
         <TextSmall>Like</TextSmall>
-      </TouchableOpacity>
+      </View>
 
       <Pressable
         style={{ alignItems: "center" }}
-        onPress={() => navigation.navigate("postDetails")}
+        onPress={() =>
+          navigation.navigate("postDetails", { post, isLiked, userData })
+        }
       >
         <FontAwesome5 name="comment-dots" size={18} color={colors.white} />
         <TextSmall>Comment</TextSmall>
