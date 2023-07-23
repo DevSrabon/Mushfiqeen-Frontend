@@ -13,9 +13,7 @@ import TextSmall from "./textSmall";
 const IconContainer = ({ onLikes, userData, post }) => {
   const navigation = useNavigation();
 
-  const isLiked = post?.likers?.some((obj) =>
-    Object.values(obj).includes(userData?.data?._id)
-  );
+  const isLiked = post?.likers?.includes(userData?.data?._id);
 
   const liked = useSharedValue(0);
   const outlineStyle = useAnimatedStyle(() => {
@@ -75,7 +73,9 @@ const IconContainer = ({ onLikes, userData, post }) => {
 
       <Pressable
         style={{ alignItems: "center" }}
-        onPress={() => navigation.navigate("postDetails")}
+        onPress={() =>
+          navigation.navigate("postDetails", { post, isLiked, userData })
+        }
       >
         <FontAwesome5 name="comment-dots" size={18} color={colors.white} />
         <TextSmall>Comment</TextSmall>
