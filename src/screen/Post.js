@@ -8,9 +8,6 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
-import Container from "../components/container";
-import CustomButton from "../components/customButton";
-import Header from "../components/header";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import { SubContainer } from "../components";
@@ -19,6 +16,7 @@ const Post = () => {
   const [description, setDescription] = useState();
   const navigate = useNavigation();
   const { userData, setRefetch } = useAuth();
+
   const onPost = async () => {
     const headers = {
       Authorization: `Bearer ${userData?.accessToken}`,

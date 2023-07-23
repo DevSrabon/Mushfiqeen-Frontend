@@ -14,14 +14,7 @@ const Comments = () => {
         <Title>Comments</Title>
         <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
           <Image source={icons.user} style={styles.userImg} />
-          <View
-            style={{
-              backgroundColor: colors.lightBg,
-              width: "90%",
-              borderRadius: 8,
-              borderColor: colors.white,
-            }}
-          >
+          <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
               <SubTitle>User Name</SubTitle>
               <TextSmall>Subtitle</TextSmall>
@@ -60,6 +53,12 @@ const Comments = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.bg,
+  },
+  commentBox: {
+    backgroundColor: colors.lightBg,
+    width: "90%",
+    borderRadius: 8,
+    borderColor: colors.white,
   },
   userImg: {
     height: 35,

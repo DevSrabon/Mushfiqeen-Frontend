@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import Container from "../components/container";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
@@ -8,6 +8,7 @@ import { useAuth } from "../contexts/useAuth";
 const Home = () => {
   const [posts, setPosts] = useState();
   const { refetch } = useAuth();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,6 +22,7 @@ const Home = () => {
     };
     fetchData();
   }, [refetch]);
+
   return (
     <Container>
       <FlatList
@@ -29,11 +31,8 @@ const Home = () => {
         keyExtractor={(item) => item?._id}
         showsVerticalScrollIndicator={false}
       />
-      {/* <HomeCard /> */}
     </Container>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Home;

@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
@@ -16,7 +17,15 @@ const StackNavigation = () => {
       {token ? (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="parent" component={Parent} />
-          <Stack.Screen name="postDetails" component={PostDetails} />
+          <Stack.Screen
+            name="postDetails"
+            component={PostDetails}
+            // options={{
+            //   presentation: "modal",
+            //   animationTypeForReplace: "push",
+            //   animation: "slide_from_right",
+            // }}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator screenOptions={{ headerShown: false }}>

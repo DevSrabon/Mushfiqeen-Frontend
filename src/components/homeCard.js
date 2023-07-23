@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     width: "100%",
     // height: 400,
     marginBottom: 10,
+    marginTop: 10,
   },
   userImg: {
     height: 40,
