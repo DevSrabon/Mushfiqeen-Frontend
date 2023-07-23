@@ -1,6 +1,6 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, View } from "react-native";
+import { Pressable, View, TouchableOpacity } from "react-native";
 import {
   Extrapolate,
   interpolate,

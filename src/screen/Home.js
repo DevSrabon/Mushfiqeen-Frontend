@@ -1,11 +1,12 @@
 import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+
 import { Text, View } from "react-native";
 import { Loading } from "../components";
+
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
-// ... (imports remain the same)
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -50,7 +51,6 @@ const Home = () => {
 
   if (loading && skip === 0) return <Loading />;
 
-  // Use a fallback value for the estimatedItemSize (e.g., 100) if the total is not a valid numeric value.
   const estimatedItemSize = parseInt(total) || 100;
 
   return (

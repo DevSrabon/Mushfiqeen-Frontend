@@ -11,3 +11,4 @@ export { default as Container } from "./container";
 export { default as SubContainer } from "./subContainer";
 export { default as Loading } from "./loading";
 export { default as NormalText } from "./normalText";
+export { default as BayanCard } from "./bayanCard";

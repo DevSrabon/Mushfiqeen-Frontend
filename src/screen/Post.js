@@ -8,7 +8,9 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { SubContainer } from "../components";
+import Container from "../components/container";
+import CustomButton from "../components/customButton";
+import Header from "../components/header";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
