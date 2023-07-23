@@ -1,6 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
-import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
@@ -15,8 +14,10 @@ import {
 } from "react-native";
 import icons from "../../assets/icons";
 import {
+  Comments,
   HorizantalBar,
   IconContainer,
+  Loading,
   Reactions,
   Row,
   SubRow,
@@ -29,10 +30,12 @@ import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 const PostDetails = () => {
   const [texts, setTexts] = useState("");
-  const [comment, setComment] = useState([]);
-  const { refetch, setRefetch, loading, setLoading } = useAuth();
+  const [post, setPost] = useState([]);
+  const { loading, setLoading } = useAuth();
+  const [refetch, setRefetch] = useState(false);
   const route = useRoute();
-  const { post, userData } = route.params;
+  const { post: postId, userData } = route.params;
+
   const config = {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
@@ -82,10 +85,10 @@ const PostDetails = () => {
         setLoading(true);
 
         const data = await axios.get(
-          `https://musfiqeen-backend.vercel.app/api/v1/posts/comment/${post?._id}`,
+          `https://musfiqeen-backend.vercel.app/api/v1/posts/comment/${postId?._id}`,
           config
         );
-        setComment(data.data.data);
+        setPost(data.data.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -94,6 +97,7 @@ const PostDetails = () => {
     };
     fetchComments();
   }, [refetch]);
+  if (loading) return <Loading />;
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
       <ScrollView>
@@ -117,7 +121,6 @@ const PostDetails = () => {
           </Row>
           <View
             style={{
-              height: 250,
               marginVertical: 5,
               marginHorizontal: 10,
             }}
@@ -186,14 +189,14 @@ const PostDetails = () => {
             </ScrollView>
           </View>
           <Title>Comments</Title>
-          <FlashList
+          {/* <FlashList
             data={comment?.comments}
-            renderItem={({ item }) => <HomeCard comment={item} />}
+            renderItem={({ item }) => <Comments comment={item} />}
             keyExtractor={(item) => item._id}
-          />
-          {/* {comment?.comments?.map((comment) => (
+          /> */}
+          {post?.comments?.map((comment) => (
             <Comments comment={comment} key={comment?._id} />
-          ))} */}
+          ))}
         </View>
       </ScrollView>
     </Container>

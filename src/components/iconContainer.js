@@ -46,41 +46,14 @@ const IconContainer = ({ onLikes, userData, post }) => {
         paddingHorizontal: 30,
       }}
     >
-
-      <TouchableOpacity
-        onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}
-        style={{ alignItems: "center" }}
-      >
-
-      <View style={{ alignItems: "center" }}>
-
-        {/* <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}> */}
-
-        {/* </Animated.View> */}
-        {/* <Animated.View style={fillStyle}> */}
+      <Pressable style={{ alignItems: "center" }} onPress={() => onLikes()}>
         {isLiked ? (
-          <AntDesign
-            name={"like1"}
-            size={18}
-            color={colors.primary}
-            onPress={() => onLikes()}
-          />
+          <AntDesign name={"like1"} size={18} color={colors.primary} />
         ) : (
-          <AntDesign
-            name={"like2"}
-            size={18}
-            color={colors.white}
-            onPress={() => onLikes()}
-          />
+          <AntDesign name={"like2"} size={18} color={colors.white} />
         )}
-
-        {/* </Animated.View> */}
         <TextSmall>Like</TextSmall>
-
-      </TouchableOpacity>
-
-      </View>
-
+      </Pressable>
 
       <Pressable
         style={{ alignItems: "center" }}
@@ -96,6 +69,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
         <FontAwesome5 name="share-square" size={18} color={colors.white} />
         <TextSmall>Share</TextSmall>
       </Pressable>
+
       <Pressable style={{ alignItems: "center" }}>
         <FontAwesome name="send" size={18} color={colors.white} />
         <TextSmall>Send</TextSmall>
