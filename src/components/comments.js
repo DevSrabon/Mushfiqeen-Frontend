@@ -1,17 +1,15 @@
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import moment from "moment";
 import React from "react";
-import colors from "../theme/Colors";
-import Title from "./title";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
+import colors from "../theme/Colors";
+import NormalText from "./normalText";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
-import NormalText from "./normalText";
-
-const Comments = () => {
+const Comments = ({ comment }) => {
   return (
     <View>
       <View style={styles.container}>
-        <Title>Comments</Title>
         <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
           <Image source={icons.user} style={styles.userImg} />
           <View
@@ -25,11 +23,9 @@ const Comments = () => {
             <View style={{ padding: 10 }}>
               <SubTitle>User Name</SubTitle>
               <TextSmall>Subtitle</TextSmall>
-              <TextSmall>2d</TextSmall>
+              <TextSmall>{moment(comment?.createdAt).fromNow()}</TextSmall>
               <NormalText style={{ marginVertical: 5 }}>
-                Some thing comment about some thing that is for a example and
-                want to test what about this comment section i wan t to m ake a
-                big comment
+                {comment?.comment}
               </NormalText>
             </View>
           </View>
