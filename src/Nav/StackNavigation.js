@@ -1,16 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import Parent from "./Parent";
-import { Login, PostDetails, Signup } from "../screen";
 import { useAuth } from "../contexts/useAuth";
-import { Loading } from "../components";
+import { Login, PostDetails, Signup } from "../screen";
+import Parent from "./Parent";
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
   const { userData, token, loading } = useAuth();
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
   return (
     <NavigationContainer>
       {token ? (
