@@ -11,6 +11,7 @@ const Tab = createBottomTabNavigator();
 export default function BottomNavigator() {
   const [isFocused, setIsFocused] = useState("home");
   const navRef = useRef(new Animated.Value(0)).current;
+  const borderColorRef = useRef(new Animated.Value(0)).current; // Animated value for border color
 
   const navigation = useNavigation();
 
@@ -21,10 +22,24 @@ export default function BottomNavigator() {
         toValue: 1,
         useNativeDriver: true,
       }).start();
-
-      navigation.navigate(route);
+      Animated.timing(borderColorRef, { // Animate the border color change
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+      navigation.navigate({ name: route });
     }
   };
+
+  const handleTabBlur = () => {
+    setIsFocused(null);
+    Animated.timing(borderColorRef, { // Animate the border color change back to the default
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+
 
   return (
     <Tab.Navigator
@@ -33,10 +48,13 @@ export default function BottomNavigator() {
       screenOptions={({ route }) => ({
         tabBarInactiveTintColor: colors.lightGray,
         tabBarActiveTintColor: colors.white,
-        tabBarActiveBackgroundColor: colors.bg,
+        // tabBarActiveBackgroundColor: colors.bg,
+        // tabBarActiveBorderWidth: 1,
+        // tabBarActiveTintBorderColor: colors.bg,
         tabBarStyle: {
           position: "absolute",
           backgroundColor: colors.bg,
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -54,16 +72,16 @@ export default function BottomNavigator() {
 
           const translateY = navRef.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, isCurrentTabFocused ? -10 : 0],
+            outputRange: [0, isCurrentTabFocused ? -5 : 0],
           });
 
           const backgroundColor = navRef.interpolate({
             inputRange: [0, 1],
             outputRange: [
-              // colors.bg,
+              colors.bg,
+              isCurrentTabFocused ? colors.bg : colors.bg,
               // isCurrentTabFocused ? colors.primary : colors.bg,
-              isCurrentTabFocused ? colors.primary : colors.bg,
-              isCurrentTabFocused ? colors.primary : colors.bg,
+              // isCurrentTabFocused ? colors.bg : colors.bg,
             ],
           });
 
@@ -75,13 +93,16 @@ export default function BottomNavigator() {
                 alignItems: "center",
               }}
               onPress={() => handleTabPress(tabName, route.name)}
+              onBlur={handleTabBlur}
             >
               <Animated.View
                 style={{
                   transform: [{ scale }, { translateY }],
                   backgroundColor,
-                  borderRadius: 20,
-                  padding: 5,
+                  borderRadius: 50,
+                  // borderWidth: 1,
+                  // borderColor: colors.white,
+                  padding: 2,
                 }}
               >
                 {tabName === "Home" && (
