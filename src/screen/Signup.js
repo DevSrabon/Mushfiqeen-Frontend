@@ -33,7 +33,6 @@ const Signup = () => {
       // setUser(response.data.data)
       setToken(response.data.accessToken);
       // AsyncStorage.setItem("token", response.data.accessToken);
-      console.log(response.data);
     } catch (error) {
       // Handle the error here
       console.error("Error signing up:", error);

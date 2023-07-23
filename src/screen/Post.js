@@ -27,7 +27,6 @@ const Post = () => {
         { description },
         { headers }
       );
-      console.log(response.status);
       setRefetch(true);
       if (response.status === 201) {
         setDescription("");

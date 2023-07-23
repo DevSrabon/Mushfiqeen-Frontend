@@ -89,7 +89,6 @@ const PostDetails = () => {
           config
         );
         setPost(data.data.data);
-        console.log(data.data.data);
       } catch (error) {
         console.log(error);
       } finally {
