@@ -1,6 +1,6 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, View } from "react-native";
+import { Pressable, View, TouchableOpacity } from "react-native";
 import {
   Extrapolate,
   interpolate,
@@ -46,7 +46,14 @@ const IconContainer = ({ onLikes, userData, post }) => {
         paddingHorizontal: 30,
       }}
     >
+
+      <TouchableOpacity
+        onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}
+        style={{ alignItems: "center" }}
+      >
+
       <View style={{ alignItems: "center" }}>
+
         {/* <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}> */}
 
         {/* </Animated.View> */}
@@ -69,7 +76,11 @@ const IconContainer = ({ onLikes, userData, post }) => {
 
         {/* </Animated.View> */}
         <TextSmall>Like</TextSmall>
+
+      </TouchableOpacity>
+
       </View>
+
 
       <Pressable
         style={{ alignItems: "center" }}

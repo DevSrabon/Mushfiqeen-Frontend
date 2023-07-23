@@ -119,7 +119,6 @@ export default function BottomNavigator() {
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
                     />
-
                   </>
                 )}
                 {tabName === "bayan" && (
@@ -138,7 +137,6 @@ export default function BottomNavigator() {
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
                     />
-
                   </>
                 )}
               </Animated.View>
@@ -185,4 +183,28 @@ export default function BottomNavigator() {
       />
     </Tab.Navigator>
   );
+}
+
+// active border when selected
+{
+  /* <Tab.Screen
+        name="ScreenName"
+        component={Screen}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <View style={styles.individualTabWrapper}>
+              {
+                focused && <View style={styles.activeDot} />
+              }
+              <CustomIcon name={'home'} size={focused ? 27 : 25} color={color} />
+            </View>
+          ),
+         
+          tabBarLabel: ({ focused, color }) => (
+            <>
+              <Text style={[styles.label, { color: 'black'}]}>Home</Text>
+            </>
+          )
+        }}
+      /> */
 }

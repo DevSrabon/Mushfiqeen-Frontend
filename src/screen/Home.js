@@ -1,8 +1,13 @@
 import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+
+import { FlatList } from "react-native";
+import Container from "../components/container";
+
 import { Text, View } from "react-native";
 import { Loading } from "../components";
+
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 const Home = () => {
@@ -13,6 +18,8 @@ const Home = () => {
   const [total, setTotal] = useState(0);
   console.log("🚀 ~ file: Home.js:14 ~ Home ~ total:", total);
   const { refetch } = useAuth();
+
+
   const fetchPosts = async () => {
     try {
       setLoading(true);
@@ -49,6 +56,7 @@ const Home = () => {
   };
   if (loading && skip === 0) return <Loading />;
 
+
   return (
     <View style={{ flex: 1 }}>
       <FlashList
@@ -64,7 +72,11 @@ const Home = () => {
           )
         }
       />
+
+
+
     </View>
+
   );
 };
 

@@ -1,21 +1,10 @@
-import Home from "./Home";
-import Login from "./Login";
-import Signup from "./Signup";
-import Bayan from "./Bayan";
-import Post from "./Post";
-import Settings from "./Settings";
-import Profile from "./Profile";
-import PostDetails from "./PostDetails";
-import Chat from "./Chat";
-
-export {
-  Home,
-  Login,
-  Signup,
-  Bayan,
-  Post,
-  Settings,
-  Profile,
-  PostDetails,
-  Chat,
-};
+export { default as Home } from "./Home";
+export { default as Login } from "./Login";
+export { default as Signup } from "./Signup";
+export { default as Bayan } from "./Bayan";
+export { default as BayanDetails } from "./BayanDetails";
+export { default as Post } from "./Post";
+export { default as PostDetails } from "./PostDetails";
+export { default as Settings } from "./Settings";
+export { default as Profile } from "./Profile";
+export { default as Chat } from "./Chat";
