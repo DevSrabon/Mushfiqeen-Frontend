@@ -1,13 +1,13 @@
 import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
+
 import { FlatList } from "react-native";
 import Container from "../components/container";
-=======
+
 import { Text, View } from "react-native";
 import { Loading } from "../components";
->>>>>>> 2aba57a6ca0da481aa5d08b076c8af9e409550e9
+
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 const Home = () => {
@@ -18,22 +18,7 @@ const Home = () => {
   const [total, setTotal] = useState(0);
   console.log("🚀 ~ file: Home.js:14 ~ Home ~ total:", total);
   const { refetch } = useAuth();
-<<<<<<< HEAD
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          "https://musfiqeen-backend.vercel.app/api/v1/posts/get"
-        );
-        setPosts(res.data.data);
-      } catch (error) {
-        console.log({ error });
-      }
-    };
-    fetchData();
-  }, [refetch]);
-=======
   const fetchPosts = async () => {
     try {
       setLoading(true);
@@ -69,7 +54,6 @@ const Home = () => {
     }
   };
   if (loading && skip === 0) return <Loading />;
->>>>>>> 2aba57a6ca0da481aa5d08b076c8af9e409550e9
 
   return (
     <View style={{ flex: 1 }}>
@@ -86,11 +70,7 @@ const Home = () => {
           )
         }
       />
-<<<<<<< HEAD
-    </Container>
-=======
     </View>
->>>>>>> 2aba57a6ca0da481aa5d08b076c8af9e409550e9
   );
 };
 
