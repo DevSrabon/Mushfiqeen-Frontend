@@ -46,35 +46,14 @@ const IconContainer = ({ onLikes, userData, post }) => {
         paddingHorizontal: 30,
       }}
     >
-      <TouchableOpacity
-        onPress={() => (liked.value = withSpring(liked.value ? 0 : 1))}
-        style={{ alignItems: "center" }}
-      >
-        <View style={{ alignItems: "center" }}>
-          {/* <Animated.View style={[StyleSheet.absoluteFillObject, outlineStyle]}> */}
-
-          {/* </Animated.View> */}
-          {/* <Animated.View style={fillStyle}> */}
-          {isLiked ? (
-            <AntDesign
-              name={"like1"}
-              size={18}
-              color={colors.primary}
-              onPress={() => onLikes()}
-            />
-          ) : (
-            <AntDesign
-              name={"like2"}
-              size={18}
-              color={colors.white}
-              onPress={() => onLikes()}
-            />
-          )}
-
-          {/* </Animated.View> */}
-          <TextSmall>Like</TextSmall>
-        </View>
-      </TouchableOpacity>
+      <Pressable style={{ alignItems: "center" }} onPress={() => onLikes()}>
+        {isLiked ? (
+          <AntDesign name={"like1"} size={18} color={colors.primary} />
+        ) : (
+          <AntDesign name={"like2"} size={18} color={colors.white} />
+        )}
+        <TextSmall>Like</TextSmall>
+      </Pressable>
 
       <Pressable
         style={{ alignItems: "center" }}
