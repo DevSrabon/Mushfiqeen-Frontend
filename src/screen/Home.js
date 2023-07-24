@@ -1,10 +1,7 @@
 import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
-import { FlatList } from "react-native";
 import Container from "../components/container";
-
 import { Text, View } from "react-native";
 import { Loading } from "../components";
 
@@ -56,21 +53,23 @@ const Home = () => {
   if (loading && skip === 0) return <Loading />;
 
   return (
-    <View style={{ flex: 1 }}>
-      <FlashList
-        data={posts}
-        renderItem={({ item }) => <HomeCard post={item} />}
-        keyExtractor={(item) => item?._id}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.1}
-        estimatedItemSize={parseInt(total)}
-        ListFooterComponent={
-          loading && (
-            <Text style={{ alignItems: "center" }}>Loading more...</Text>
-          )
-        }
-      />
-    </View>
+    <Container>
+      <View style={{ flex: 1 }}>
+        <FlashList
+          data={posts}
+          renderItem={({ item }) => <HomeCard post={item} />}
+          keyExtractor={(item) => item?._id}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.1}
+          estimatedItemSize={parseInt(total)}
+          ListFooterComponent={
+            loading && (
+              <Text style={{ alignItems: "center" }}>Loading more...</Text>
+            )
+          }
+        />
+      </View>
+    </Container>
   );
 };
 

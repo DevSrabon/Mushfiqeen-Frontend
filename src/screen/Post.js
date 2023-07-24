@@ -14,7 +14,7 @@ import { SubContainer } from "../components";
 
 const Post = () => {
   const [description, setDescription] = useState();
-  const navigate = useNavigation();
+  const navigation = useNavigation();
   const { userData, setRefetch } = useAuth();
 
   const onPost = async () => {
@@ -32,15 +32,15 @@ const Post = () => {
       )
       .then((response) => {
         // Handle the response data here
-        console.log("Response:", response);
-        if (response.status === 200) {
+        // console.log("Response:", response);
+        if (response.status === 201) {
           setRefetch(true);
-          navigate.navigate("home");
+          navigation.navigate("Home");
         }
       })
       .catch((error) => {
         // Handle errors here
-        console.error("Error:", error);
+        // console.error("Error:", error);
       });
   };
   return (
