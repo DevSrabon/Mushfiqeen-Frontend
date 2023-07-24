@@ -22,7 +22,8 @@ export default function BottomNavigator() {
         toValue: 1,
         useNativeDriver: true,
       }).start();
-      Animated.timing(borderColorRef, { // Animate the border color change
+      Animated.timing(borderColorRef, {
+        // Animate the border color change
         toValue: 1,
         duration: 300,
         useNativeDriver: false,
@@ -33,13 +34,13 @@ export default function BottomNavigator() {
 
   const handleTabBlur = () => {
     setIsFocused(null);
-    Animated.timing(borderColorRef, { // Animate the border color change back to the default
+    Animated.timing(borderColorRef, {
+      // Animate the border color change back to the default
       toValue: 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
   };
-
 
   return (
     <Tab.Navigator
