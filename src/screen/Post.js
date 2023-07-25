@@ -8,9 +8,9 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import SubContainer from "../components/subContainer";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import { SubContainer } from "../components";
 
 const Post = () => {
   const [description, setDescription] = useState("");
