@@ -22,8 +22,7 @@ export default function BottomNavigator() {
         toValue: 1,
         useNativeDriver: true,
       }).start();
-      Animated.timing(borderColorRef, {
-        // Animate the border color change
+      Animated.timing(borderColorRef, { // Animate the border color change
         toValue: 1,
         duration: 300,
         useNativeDriver: false,
@@ -34,13 +33,13 @@ export default function BottomNavigator() {
 
   const handleTabBlur = () => {
     setIsFocused(null);
-    Animated.timing(borderColorRef, {
-      // Animate the border color change back to the default
+    Animated.timing(borderColorRef, { // Animate the border color change back to the default
       toValue: 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
   };
+
 
   return (
     <Tab.Navigator
@@ -49,9 +48,7 @@ export default function BottomNavigator() {
       screenOptions={({ route }) => ({
         tabBarInactiveTintColor: colors.lightGray,
         tabBarActiveTintColor: colors.white,
-        // tabBarActiveBackgroundColor: colors.bg,
-        // tabBarActiveBorderWidth: 1,
-        // tabBarActiveTintBorderColor: colors.bg,
+
         tabBarStyle: {
           position: "absolute",
           backgroundColor: colors.bg,
@@ -95,22 +92,32 @@ export default function BottomNavigator() {
               }}
               onPress={() => handleTabPress(tabName, route.name)}
               onBlur={handleTabBlur}
+
             >
               <Animated.View
-                style={{
-                  transform: [{ scale }, { translateY }],
-                  backgroundColor,
-                  borderRadius: 50,
-                  // borderWidth: 1,
-                  // borderColor: colors.white,
-                  padding: 2,
-                }}
+                style={
+                  {
+                    transform: [{ scale }, { translateY }],
+                    backgroundColor,
+                    borderRadius: 50,
+
+                    // borderWidth: 1,
+                    // borderColor: colors.white,
+                    padding: 2,
+                  }}
               >
                 {tabName === "Home" && (
                   <Entypo
                     name="home"
                     size={24}
                     color={focused ? colors.white : colors.lightGray}
+
+                    style={focused && {
+                      borderWidth: 1,
+                      borderColor: colors.white,
+                      borderRadius: 50,
+                      padding: 2,
+                    }}
                   />
                 )}
                 {tabName === "post" && (
@@ -119,7 +126,15 @@ export default function BottomNavigator() {
                       name="post-add"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
+
+                      style={focused && {
+                        borderWidth: 1,
+                        borderColor: colors.white,
+                        borderRadius: 50,
+                        padding: 3,
+                      }}
                     />
+
                   </>
                 )}
                 {tabName === "bayan" && (
@@ -128,6 +143,14 @@ export default function BottomNavigator() {
                       name="sound"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
+
+                      style={focused && {
+                        borderWidth: 1,
+                        borderColor: colors.white,
+                        borderRadius: 50,
+                        padding: 2,
+                      }}
+
                     />
                   </>
                 )}
@@ -137,7 +160,15 @@ export default function BottomNavigator() {
                       name="chat"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
+
+                      style={focused && {
+                        borderWidth: 1,
+                        borderColor: colors.white,
+                        borderRadius: 50,
+                        padding: 2,
+                      }}
                     />
+
                   </>
                 )}
               </Animated.View>
@@ -184,28 +215,4 @@ export default function BottomNavigator() {
       />
     </Tab.Navigator>
   );
-}
-
-// active border when selected
-{
-  /* <Tab.Screen
-        name="ScreenName"
-        component={Screen}
-        options={{
-          tabBarIcon: ({ color, focused }) => (
-            <View style={styles.individualTabWrapper}>
-              {
-                focused && <View style={styles.activeDot} />
-              }
-              <CustomIcon name={'home'} size={focused ? 27 : 25} color={color} />
-            </View>
-          ),
-         
-          tabBarLabel: ({ focused, color }) => (
-            <>
-              <Text style={[styles.label, { color: 'black'}]}>Home</Text>
-            </>
-          )
-        }}
-      /> */
 }
