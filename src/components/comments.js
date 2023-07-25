@@ -14,7 +14,7 @@ const Comments = ({ comment }) => {
           <Image source={icons.user} style={styles.userImg} />
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
-              <SubTitle>User Name</SubTitle>
+              <SubTitle>{comment?.userId?.fullName}</SubTitle>
               <TextSmall>Subtitle</TextSmall>
               <TextSmall>{moment(comment?.createdAt).fromNow()}</TextSmall>
               <NormalText style={{ marginVertical: 5 }}>
