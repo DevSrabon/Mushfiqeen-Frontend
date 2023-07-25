@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import colors from "../theme/Colors";
-import { SubContainer } from "../components";
+import { DropDown, Row, SubContainer } from "../components";
 
 const BayanPost = () => {
   return (
@@ -15,6 +15,7 @@ const BayanPost = () => {
       <Pressable>
         <Text style={styles.button}>Post</Text>
       </Pressable>
+
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Recorded Date"
@@ -29,7 +30,7 @@ const BayanPost = () => {
           style={styles.input}
         />
       </View>
-
+      <DropDown />
       <ScrollView style={{ marginTop: 10 }}>
         <TextInput
           placeholder="What do you want to talk about?"
