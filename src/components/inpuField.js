@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet, Text, TextInput, View } from "react-native";
+import colors from "../theme/Colors";
 
 const InputField = ({
   value,
@@ -66,9 +67,9 @@ const InputField = ({
             top: value
               ? -9
               : focusAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [13, -9],
-                }),
+                inputRange: [0, 1],
+                outputRange: [13, -9],
+              }),
           },
         ]}
       >
@@ -81,9 +82,9 @@ const InputField = ({
               fontSize: value
                 ? -14
                 : focusAnim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [15, 14],
-                  }),
+                  inputRange: [0, 1],
+                  outputRange: [15, 14],
+                }),
             },
           ]}
         >
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
   error: { color: "red" },
   input: {
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: colors.lightBg,
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
@@ -109,11 +110,7 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 17,
   },
-  labelContainer: {
-    position: "absolute",
-    left: 16,
-    paddingHorizontal: 5,
-  },
+
   errorBorder: {
     borderColor: "red",
     color: "red",
@@ -122,24 +119,24 @@ const styles = StyleSheet.create({
     borderColor: "#B4AAF2",
     color: "black",
   },
+  labelContainer: {
+    position: "absolute",
+    left: 16,
+    paddingHorizontal: 5,
+  },
   labelFocusContainer: {
     position: "absolute",
     left: 16,
     // paddingHorizontal: 7,
     paddingVertical: 1,
-    backgroundColor: "#efedf8",
+    backgroundColor: colors.lightBg,
     borderWidth: 1,
     borderRadius: 5,
-  },
-  label: {
-    // fontFamily: "Medium",
-    // fontSize: 10,
-    // color: "#747980",
   },
 
   textInput: {
     borderWidth: 1,
     color: "#747980",
-    backgroundColor: "#efedf8",
+    backgroundColor: colors.lightGray,
   },
 });
