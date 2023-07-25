@@ -197,7 +197,13 @@ const PostDetails = () => {
             keyExtractor={(item) => item._id}
           /> */}
           {post?.comments?.map((comment) => (
-            <Comments comment={comment} key={comment?._id} />
+            <Comments
+              comment={comment}
+              key={comment?._id}
+              setRefetch={setRefetch}
+              postId={post?._id}
+              config={config}
+            />
           ))}
         </View>
       </ScrollView>

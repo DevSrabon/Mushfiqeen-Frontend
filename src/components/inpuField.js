@@ -67,9 +67,9 @@ const InputField = ({
             top: value
               ? -9
               : focusAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [13, -9],
-              }),
+                  inputRange: [0, 1],
+                  outputRange: [13, -9],
+                }),
           },
         ]}
       >
@@ -82,9 +82,9 @@ const InputField = ({
               fontSize: value
                 ? -14
                 : focusAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [15, 14],
-                }),
+                    inputRange: [0, 1],
+                    outputRange: [15, 14],
+                  }),
             },
           ]}
         >
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   successBorder: {
     borderColor: "#B4AAF2",
-    color: "black",
+    color: "white",
   },
   labelContainer: {
     position: "absolute",
