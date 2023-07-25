@@ -17,7 +17,6 @@ import {
   Comments,
   HorizantalBar,
   IconContainer,
-  Loading,
   Reactions,
   Row,
   SubRow,
@@ -97,7 +96,10 @@ const PostDetails = () => {
     };
     fetchComments();
   }, [refetch]);
-  if (loading) return <Loading />;
+
+  const items = parseInt(post?.commentsLength);
+
+  // if (loading) return <Loading />;
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
       <ScrollView>
@@ -189,13 +191,19 @@ const PostDetails = () => {
             </ScrollView>
           </View>
           <Title>Comments</Title>
-          {/* <FlashList
-            data={comment?.comments}
+          {/* <FlatList
+            data={post?.comments}
             renderItem={({ item }) => <Comments comment={item} />}
             keyExtractor={(item) => item._id}
           /> */}
           {post?.comments?.map((comment) => (
-            <Comments comment={comment} key={comment?._id} />
+            <Comments
+              comment={comment}
+              key={comment?._id}
+              setRefetch={setRefetch}
+              postId={post?._id}
+              config={config}
+            />
           ))}
         </View>
       </ScrollView>

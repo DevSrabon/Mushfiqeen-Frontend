@@ -1,12 +1,51 @@
+import axios from "axios";
 import moment from "moment";
-import React from "react";
-import { Image, Pressable, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
+import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import CustomModal from "./customModal";
+import InputField from "./inpuField";
 import NormalText from "./normalText";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
-const Comments = ({ comment }) => {
+const Comments = ({ comment, postId, config, setRefetch }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [value, setValue] = useState("");
+
+  const { userData } = useAuth();
+  const isLiked = comment?.likes?.includes(userData?.data?._id);
+  const onCommentsLikes = async () => {
+    try {
+      await axios.put(
+        `https://musfiqeen-backend.vercel.app/api/v1/posts/${postId}/comments/${comment?._id}/like`,
+        {},
+        config
+      );
+      setRefetch(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefetch(false);
+    }
+  };
+  const onReply = async () => {
+    try {
+      await axios.put(
+        `https://musfiqeen-backend.vercel.app/api/v1/posts/reply/${postId}`,
+        { replyText: value, commentId: comment?._id },
+        config
+      );
+      setRefetch(true);
+      setModalVisible(false);
+      setValue("");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefetch(false);
+    }
+  };
   return (
     <View>
       <View style={styles.container}>
@@ -14,7 +53,7 @@ const Comments = ({ comment }) => {
           <Image source={icons.user} style={styles.userImg} />
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
-              <SubTitle>User Name</SubTitle>
+              <SubTitle>{comment?.userId?.fullName}</SubTitle>
               <TextSmall>Subtitle</TextSmall>
               <TextSmall>{moment(comment?.createdAt).fromNow()}</TextSmall>
               <NormalText style={{ marginVertical: 5 }}>
@@ -25,22 +64,72 @@ const Comments = ({ comment }) => {
         </View>
       </View>
       <View
-        style={{
-          flexDirection: "row",
-          marginLeft: 50,
-          gap: 10,
-          marginBottom: 10,
-        }}
+        style={
+          {
+            // flexDirection: "row",
+            // marginLeft: 50,
+            // gap: 10,
+            // marginBottom: 10,
+          }
+        }
       >
-        <Pressable>
-          <SubTitle>Like</SubTitle>
-        </Pressable>
+        <View
+          style={{
+            flexDirection: "row",
+            marginLeft: 50,
+            gap: 10,
+            marginBottom: 10,
+          }}
+        >
+          <Pressable onPress={onCommentsLikes}>
+            <SubTitle>
+              {comment.commentLikes}{" "}
+              <Text style={isLiked && { color: "blue" }}>
+                {isLiked ? "Liked" : "Like"}
+              </Text>
+            </SubTitle>
+          </Pressable>
 
-        <SubTitle>|</SubTitle>
+          <SubTitle>|</SubTitle>
 
-        <Pressable>
-          <SubTitle>Reply</SubTitle>
-        </Pressable>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <SubTitle>Reply</SubTitle>
+          </Pressable>
+        </View>
+        {comment?.replies
+          ?.sort()
+          .reverse()
+          .map((reply) => (
+            <View key={reply?._id} style={styles.subContainer}>
+              <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
+                <Image source={icons.user} style={styles.userImg} />
+                <View style={styles.subCommentBox}>
+                  <View style={{ padding: 10 }}>
+                    <SubTitle>{reply?.userId?.fullName}</SubTitle>
+                    {/* <TextSmall>Subtitle</TextSmall> */}
+                    <TextSmall>{moment(reply?.createdAt).fromNow()}</TextSmall>
+                    <NormalText style={{ marginVertical: 5 }}>
+                      {reply?.reply}
+                    </NormalText>
+                  </View>
+                </View>
+              </View>
+            </View>
+          ))}
+        {/* modal */}
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        >
+          <InputField
+            placeholder={"Add reply"}
+            setValue={setValue}
+            value={value}
+          />
+          <Text onPress={onReply} style={styles.btn}>
+            Submit
+          </Text>
+        </CustomModal>
       </View>
     </View>
   );
@@ -50,9 +139,19 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.bg,
   },
+  subContainer: {
+    backgroundColor: colors.bg,
+    marginLeft: 40,
+  },
   commentBox: {
     backgroundColor: colors.lightBg,
     width: "90%",
+    borderRadius: 8,
+    borderColor: colors.white,
+  },
+  subCommentBox: {
+    backgroundColor: colors.lightBg,
+    width: "89%",
     borderRadius: 8,
     borderColor: colors.white,
   },
@@ -61,6 +160,17 @@ const styles = StyleSheet.create({
     width: 35,
     borderRadius: 50,
     alignSelf: "flex-start",
+  },
+  btn: {
+    backgroundColor: "#B4AAF2",
+    width: "90%",
+    textAlign: "center",
+    textAlignVertical: "center",
+    height: 40,
+    color: "white",
+    fontSize: 16,
+    fontWeight: "500",
+    borderRadius: 5,
   },
 });
 
