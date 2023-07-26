@@ -11,6 +11,7 @@ import NormalText from "./normalText";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
 const Comments = ({ comment, postId, config, setRefetch }) => {
+  // console.log("🚀 ~ file: comments.js:14 ~ Comments ~ comment:", comment);
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState("");
 
@@ -32,11 +33,12 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
   };
   const onReply = async () => {
     try {
-      await axios.put(
+      const rest = await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/reply/${postId}`,
         { replyText: value, commentId: comment?._id },
         config
       );
+      console.log(rest.data, "=======");
       setRefetch(true);
       setModalVisible(false);
       setValue("");
@@ -63,16 +65,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           </View>
         </View>
       </View>
-      <View
-        style={
-          {
-            // flexDirection: "row",
-            // marginLeft: 50,
-            // gap: 10,
-            // marginBottom: 10,
-          }
-        }
-      >
+      <View>
         <View
           style={{
             flexDirection: "row",
@@ -97,7 +90,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           </Pressable>
         </View>
         {comment?.replies
-          ?.sort()
+          ?.slice(0)
           .reverse()
           .map((reply) => (
             <View key={reply?._id} style={styles.subContainer}>

@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -6,13 +8,40 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { DropDown, SubContainer } from "../components";
+import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import { DropDown, Row, SubContainer } from "../components";
 
 const BayanPost = () => {
+  const [lang, setLang] = useState("BN");
+  const [date, setDate] = useState("");
+  const [place, setPlace] = useState("");
+  const [description, setDescription] = useState("");
+  const { userData } = useAuth();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData?.accessToken}`,
+    },
+  };
+  const onBayan = async () => {
+    try {
+      const res = await axios.post(
+        `https://musfiqeen-backend.vercel.app/api/v1/bayans/create`,
+        { description, lang, place, date },
+        config
+      );
+      setDate("");
+      setDescription("");
+      setPlace("");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SubContainer>
-      <Pressable>
+      <Pressable onPress={onBayan}>
         <Text style={styles.button}>Post</Text>
       </Pressable>
 
@@ -22,15 +51,17 @@ const BayanPost = () => {
           placeholderTextColor={colors.lightGray}
           selectionColor={colors.white}
           style={styles.input}
+          onChangeText={setDate}
         />
         <TextInput
           placeholder="Recorded Place"
           placeholderTextColor={colors.lightGray}
           selectionColor={colors.white}
           style={styles.input}
+          onChangeText={setPlace}
         />
       </View>
-      <DropDown />
+      <DropDown category={lang} setCategory={setLang} />
       <ScrollView style={{ marginTop: 10 }}>
         <TextInput
           placeholder="What do you want to talk about?"
@@ -38,6 +69,8 @@ const BayanPost = () => {
           textAlignVertical={"top"}
           multiline={true}
           numberOfLines={18}
+          value={description}
+          onChangeText={setDescription}
           maxHeight={450}
           selectionColor={colors.white}
           style={{

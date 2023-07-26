@@ -1,5 +1,4 @@
 import { AntDesign } from "@expo/vector-icons";
-import axios from "axios";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
@@ -14,7 +13,7 @@ import {
 } from "../components";
 import colors from "../theme/Colors";
 
-const BayanCard = () => {
+const BayanCard = ({ item }) => {
   return (
     <View style={styles.container}>
       <Row>
@@ -25,7 +24,7 @@ const BayanCard = () => {
             style={styles.userImg}
           />
           <View>
-            <Title>User name</Title>
+            <Title>{item?.user?.fullName}</Title>
             <SubTitle>Sub title of user</SubTitle>
           </View>
         </SubRow>
@@ -41,22 +40,7 @@ const BayanCard = () => {
           marginHorizontal: 10,
         }}
       >
-        <SubTitle>
-          দুনিয়ার মানুষ একজনে আরেকজনের কাছে শিখে। দেখে, অনুসরণ করে, দেখে চলে।
-          মানুষ মাত্রই তাই। কেউ যদি বলে যে আমি নিজেই চলি তো অর্থহীন কথা। আমি
-          কারো থেকে কিছু নেই না। মাকড়সা নিজের পেটের ভেতর থেকে জাল বের করে কারো
-          কাছে থেকে কিছু নেয় না, ও তেমন কোন লাভ নেই। মানুষের মর্যাদাই হইলো
-          শিক্ষার মধ্যে শিখতে পারে বলেই। এই সৃষ্টি জগতের মধ্যে মানুষকে আল্লাহ
-          তায়ালা শিখার ক্ষমতা দিয়েছেন, বাকি কেউ খুব একটা পারে না যেটুকু পারে
-          বড় অল্প। সার্কাসে কিছু বাঘ, বানর, হাতি কিছু শিখে সার্কাসের খেলা
-          দেখায় খুব সীমিত। মানুষের শিক্ষার ক্ষমতা অনেক বেশি। শিখার নিয়ম হল যে,
-          যে কোন কারণে নিজেকে ছোট মনে করে সে তার বড়র কাছ থেকে শেখে, প্রত্যেক
-          ব্যাপারেই তাই, খেলাধুলা হোক, পোশাক আশাকে হোক। সেজন্য পোশাকের ব্যাপারে
-          সাধারণত গরিবরা ধনীদের দেখে দেখে জামা কাপড় বানায়। বিপরীতটা হয় না
-          ধনীরা গরিবদের দেখে তাদের ফ্যাশন বানাচ্ছে ওরকম হয় না। বরং গরিবরা
-          ধনীদেরকে দেখে চলে, গ্রামবাসী শহরবাসীকে দেখে চলে। বিপরীত নয় শহরবাসী
-          গ্রামকে দেখে চলছে, প্রজারা রাজাদেরকে দেখে চলে এটাই হলো প্রচলিত নিয়ম।
-        </SubTitle>
+        <SubTitle>{item?.description}</SubTitle>
       </View>
       <Row>
         <SubRow>
