@@ -5,6 +5,9 @@ import { Loading } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import { BayanPost, Login, PostDetails, Signup } from "../screen";
 import Parent from "./Parent";
+import SkeletonMain from "../components/Skeleton/SkeletonMain";
+import AnimationButton from "../components/AnimationButton";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +28,8 @@ const StackNavigation = () => {
         </Stack.Navigator>
       ) : (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {/* <Stack.Screen name="SkeletonMain" component={SkeletonMain} /> */}
+          {/* <Stack.Screen name="AnimationButton" component={AnimationButton} /> */}
           <Stack.Screen name="login" component={Login} />
           <Stack.Screen name="signup" component={Signup} />
         </Stack.Navigator>

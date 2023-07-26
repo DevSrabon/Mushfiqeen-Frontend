@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Animated, TouchableOpacity, Text } from "react-native";
+import { Animated, TouchableOpacity, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
@@ -77,7 +77,7 @@ export default function BottomNavigator() {
             inputRange: [0, 1],
             outputRange: [
               colors.bg,
-              isCurrentTabFocused ? colors.bg : colors.bg,
+              isCurrentTabFocused ? 0 : colors.bg,
               // isCurrentTabFocused ? colors.primary : colors.bg,
               // isCurrentTabFocused ? colors.bg : colors.bg,
             ],
@@ -92,7 +92,6 @@ export default function BottomNavigator() {
               }}
               onPress={() => handleTabPress(tabName, route.name)}
               onBlur={handleTabBlur}
-
             >
               <Animated.View
                 style={
@@ -113,63 +112,91 @@ export default function BottomNavigator() {
                     color={focused ? colors.white : colors.lightGray}
 
                     style={focused && {
-                      borderWidth: 1,
+                      borderWidth: 2,
                       borderColor: colors.white,
-                      borderRadius: 50,
-                      padding: 2,
+                      borderRadius: 20,
+                      paddingHorizontal: 9,
+                      paddingRight: 5,
+                      paddingTop: 1,
+                      alignItems: "center",
                     }}
                   />
                 )}
-                {tabName === "post" && (
-                  <>
+                {tabName === "Post" && (
+                  <View
+                    style={focused && {
+                      borderWidth: 2,
+                      borderColor: colors.white,
+                      borderRadius: 20,
+                      paddingHorizontal: 9,
+                      paddingBottom: 4,
+                      paddingTop: 1,
+                      alignItems: "center",
+                    }}
+                  >
                     <MaterialIcons
                       name="post-add"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
 
-                      style={focused && {
-                        borderWidth: 1,
-                        borderColor: colors.white,
-                        borderRadius: 50,
-                        padding: 3,
-                      }}
+                      // style={focused && {
+                      //   borderWidth: 1,
+                      //   borderColor: colors.white,
+                      //   borderRadius: 50,
+                      //   padding: 3,
+                      // }}
                     />
 
-                  </>
+                  </View>
                 )}
-                {tabName === "bayan" && (
-                  <>
+                {tabName === "Bayan" && (
+                  <View
+                    style={focused && {
+                      borderWidth: 2,
+                      borderColor: colors.white,
+                      borderRadius: 20,
+                      paddingHorizontal: 9,
+                      paddingBottom: 2,
+                      paddingTop: 1,
+                      alignItems: "center",
+                    }}
+                  >
                     <Entypo
                       name="sound"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
 
-                      style={focused && {
-                        borderWidth: 1,
-                        borderColor: colors.white,
-                        borderRadius: 50,
-                        padding: 2,
-                      }}
+                    // style={focused && {
+                    //   borderWidth: 1,
+                    //   borderColor: colors.white,
+                    //   borderRadius: 50,
+                    //   padding: 2,
+                    // }}
 
                     />
-                  </>
+                  </View>
                 )}
-                {tabName === "chat" && (
-                  <>
+                {tabName === "Chat" && (
+                  <View
+                    style={focused && {
+                      borderWidth: 2,
+                      borderColor: colors.white,
+                      borderRadius: 20,
+                      paddingHorizontal: 9,
+                      // paddingBottom: 4,
+                      paddingTop: 1,
+                      alignItems: "center",
+                    }}
+                  >
                     <MaterialIcons
                       name="chat"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
 
-                      style={focused && {
-                        borderWidth: 1,
-                        borderColor: colors.white,
-                        borderRadius: 50,
-                        padding: 2,
-                      }}
+
                     />
 
-                  </>
+                  </View>
                 )}
               </Animated.View>
             </TouchableOpacity>
@@ -187,7 +214,7 @@ export default function BottomNavigator() {
         })}
       />
       <Tab.Screen
-        name="post"
+        name="Post"
         component={Post}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
@@ -196,8 +223,8 @@ export default function BottomNavigator() {
         })}
       />
       <Tab.Screen
+        name="Bayan"
         component={Bayan}
-        name="bayan"
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
             handleTabPress("bayan", "bayan", navigation);
@@ -205,7 +232,7 @@ export default function BottomNavigator() {
         })}
       />
       <Tab.Screen
-        name="chat"
+        name="Chat"
         component={Chat}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
