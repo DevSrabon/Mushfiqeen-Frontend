@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
 
   textInput: {
     borderWidth: 1,
-    color: "#747980",
+    color: colors.white,
     backgroundColor: colors.lightGray,
   },
 });
