@@ -1,17 +1,15 @@
-import { View, StyleSheet, Text } from "react-native";
 import React, { useState } from "react";
+import { StyleSheet, Text } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import colors from "../theme/Colors";
 
-const DropDown = () => {
-  const [category, setCategory] = useState();
-
+const DropDown = ({ category, setCategory }) => {
   const categories = [
-    { key: "BAN", value: "Bangla" },
-    { key: "ENG", value: "English" },
-    { key: "FRN", value: "French" },
-    { key: "URD", value: "Urdu" },
-    { key: "ARB", value: "Arabic" },
+    { key: "BN", value: "Bangla" },
+    { key: "EN", value: "English" },
+    { key: "FR", value: "French" },
+    { key: "UR", value: "Urdu" },
+    { key: "AR", value: "Arabic" },
   ];
 
   return (
@@ -25,7 +23,7 @@ const DropDown = () => {
       setSelected={setCategory}
       data={categories}
       placeholder="Select Your Role"
-      defaultOption={{ key: "BAN", value: "Bangla" }}
+      defaultOption={{ key: "BN", value: "Bangla" }}
     />
   );
 };

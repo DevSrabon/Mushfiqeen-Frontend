@@ -11,6 +11,7 @@ const InputField = ({
   multiline,
   editable,
   numberOfLines,
+  defaultValue,
   keyboardType,
   style,
   inputStyles,
@@ -46,6 +47,7 @@ const InputField = ({
         editable={editable}
         numberOfLines={numberOfLines}
         keyboardType={keyboardType}
+        defaultValue={defaultValue}
         blurOnSubmit={true}
         ref={inputref}
         onBlur={() => {
@@ -56,41 +58,43 @@ const InputField = ({
         }}
         {...restOfProps}
       />
-      <Animated.View
-        style={[
-          styles.labelContainer,
-          error ? styles.errorBorder : styles.successBorder,
-          isFocused || value
-            ? styles.labelFocusContainer
-            : styles.labelContainer,
-          {
-            top: value
-              ? -9
-              : focusAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [13, -9],
-                }),
-          },
-        ]}
-      >
-        <Animated.Text
-          onPress={() => inputref.current.focus()}
+      {placeholder && (
+        <Animated.View
           style={[
-            styles.label,
+            styles.labelContainer,
             error ? styles.errorBorder : styles.successBorder,
+            isFocused || value
+              ? styles.labelFocusContainer
+              : styles.labelContainer,
             {
-              fontSize: value
-                ? -14
+              top: value
+                ? -9
                 : focusAnim.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [15, 14],
+                    outputRange: [13, -9],
                   }),
             },
           ]}
         >
-          {placeholder}
-        </Animated.Text>
-      </Animated.View>
+          <Animated.Text
+            onPress={() => inputref.current.focus()}
+            style={[
+              styles.label,
+              error ? styles.errorBorder : styles.successBorder,
+              {
+                fontSize: value
+                  ? -14
+                  : focusAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [15, 14],
+                    }),
+              },
+            ]}
+          >
+            {placeholder}
+          </Animated.Text>
+        </Animated.View>
+      )}
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );

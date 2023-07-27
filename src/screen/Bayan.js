@@ -1,11 +1,39 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
-import { BayanCard, Row, SubContainer } from "../components";
-import colors from "../theme/Colors";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { BayanCard, SubContainer } from "../components";
+import { useAuth } from "../contexts/useAuth";
+import colors from "../theme/Colors";
+import { FlatList } from "react-native-gesture-handler";
 
 const Bayan = () => {
   const navigation = useNavigation();
+  const [lang, setLang] = useState("BN");
+  const { userData } = useAuth();
+
+  const [data, setData] = useState([]);
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData?.accessToken}`,
+    },
+  };
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        `https://musfiqeen-backend.vercel.app/api/v1/bayans/get/${lang}`,
+        config
+      );
+      setData(res.data.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [lang]);
   return (
     <SubContainer>
       <Pressable
@@ -22,24 +50,27 @@ const Bayan = () => {
           justifyContent: "center",
         }}
       >
-        <Pressable>
+        <Pressable onPress={() => setLang("BN")}>
           <Text style={styles.button}>বাংলা</Text>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => setLang("EN")}>
           <Text style={styles.button}>English</Text>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => setLang("FR")}>
           <Text style={styles.button}>Français</Text>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => setLang("UR")}>
           <Text style={styles.button}>اردو</Text>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={() => setLang("AR")}>
           <Text style={styles.button}>عربي</Text>
         </Pressable>
       </View>
-
-      <BayanCard />
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <BayanCard item={item} />}
+        keyExtractor={(item) => item._id}
+      />
     </SubContainer>
   );
 };

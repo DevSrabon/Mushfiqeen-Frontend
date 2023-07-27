@@ -8,7 +8,7 @@ import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 const Signup = () => {
-  const { setUser, setToken } = useAuth();
+  const { loading, setLoading, setToken } = useAuth();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -20,6 +20,7 @@ const Signup = () => {
 
   const onSignup = async () => {
     try {
+      setLoading(true);
       const response = await axios.post(
         "https://musfiqeen-backend.vercel.app//api/v1/users/signup",
         {
@@ -30,12 +31,13 @@ const Signup = () => {
         }
       );
 
-      // setUser(response.data.data)
-      setToken(response.data.accessToken);
-      // AsyncStorage.setItem("token", response.data.accessToken);
+      if (response.status === 200) {
+        navigation.navigate("verifyCode");
+      }
     } catch (error) {
-      // Handle the error here
       console.error("Error signing up:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,8 +107,8 @@ const Signup = () => {
         <View style={{ flex: 1, width: "90%" }}>
           <CustomButton
             text="Continue"
-            // loading={loading}
-            // disabled={loading}
+            loading={loading}
+            disabled={loading}
             onPress={onSignup}
             type="primary"
           />

@@ -14,6 +14,7 @@ const CustomButton = ({
   bgColor,
   fgColor,
   disabled,
+  style,
   loading = false,
 }) => {
   const [scaleValue] = useState(new Animated.Value(1));
@@ -42,6 +43,7 @@ const CustomButton = ({
       <Animated.View
         style={[
           styles.container,
+          style,
           styles[`container_${type}`],
           bgColor ? { backgroundColor: bgColor } : {},
           { transform: [{ scale: scaleValue }] },
@@ -68,7 +70,7 @@ const CustomButton = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: "90%",
     maxHeight: 50,
     padding: 15,
     marginVertical: 5,
