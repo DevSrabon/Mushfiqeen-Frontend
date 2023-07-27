@@ -1,6 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Container from "../components/container";
 import CustomButton from "../components/customButton";
@@ -8,15 +8,17 @@ import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 const Login = () => {
-  const { setUser, setToken } = useAuth();
+  const { userData, setToken, loading, setLoading } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
   const navigation = useNavigation();
+  const router = useRoute();
 
   const onSignInPressed = async () => {
     try {
+      setLoading(true);
       const response = await axios.post(
         "https://musfiqeen-backend.vercel.app/api/v1/users/login",
         {
@@ -27,13 +29,25 @@ const Login = () => {
 
       // setUser(response.data.data)
       setToken(response.data.accessToken);
+      console.log(response.data.accessToken);
       // AsyncStorage.setItem("token", response.data.accessToken);
-      console.log(response.data);
     } catch (error) {
-      // Handle the error here
-      console.error("Error signing up:", error);
+      if (error.message === "Request failed with status code 401") {
+        navigation.navigate("verifyCode", (state = { email }));
+      }
+      console.error("Error logging:", error.message);
+    } finally {
+      setLoading(false);
     }
   };
+  useEffect(() => {
+    if (userData?.data && userData?.data?.role !== "inactive") {
+      navigation.navigate(router?.params?.from || "Home");
+    } else if (userData?.data?.status === "inactive") {
+      navigation.navigate("verifyCode");
+    }
+  }, [navigation, userData?.data?.role]);
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <Container style={{ alignItems: "center" }}>
@@ -60,8 +74,8 @@ const Login = () => {
             text="Login"
             onPress={onSignInPressed}
             type="primary"
-            // loading={loading}
-            // disabled={loading}
+            loading={loading}
+            disabled={loading}
           />
         </View>
 

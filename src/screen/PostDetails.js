@@ -13,6 +13,7 @@ import {
   View,
 } from "react-native";
 import icons from "../../assets/icons";
+import { Protect } from "../Nav/ProtectedRoute";
 import {
   Comments,
   HorizantalBar,
@@ -30,10 +31,11 @@ import colors from "../theme/Colors";
 const PostDetails = () => {
   const [texts, setTexts] = useState("");
   const [post, setPost] = useState([]);
-  const { loading, setLoading } = useAuth();
+  const { loading, setLoading, postId, userData } = useAuth();
+  // console.log("🚀 ~ file: PostDetails.js:34 ~ PostDetails ~ postId:", postId);
   const [refetch, setRefetch] = useState(false);
   const route = useRoute();
-  const { post: postId, userData } = route.params;
+  // const {  } = route.params;
 
   const config = {
     headers: {
@@ -96,8 +98,6 @@ const PostDetails = () => {
     };
     fetchComments();
   }, [refetch]);
-
-  const items = parseInt(post?.commentsLength);
 
   // if (loading) return <Loading />;
   return (
@@ -239,4 +239,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostDetails;
+export default Protect(PostDetails);

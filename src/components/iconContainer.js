@@ -1,6 +1,6 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, View, TouchableOpacity } from "react-native";
+import { Pressable, View } from "react-native";
 import {
   Extrapolate,
   interpolate,
@@ -9,9 +9,11 @@ import {
 } from "react-native-reanimated";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
+import { useAuth } from "../contexts/useAuth";
 
 const IconContainer = ({ onLikes, userData, post }) => {
   const navigation = useNavigation();
+  const { setPostId } = useAuth();
 
   const isLiked = post?.likers?.includes(userData?.data?._id);
 
@@ -35,7 +37,10 @@ const IconContainer = ({ onLikes, userData, post }) => {
       ],
     };
   });
-
+  const onNavigate = () => {
+    setPostId(post);
+    navigation.navigate("postDetails");
+  };
   return (
     <View
       style={{
@@ -55,12 +60,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
         <TextSmall>Like</TextSmall>
       </Pressable>
 
-      <Pressable
-        style={{ alignItems: "center" }}
-        onPress={() =>
-          navigation.navigate("postDetails", { post, isLiked, userData })
-        }
-      >
+      <Pressable style={{ alignItems: "center" }} onPress={() => onNavigate()}>
         <FontAwesome5 name="comment-dots" size={18} color={colors.white} />
         <TextSmall>Comment</TextSmall>
       </Pressable>

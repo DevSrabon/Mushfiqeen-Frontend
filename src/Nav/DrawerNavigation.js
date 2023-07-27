@@ -1,17 +1,37 @@
-import { View, Text, Image, Pressable } from "react-native";
-import React from "react";
+import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   DrawerItemList,
   createDrawerNavigator,
 } from "@react-navigation/drawer";
-import { SimpleLineIcons, MaterialIcons } from "@expo/vector-icons";
-import colors from "../theme/Colors";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, Pressable, Text, View } from "react-native";
 import icons from "../../assets/icons";
+import { useAuth } from "../contexts/useAuth";
 import { Profile, Settings } from "../screen";
+import colors from "../theme/Colors";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = () => {
+  const { setToken, setUserData, setLoading, userData } = useAuth();
+  const navigation = useNavigation();
+
+  const onLogOut = async () => {
+    try {
+      setLoading(true);
+      await AsyncStorage.removeItem("token");
+      setToken(null);
+      setUserData(null);
+    } catch (error) {
+      console.error("Error logging out:", error);
+    } finally {
+      setLoading(false);
+      navigation.navigate("login");
+    }
+  };
+
   return (
     <Drawer.Navigator
       screenOptions={({ navigation }) => ({
@@ -44,69 +64,56 @@ const DrawerNavigation = () => {
           color: colors.white,
         },
       })}
-      drawerContent={(props) => {
-        return (
-          <>
-            <View
+      drawerContent={(props) => (
+        <>
+          <View
+            style={{
+              marginTop: 30,
+              height: 200,
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              paddingLeft: 10,
+            }}
+          >
+            <Image
+              source={icons.user}
               style={{
-                marginTop: 30,
-                height: 200,
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "flex-start",
-                paddingLeft: 10,
-                // borderBottomColor: colors.bg,
-                // borderBottomWidth: 1,
+                height: 70,
+                width: 70,
+                borderRadius: 50,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: 22,
+                marginVertical: 6,
+                fontFamily: "SemiBold",
+                color: colors.white,
               }}
             >
-              <Image
-                source={icons.user}
-                style={{
-                  height: 70,
-                  width: 70,
-                  borderRadius: 50,
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 22,
-                  marginVertical: 6,
-                  fontFamily: "SemiBold",
-                  color: colors.white,
-                }}
-              >
-                Test user
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontFamily: "Medium",
-                  color: colors.white,
-                }}
-              >
-                Main Manager
-              </Text>
-            </View>
-            <DrawerItemList {...props} />
-          </>
-        );
-      }}
-      // screenOptions={{
-      //   drawerStyle: {
-      //     backgroundColor: colors.bg,
-      //     width: 250,
-      //   },
-      //   headerStyle: {
-      //     backgroundColor: colors.bg,
-      //   },
-      //   headerTintColor: "#fff",
-      //   headerTitleStyle: {
-      //     fontWeight: "bold",
-      //   },
-      //   drawerLabelStyle: {
-      //     color: colors.white,
-      //   },
-      // }}
+              {userData?.data?.fullName || "Test user"}
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: "Medium",
+                color: colors.white,
+              }}
+            >
+              Main Manager
+            </Text>
+          </View>
+          <DrawerItemList {...props} />
+          <Pressable onPress={onLogOut}>
+            <Text
+              style={{ textAlign: "center", marginTop: 10, color: "white" }}
+            >
+              Log Out
+            </Text>
+          </Pressable>
+        </>
+      )}
     >
       <Drawer.Screen
         name="profile"
