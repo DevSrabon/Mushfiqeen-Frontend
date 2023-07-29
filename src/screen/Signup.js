@@ -2,22 +2,27 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import AddImages from "../components/AddImages";
 import Container from "../components/container";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
+import useImagePicker from "../hooks/useImagePicker";
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [designation, setDesignation] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const apiUrl = "http://localhost:5000/api/v1/users/signup";
   const fullName = firstName + " " + lastName;
 
+  const { imageURL, loading: imgLoading, takePhoto } = useImagePicker();
+  console.log(imageURL?.[0]);
   const onSignup = async () => {
     try {
       setLoading(true);
@@ -28,6 +33,8 @@ const Signup = () => {
           password,
           confirmPassword: password,
           fullName,
+          imageURL: imageURL?.[0],
+          designation,
         }
       );
 
@@ -40,7 +47,6 @@ const Signup = () => {
       setLoading(false);
     }
   };
-
   return (
     <ScrollView style={{ flex: 1 }}>
       <Container style={{ alignItems: "center" }}>
@@ -60,7 +66,16 @@ const Signup = () => {
           setValue={setLastName}
           error={error.lastName}
         />
-
+        <AddImages
+          imageUrls={imageURL}
+          takePhoto={takePhoto}
+          error={error.errorImg}
+        />
+        <InputField
+          placeholder="Occupation"
+          value={designation}
+          setValue={setDesignation}
+        />
         <InputField
           placeholder="Your Email"
           value={email}
@@ -90,38 +105,17 @@ const Signup = () => {
             <Text style={{ fontSize: 16 }}>Terms & Conditions</Text> and{" "}
             <Text style={{ fontSize: 16 }}>Privacy Policy.*</Text>
           </Text>
-          {/* {error?.errorMsg && (
-            <Text
-              style={{
-                color: "orange",
-                marginLeft: 10,
-                fontSize: 16,
-                fontWeight: "500",
-              }}
-            >
-              {error?.errorMsg}
-            </Text>
-          )} */}
         </View>
 
         <View style={{ flex: 1, width: "90%" }}>
           <CustomButton
             text="Continue"
-            loading={loading}
-            disabled={loading}
+            loading={loading || imgLoading}
+            disabled={loading || imgLoading}
             onPress={onSignup}
             type="primary"
           />
         </View>
-        {/* <View style={{ flex: 1, width: "90%" }}>
-          <CustomButton
-            text="Google"
-            loading={loading}
-            disabled={loading}
-            onPress={onGoogleButtonPress}
-            type="primary"
-          />
-        </View> */}
         <View
           style={{
             flex: 1,
