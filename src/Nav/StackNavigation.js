@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/useAuth";
 import { BayanPost, Login, PostDetails, Signup } from "../screen";
 import VerifyCode from "../screen/VerifyCode";
 import Parent from "./Parent";
+// import UpdateProfile from "../screen/UpdateProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,8 +16,10 @@ const StackNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        // initialRouteName="verifyCode"
+      // initialRouteName="verifyCode"
       >
+        {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
+
         <Stack.Screen name="parent" component={Parent} />
         <Stack.Screen name="postDetails" component={PostDetails} />
         <Stack.Screen name="login" component={Login} />
