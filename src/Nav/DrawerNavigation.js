@@ -10,6 +10,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import { useAuth } from "../contexts/useAuth";
 import { Profile, Settings } from "../screen";
+import UpdateProfile from "../screen/UpdateProfile";
 import colors from "../theme/Colors";
 
 const Drawer = createDrawerNavigator();
@@ -77,7 +78,7 @@ const DrawerNavigation = () => {
             }}
           >
             <Image
-              source={icons.user}
+              source={{ uri: userData?.data?.imageURL } || icons.user}
               style={{
                 height: 70,
                 width: 70,
@@ -116,15 +117,26 @@ const DrawerNavigation = () => {
       )}
     >
       <Drawer.Screen
-        name="profile"
+        name="home"
         options={{
-          drawerLabel: "Profile",
-          title: "Profile",
+          drawerLabel: "Home",
+          title: "Home",
           drawerIcon: () => (
             <SimpleLineIcons name="home" size={20} color={colors.white} />
           ),
         }}
         component={Profile}
+      />
+      <Drawer.Screen
+        name="profile"
+        options={{
+          drawerLabel: "Profile",
+          title: "Profile",
+          drawerIcon: () => (
+            <SimpleLineIcons name="user" size={20} color={colors.white} />
+          ),
+        }}
+        component={UpdateProfile}
       />
 
       <Drawer.Screen

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useState } from "react";
 import {
@@ -18,6 +19,7 @@ const BayanPost = () => {
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
   const { userData } = useAuth();
+  const navigation = useNavigation();
   const config = {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
@@ -33,6 +35,8 @@ const BayanPost = () => {
       setDate("");
       setDescription("");
       setPlace("");
+      navigation.navigate("Bayan");
+
       console.log(res.data);
     } catch (error) {
       console.log(error);

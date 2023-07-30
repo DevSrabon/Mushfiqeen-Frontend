@@ -44,6 +44,7 @@ const InputField = ({
         secureTextEntry={secureTextEntry}
         value={value}
         multiline={multiline}
+        cursorColor={"yellow"}
         editable={editable}
         numberOfLines={numberOfLines}
         keyboardType={keyboardType}

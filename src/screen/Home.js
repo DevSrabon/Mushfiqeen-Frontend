@@ -6,6 +6,7 @@ import { Loading } from "../components";
 
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
+import colors from "../theme/Colors";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -53,7 +54,7 @@ const Home = () => {
   const estimatedItemSize = parseInt(total) || 100;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.lightBg }}>
       <FlashList
         data={posts}
         renderItem={({ item }) => <HomeCard post={item} />}
