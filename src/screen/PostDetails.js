@@ -13,7 +13,6 @@ import {
   View,
 } from "react-native";
 import icons from "../../assets/icons";
-import { Protect } from "../Nav/ProtectedRoute";
 import {
   Comments,
   HorizantalBar,
@@ -102,7 +101,7 @@ const PostDetails = () => {
   // if (loading) return <Loading />;
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: colors.bg }}>
         <View style={styles.container}>
           <Row>
             <SubRow>
@@ -239,4 +238,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Protect(PostDetails);
+export default PostDetails;

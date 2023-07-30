@@ -27,10 +27,11 @@ const UpdateProfile = ({ navigation }) => {
   const [address, setAddress] = useState("Dhaka");
   const [country, setCountry] = useState("Bangladesh");
   const [bio, setBio] = useState("");
-  const navigations = useNavigation();
-  const [occupation, setOccupation] = useState("Teacher");
-
+  const [designation, setDesignation] = useState("Teacher");
   const [contactNumber, setContactNumber] = useState("1234567890");
+
+  const navigations = useNavigation();
+
   const handleInputChange = (value) => {
     const cleanedValue = value.replace(/[^0-9]/g, "");
     setContactNumber(cleanedValue);
@@ -140,7 +141,7 @@ const UpdateProfile = ({ navigation }) => {
         address,
         country,
         bio,
-        occupation,
+        designation,
         contactNumber,
         dateOfBirth,
       };
@@ -152,7 +153,7 @@ const UpdateProfile = ({ navigation }) => {
         navigations.navigate("home");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   };
   return (
@@ -235,8 +236,8 @@ const UpdateProfile = ({ navigation }) => {
           <View>
             <InputField
               placeholder="Occupation"
-              value={occupation}
-              setValue={setOccupation}
+              value={designation}
+              setValue={setDesignation}
             />
           </View>
           <View

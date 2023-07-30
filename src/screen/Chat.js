@@ -1,5 +1,6 @@
-import { View, Text } from "react-native";
 import React from "react";
+import { Text, View } from "react-native";
+import { Protect } from "../Nav/ProtectedRoute";
 
 const Chat = () => {
   return (
@@ -9,4 +10,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default Protect(Chat);

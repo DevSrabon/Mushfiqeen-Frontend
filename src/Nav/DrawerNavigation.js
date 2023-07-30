@@ -33,6 +33,10 @@ const DrawerNavigation = () => {
     }
   };
 
+  const onSignIn = () => {
+    navigation.navigate("login");
+  };
+
   return (
     <Drawer.Navigator
       screenOptions={({ navigation }) => ({
@@ -106,13 +110,23 @@ const DrawerNavigation = () => {
             </Text>
           </View>
           <DrawerItemList {...props} />
-          <Pressable onPress={onLogOut}>
-            <Text
-              style={{ textAlign: "center", marginTop: 10, color: "white" }}
-            >
-              Log Out
-            </Text>
-          </Pressable>
+          {userData?.data ? (
+            <Pressable onPress={onLogOut}>
+              <Text
+                style={{ textAlign: "center", marginTop: 10, color: "white" }}
+              >
+                Log Out
+              </Text>
+            </Pressable>
+          ) : (
+            <Pressable onPress={onSignIn}>
+              <Text
+                style={{ textAlign: "center", marginTop: 10, color: "white" }}
+              >
+                Sign In
+              </Text>
+            </Pressable>
+          )}
         </>
       )}
     >
