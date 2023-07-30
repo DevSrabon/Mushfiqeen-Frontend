@@ -10,6 +10,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import { useAuth } from "../contexts/useAuth";
 import { Profile, Settings } from "../screen";
+import UpdateProfile from "../screen/UpdateProfile";
 import colors from "../theme/Colors";
 
 const Drawer = createDrawerNavigator();
@@ -30,6 +31,10 @@ const DrawerNavigation = () => {
       setLoading(false);
       navigation.navigate("login");
     }
+  };
+
+  const onSignIn = () => {
+    navigation.navigate("login");
   };
 
   return (
@@ -77,7 +82,7 @@ const DrawerNavigation = () => {
             }}
           >
             <Image
-              source={icons.user}
+              source={{ uri: userData?.data?.imageURL } || icons.user}
               style={{
                 height: 70,
                 width: 70,
@@ -105,26 +110,47 @@ const DrawerNavigation = () => {
             </Text>
           </View>
           <DrawerItemList {...props} />
-          <Pressable onPress={onLogOut}>
-            <Text
-              style={{ textAlign: "center", marginTop: 10, color: "white" }}
-            >
-              Log Out
-            </Text>
-          </Pressable>
+          {userData?.data ? (
+            <Pressable onPress={onLogOut}>
+              <Text
+                style={{ textAlign: "center", marginTop: 10, color: "white" }}
+              >
+                Log Out
+              </Text>
+            </Pressable>
+          ) : (
+            <Pressable onPress={onSignIn}>
+              <Text
+                style={{ textAlign: "center", marginTop: 10, color: "white" }}
+              >
+                Sign In
+              </Text>
+            </Pressable>
+          )}
         </>
       )}
     >
+      <Drawer.Screen
+        name="home"
+        options={{
+          drawerLabel: "Home",
+          title: "Home",
+          drawerIcon: () => (
+            <SimpleLineIcons name="home" size={20} color={colors.white} />
+          ),
+        }}
+        component={Profile}
+      />
       <Drawer.Screen
         name="profile"
         options={{
           drawerLabel: "Profile",
           title: "Profile",
           drawerIcon: () => (
-            <SimpleLineIcons name="home" size={20} color={colors.white} />
+            <SimpleLineIcons name="user" size={20} color={colors.white} />
           ),
         }}
-        component={Profile}
+        component={UpdateProfile}
       />
 
       <Drawer.Screen

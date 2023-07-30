@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
 import {
   HorizantalBar,
@@ -17,10 +17,11 @@ import colors from "../theme/Colors";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
+  console.log(post?.user);
 
   const onLikes = async () => {
     try {
-      await axios.put(
+      const res = await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/likes/${post?._id}`,
         {},
         {
@@ -29,6 +30,7 @@ const HomeCard = ({ post }) => {
           },
         }
       );
+
       setRefetch(true);
       console.log("Like updated successfully");
     } catch (error) {
@@ -37,24 +39,66 @@ const HomeCard = ({ post }) => {
       setRefetch(false);
     }
   };
+
+  const onFollow = async () => {
+    try {
+      await axios.post(
+        `https://musfiqeen-backend.vercel.app/api/v1/users/add-follow/${post?.user?._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${userData?.accessToken}`,
+          },
+        }
+      );
+
+      setRefetch(true);
+      console.log("Like updated successfully");
+    } catch (error) {
+      alert(error.response.data.message);
+    } finally {
+      setRefetch(false);
+    }
+  };
+  const isFollowing = post?.user?.followers?.includes(userData?.data?._id);
+
   return (
     <View style={styles.container}>
       <Row>
         <SubRow>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
+          {post?.user?.imageURL ? (
+            <Image
+              source={{ uri: post?.user?.imageURL }}
+              resizeMode="cover"
+              style={styles.userImg}
+            />
+          ) : (
+            <Image
+              source={icons.user}
+              resizeMode="cover"
+              style={styles.userImg}
+            />
+          )}
           <View>
             <Title>{post?.user?.fullName}</Title>
-            <SubTitle>Sub title of user</SubTitle>
+            <SubTitle>
+              {post?.user?.designation || "Sub title of user"}
+            </SubTitle>
           </View>
         </SubRow>
-        <SubRow>
-          <AntDesign name="plussquareo" size={16} color={colors.primary} />
-          <Title style={{ color: colors.primary }}>Follow</Title>
-        </SubRow>
+        {isFollowing ? (
+          <SubRow>
+            <AntDesign name="Safety" size={16} color={colors.primary} />
+            <Title style={{ color: colors.primary }}>Followed</Title>
+          </SubRow>
+        ) : (
+          <Pressable onPress={onFollow}>
+            <SubRow>
+              <AntDesign name="plussquareo" size={16} color={colors.primary} />
+              <Title style={{ color: colors.primary }}>Follow</Title>
+            </SubRow>
+          </Pressable>
+        )}
       </Row>
       <View
         style={{
@@ -105,7 +149,7 @@ const styles = StyleSheet.create({
     width: "100%",
     // height: 400,
     marginBottom: 10,
-    marginTop: 10,
+    // marginTop: 10,
   },
   userImg: {
     height: 40,

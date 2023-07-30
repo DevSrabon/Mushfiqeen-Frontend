@@ -6,25 +6,27 @@ import { Loading } from "../components";
 
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
+import colors from "../theme/Colors";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
-  const { refetch } = useAuth();
 
+  const { refetch, userData } = useAuth();
   const fetchPosts = async () => {
     try {
       const limit = 10;
       const response = await axios.get(
-        `https://musfiqeen-backend.vercel.app/api/v1/posts/get?limit=${limit}&skip=${skip}`
+        `https://musfiqeen-backend.vercel.app/api/v1/posts/get?id=${userData?.data?._id}&limit=${limit}&skip=${skip}`
       );
       if (skip === 0) {
         setPosts(response.data.data);
       } else {
         setPosts((prevPosts) => [...prevPosts, ...response.data.data]);
       }
+
       setTotal(response.data.total);
     } catch (error) {
       console.log(error);
@@ -34,13 +36,14 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log("fetch");
     if (refetch) {
       setSkip(0);
       fetchPosts();
     } else {
       fetchPosts();
     }
-  }, [skip, refetch]);
+  }, [skip, refetch, userData?.data?._id]);
 
   const handleLoadMore = () => {
     if (!loading) {
@@ -53,7 +56,7 @@ const Home = () => {
   const estimatedItemSize = parseInt(total) || 100;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.lightBg }}>
       <FlashList
         data={posts}
         renderItem={({ item }) => <HomeCard post={item} />}

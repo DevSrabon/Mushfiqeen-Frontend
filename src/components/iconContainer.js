@@ -7,9 +7,9 @@ import {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
+import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
-import { useAuth } from "../contexts/useAuth";
 
 const IconContainer = ({ onLikes, userData, post }) => {
   const navigation = useNavigation();
@@ -57,7 +57,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
         ) : (
           <AntDesign name={"like2"} size={18} color={colors.white} />
         )}
-        <TextSmall>Like</TextSmall>
+        <TextSmall>{isLiked ? "Liked" : "Like"}</TextSmall>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }} onPress={() => onNavigate()}>
