@@ -7,7 +7,7 @@ import { useAuth } from "../contexts/useAuth";
 import { BayanPost, Login, PostDetails, Signup } from "../screen";
 import VerifyCode from "../screen/VerifyCode";
 import Parent from "./Parent";
-// import UpdateProfile from "../screen/UpdateProfile";
+import UpdateProfile from "../screen/UpdateProfile";
 
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator();
@@ -35,7 +35,7 @@ const StackNavigation = () => {
         screenOptions={{ headerShown: false }}
       // initialRouteName="verifyCode"
       >
-        {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
+        <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
 
         <Stack.Screen name="parent" component={Parent} />
         <Stack.Screen
