@@ -136,7 +136,7 @@ const DrawerNavigation = () => {
           drawerLabel: "Home",
           title: "Home",
           drawerIcon: () => (
-            <SimpleLineIcons name="home" size={20} color={colors.white} />
+            <Image source={{ uri: userData?.data?.imageURL }} />
           ),
         }}
         component={Profile}
