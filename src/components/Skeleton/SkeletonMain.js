@@ -9,7 +9,7 @@ const SkeletonMain = () => {
   return (
     <View style={styles.container}>
       <View style={[styles.card, { width: cardWidth }]}>
-        <Skeleton height={50} width={50} style={{ borderRadius: 20 }} />
+        <Skeleton height={60} width={55} style={{ borderRadius: 20 }} />
         {/* aspect ratio 16/9 */}
         <Skeleton
           height={(skeWidth / 16) * 9}

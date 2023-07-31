@@ -36,6 +36,7 @@ const StackNavigation = () => {
       // initialRouteName="verifyCode"
       >
         {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
+        {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
 
         <Stack.Screen name="parent" component={Parent} />
         <Stack.Screen
