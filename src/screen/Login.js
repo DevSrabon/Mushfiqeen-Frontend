@@ -7,6 +7,9 @@ import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
+import colors from "../theme/Colors";
+
+
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
 
@@ -88,6 +91,7 @@ const Login = () => {
         <Text
           style={{
             fontFamily: "SemiBold",
+            color:colors.white,
           }}
         >
           Don't have an account?
