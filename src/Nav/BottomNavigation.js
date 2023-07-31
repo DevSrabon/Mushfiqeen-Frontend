@@ -22,7 +22,8 @@ export default function BottomNavigator() {
         toValue: 1,
         useNativeDriver: true,
       }).start();
-      Animated.timing(borderColorRef, { // Animate the border color change
+      Animated.timing(borderColorRef, {
+        // Animate the border color change
         toValue: 1,
         duration: 300,
         useNativeDriver: false,
@@ -33,13 +34,13 @@ export default function BottomNavigator() {
 
   const handleTabBlur = () => {
     setIsFocused(null);
-    Animated.timing(borderColorRef, { // Animate the border color change back to the default
+    Animated.timing(borderColorRef, {
+      // Animate the border color change back to the default
       toValue: 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
   };
-
 
   return (
     <Tab.Navigator
@@ -94,45 +95,47 @@ export default function BottomNavigator() {
               onBlur={handleTabBlur}
             >
               <Animated.View
-                style={
-                  {
-                    transform: [{ scale }, { translateY }],
-                    backgroundColor,
-                    borderRadius: 50,
+                style={{
+                  transform: [{ scale }, { translateY }],
+                  backgroundColor,
+                  borderRadius: 50,
 
-                    // borderWidth: 1,
-                    // borderColor: colors.white,
-                    padding: 2,
-                  }}
+                  // borderWidth: 1,
+                  // borderColor: colors.white,
+                  padding: 2,
+                }}
               >
                 {tabName === "Home" && (
                   <Entypo
                     name="home"
                     size={24}
                     color={focused ? colors.white : colors.lightGray}
-
-                    style={focused && {
-                      borderWidth: 2,
-                      borderColor: colors.white,
-                      borderRadius: 20,
-                      paddingHorizontal: 9,
-                      paddingRight: 5,
-                      paddingTop: 1,
-                      alignItems: "center",
-                    }}
+                    style={
+                      focused && {
+                        borderWidth: 2,
+                        borderColor: colors.white,
+                        borderRadius: 20,
+                        paddingHorizontal: 9,
+                        paddingRight: 5,
+                        paddingTop: 1,
+                        alignItems: "center",
+                      }
+                    }
                   />
                 )}
                 {tabName === "Post" && (
                   <View
-                    style={focused && {
-                      borderWidth: 2,
-                      borderColor: colors.white,
-                      borderRadius: 20,
-                      paddingHorizontal: 9,
-                      paddingBottom: 4,
-                      paddingTop: 1,
-                      alignItems: "center",
-                    }}
+                    style={
+                      focused && {
+                        borderWidth: 2,
+                        borderColor: colors.white,
+                        borderRadius: 20,
+                        paddingHorizontal: 9,
+                        paddingBottom: 4,
+                        paddingTop: 1,
+                        alignItems: "center",
+                      }
+                    }
                   >
                     <MaterialIcons
                       name="post-add"
@@ -146,56 +149,55 @@ export default function BottomNavigator() {
                       //   padding: 3,
                       // }}
                     />
-
                   </View>
                 )}
                 {tabName === "Bayan" && (
                   <View
-                    style={focused && {
-                      borderWidth: 2,
-                      borderColor: colors.white,
-                      borderRadius: 20,
-                      paddingHorizontal: 9,
-                      paddingBottom: 2,
-                      paddingTop: 1,
-                      alignItems: "center",
-                    }}
+                    style={
+                      focused && {
+                        borderWidth: 2,
+                        borderColor: colors.white,
+                        borderRadius: 20,
+                        paddingHorizontal: 9,
+                        paddingBottom: 2,
+                        paddingTop: 1,
+                        alignItems: "center",
+                      }
+                    }
                   >
                     <Entypo
                       name="sound"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
 
-                    // style={focused && {
-                    //   borderWidth: 1,
-                    //   borderColor: colors.white,
-                    //   borderRadius: 50,
-                    //   padding: 2,
-                    // }}
-
+                      // style={focused && {
+                      //   borderWidth: 1,
+                      //   borderColor: colors.white,
+                      //   borderRadius: 50,
+                      //   padding: 2,
+                      // }}
                     />
                   </View>
                 )}
                 {tabName === "Chat" && (
                   <View
-                    style={focused && {
-                      borderWidth: 2,
-                      borderColor: colors.white,
-                      borderRadius: 20,
-                      paddingHorizontal: 9,
-                      // paddingBottom: 4,
-                      paddingTop: 1,
-                      alignItems: "center",
-                    }}
+                    style={
+                      focused && {
+                        borderWidth: 2,
+                        borderColor: colors.white,
+                        borderRadius: 20,
+                        paddingHorizontal: 9,
+                        // paddingBottom: 4,
+                        paddingTop: 1,
+                        alignItems: "center",
+                      }
+                    }
                   >
                     <MaterialIcons
                       name="chat"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
-
-
                     />
-
                   </View>
                 )}
               </Animated.View>
