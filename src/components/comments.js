@@ -38,7 +38,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
         { replyText: value, commentId: comment?._id },
         config
       );
-      console.log(rest.data, "=======");
+
       setRefetch(true);
       setModalVisible(false);
       setValue("");

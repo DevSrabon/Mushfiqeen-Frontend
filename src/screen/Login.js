@@ -39,9 +39,11 @@ const Login = () => {
       setLoading(false);
     }
   };
+  console.log(router?.params?.from);
   useEffect(() => {
     if (userData?.data && userData?.data?.role !== "inactive") {
-      navigation.replace(router?.params?.from || "parent");
+      // navigation.navigate(router?.params?.from || "parent");
+      navigation.navigate("parent");
     } else if (userData?.data?.status === "inactive") {
       navigation.navigate("verifyCode");
     }

@@ -20,6 +20,7 @@ const BayanPost = () => {
   const [description, setDescription] = useState("");
   const { userData } = useAuth();
   const navigation = useNavigation();
+  console.log(userData.accessToken);
   const config = {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
@@ -32,15 +33,16 @@ const BayanPost = () => {
         { description, lang, place, date },
         config
       );
-      setDate("");
-      setDescription("");
-      setPlace("");
-      navigation.navigate("Bayan");
+      if (res.data) {
+        setDate("");
+        setDescription("");
+        setPlace("");
+        navigation.navigate("Bayan");
+      }
 
       console.log(res.data);
     } catch (error) {
-      console.log(error);
-      alert(error.response.data.message);
+      alert(error.response.data.error);
     }
   };
 

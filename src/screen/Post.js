@@ -32,6 +32,7 @@ const Post = () => {
       setRefetch(true);
       if (response.status === 201) {
         navigation.navigate("Home");
+        setDescription("");
       }
     } catch (error) {
       console.error("Error from post:", error);

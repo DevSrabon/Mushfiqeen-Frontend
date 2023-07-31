@@ -6,6 +6,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [refetch, setRefetch] = useState(false);
   const [userData, setUserData] = useState(null);
+  console.log("🚀 ~ file: useAuth.js:9 ~ AuthProvider ~ userData:", userData);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const [postId, setPostId] = useState(null);
@@ -31,7 +32,7 @@ const AuthProvider = ({ children }) => {
       }
 
       const userData = await response.json();
-      setUserData(userData);
+      setUserData({ ...userData, accessToken: token });
     } catch (error) {
       console.error("Error:", error);
     } finally {

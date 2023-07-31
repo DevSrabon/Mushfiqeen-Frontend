@@ -27,7 +27,7 @@ const UpdateProfile = ({ navigation }) => {
   const [address, setAddress] = useState("Dhaka");
   const [country, setCountry] = useState("Bangladesh");
   const [bio, setBio] = useState("");
-  const [designation, setDesignation] = useState("Teacher");
+  const [designation, setDesignation] = useState(userData?.data?.designation);
   const [contactNumber, setContactNumber] = useState("1234567890");
 
   const navigations = useNavigation();
@@ -222,6 +222,7 @@ const UpdateProfile = ({ navigation }) => {
               placeholder="Email"
               value={email}
               setValue={setEmail}
+              editable={false}
               keyboardType="email-address"
             />
           </View>
