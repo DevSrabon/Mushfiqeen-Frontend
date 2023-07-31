@@ -32,17 +32,16 @@ const Login = () => {
       console.log(response.data.accessToken);
       // AsyncStorage.setItem("token", response.data.accessToken);
     } catch (error) {
-      if (error.message === "Request failed with status code 401") {
+      if (error.message === "Request failed with status code 402") {
         navigation.navigate("verifyCode", (state = { email }));
       }
-      console.error("Error logging:", error.message);
     } finally {
       setLoading(false);
     }
   };
   useEffect(() => {
     if (userData?.data && userData?.data?.role !== "inactive") {
-      navigation.navigate(router?.params?.from || "Home");
+      navigation.replace(router?.params?.from || "parent");
     } else if (userData?.data?.status === "inactive") {
       navigation.navigate("verifyCode");
     }
