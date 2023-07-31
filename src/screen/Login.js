@@ -32,17 +32,27 @@ const Login = () => {
 
       // setUser(response.data.data)
       setToken(response.data.accessToken);
-      console.log(response.data.accessToken);
       // AsyncStorage.setItem("token", response.data.accessToken);
     } catch (error) {
       if (error.message === "Request failed with status code 402") {
         navigation.navigate("verifyCode", (state = { email }));
       }
+      if (
+        error.message !== "Request failed with status code 402" &&
+        error.response.data.message
+      ) {
+        alert(
+          error.message !== "Request failed with status code 402" &&
+            error.response.data.message
+        );
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     } finally {
       setLoading(false);
     }
   };
-  console.log(router?.params?.from);
+
   useEffect(() => {
     if (userData?.data && userData?.data?.role !== "inactive") {
       // navigation.navigate(router?.params?.from || "parent");

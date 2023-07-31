@@ -1,25 +1,48 @@
-import { View, Pressable, StyleSheet, Image } from "react-native";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import React from "react";
-import { Entypo } from "@expo/vector-icons";
-import icons from "../../assets/icons";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import colors from "../theme/Colors";
 import SubTitle from "./subTitle";
-import { AntDesign } from "@expo/vector-icons";
 
-const Reacttions = () => {
+const Reactions = ({ post }) => {
+  const imageArr = post?.likers;
+  console.log(imageArr);
   return (
     <>
       <SubTitle style={{ marginLeft: 20 }}>Reactions</SubTitle>
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
+          justifyContent: "flex-end",
+          alignItems: "flex-end",
+          gap: 5,
           marginVertical: 10,
           paddingHorizontal: 20,
         }}
       >
-        <Pressable style={{ alignItems: "center" }}>
+        {imageArr
+          ?.slice(0)
+          .reverse()
+          .slice(0, 5)
+          ?.map((img, i) => (
+            <Pressable key={i} style={{ alignItems: "center" }}>
+              <Image
+                source={{ uri: img?.imageURL }}
+                resizeMode="cover"
+                style={styles.userImg}
+              />
+              <View style={styles.iconBox}>
+                <AntDesign
+                  name="like1"
+                  size={12}
+                  color={colors.white}
+                  style={styles.icon}
+                />
+              </View>
+            </Pressable>
+          ))}
+
+        {/* <Pressable style={{ alignItems: "center" }}>
           <Image
             source={icons.user}
             resizeMode="cover"
@@ -50,7 +73,6 @@ const Reacttions = () => {
             />
           </View>
         </Pressable>
-
         <Pressable style={{ alignItems: "center" }}>
           <Image
             source={icons.user}
@@ -95,22 +117,7 @@ const Reacttions = () => {
               style={styles.icon}
             />
           </View>
-        </Pressable>
-        <Pressable style={{ alignItems: "center" }}>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
-          <View style={styles.iconBox}>
-            <AntDesign
-              name="like1"
-              size={12}
-              color={colors.white}
-              style={styles.icon}
-            />
-          </View>
-        </Pressable>
+        </Pressable> */}
         <Pressable
           style={{
             alignItems: "center",
@@ -171,4 +178,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Reacttions;
+export default Reactions;
