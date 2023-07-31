@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
       }
 
       const userData = await response.json();
-      setUserData(userData);
+      setUserData({ ...userData, accessToken: token });
     } catch (error) {
       console.error("Error:", error);
     } finally {

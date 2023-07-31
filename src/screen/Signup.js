@@ -9,6 +9,7 @@ import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import useImagePicker from "../hooks/useImagePicker";
+import colors from "../theme/Colors";
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
   const navigation = useNavigation();
@@ -39,10 +40,14 @@ const Signup = () => {
       );
 
       if (response.status === 200) {
-        navigation.navigate("verifyCode");
+        navigation.navigate("verifyCode", (state = { email }));
       }
     } catch (error) {
-      console.error("Error signing up:", error);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     } finally {
       setLoading(false);
     }
@@ -91,7 +96,11 @@ const Signup = () => {
           secureTextEntry={true}
           error={error.password}
         />
-        <View>
+        <View
+          style={{
+            marginVertical: 15
+          }}
+        >
           <Text
             style={{
               fontFamily: "Medium",
@@ -99,11 +108,16 @@ const Signup = () => {
               lineHeight: 20,
               marginBottom: 10,
               marginHorizontal: 10,
+              color: colors.white,
             }}
           >
             By signing up you agree to our{" "}
-            <Text style={{ fontSize: 16 }}>Terms & Conditions</Text> and{" "}
-            <Text style={{ fontSize: 16 }}>Privacy Policy.*</Text>
+            <Text
+              style={{ fontSize: 16, color: colors.white }
+              }>Terms & Conditions</Text> and{" "}
+            <Text
+              style={{ fontSize: 16, color: colors.white }
+              }>Privacy Policy.*</Text>
           </Text>
         </View>
 
@@ -127,6 +141,7 @@ const Signup = () => {
           <Text
             style={{
               fontFamily: "SemiBold",
+              color: colors.white,
             }}
           >
             Already signed up ?

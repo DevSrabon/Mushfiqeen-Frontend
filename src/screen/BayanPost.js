@@ -32,15 +32,20 @@ const BayanPost = () => {
         { description, lang, place, date },
         config
       );
-      setDate("");
-      setDescription("");
-      setPlace("");
-      navigation.navigate("Bayan");
+      if (res.data) {
+        setDate("");
+        setDescription("");
+        setPlace("");
+        navigation.navigate("Bayan");
+      }
 
       console.log(res.data);
     } catch (error) {
-      console.log(error);
-      alert(error.response.data.message);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     }
   };
 

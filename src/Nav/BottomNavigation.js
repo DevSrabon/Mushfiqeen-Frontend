@@ -112,11 +112,15 @@ export default function BottomNavigator() {
                     color={focused ? colors.white : colors.lightGray}
                     style={
                       focused && {
-                        borderWidth: 2,
+                        borderTopWidth: 3,
+                        borderLeftWidth: 3,
+                        borderRightWidth: 3,
+                        borderRadius: 7,
                         borderColor: colors.white,
-                        borderRadius: 20,
-                        paddingHorizontal: 9,
                         paddingRight: 5,
+                        paddingLeft: 11,
+
+                        borderColor: colors.white,
                         paddingTop: 1,
                         alignItems: "center",
                       }
@@ -127,11 +131,13 @@ export default function BottomNavigator() {
                   <View
                     style={
                       focused && {
-                        borderWidth: 2,
-                        borderColor: colors.white,
-                        borderRadius: 20,
+                        borderTopWidth: 3,
+                        borderLeftWidth: 3,
+                        borderRightWidth: 3,
+                        borderRadius: 7,
+
                         paddingHorizontal: 9,
-                        paddingBottom: 4,
+                        borderColor: colors.white,
                         paddingTop: 1,
                         alignItems: "center",
                       }
@@ -141,13 +147,6 @@ export default function BottomNavigator() {
                       name="post-add"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
-
-                      // style={focused && {
-                      //   borderWidth: 1,
-                      //   borderColor: colors.white,
-                      //   borderRadius: 50,
-                      //   padding: 3,
-                      // }}
                     />
                   </View>
                 )}
@@ -155,11 +154,13 @@ export default function BottomNavigator() {
                   <View
                     style={
                       focused && {
-                        borderWidth: 2,
-                        borderColor: colors.white,
-                        borderRadius: 20,
+                        borderTopWidth: 3,
+                        borderLeftWidth: 3,
+                        borderRightWidth: 3,
+                        borderRadius: 7,
+
                         paddingHorizontal: 9,
-                        paddingBottom: 2,
+                        borderColor: colors.white,
                         paddingTop: 1,
                         alignItems: "center",
                       }
@@ -169,13 +170,6 @@ export default function BottomNavigator() {
                       name="sound"
                       size={24}
                       color={focused ? colors.white : colors.lightGray}
-
-                      // style={focused && {
-                      //   borderWidth: 1,
-                      //   borderColor: colors.white,
-                      //   borderRadius: 50,
-                      //   padding: 2,
-                      // }}
                     />
                   </View>
                 )}
@@ -183,11 +177,12 @@ export default function BottomNavigator() {
                   <View
                     style={
                       focused && {
-                        borderWidth: 2,
-                        borderColor: colors.white,
-                        borderRadius: 20,
+                        borderTopWidth: 3,
+                        borderLeftWidth: 3,
+                        borderRightWidth: 3,
+                        borderRadius: 7,
                         paddingHorizontal: 9,
-                        // paddingBottom: 4,
+                        borderColor: colors.white,
                         paddingTop: 1,
                         alignItems: "center",
                       }
@@ -220,7 +215,7 @@ export default function BottomNavigator() {
         component={Post}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            handleTabPress("post", "post", navigation);
+            handleTabPress("Post", "Post", navigation);
           },
         })}
       />
@@ -229,7 +224,7 @@ export default function BottomNavigator() {
         component={Bayan}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            handleTabPress("bayan", "bayan", navigation);
+            handleTabPress("Bayan", "Bayan", navigation);
           },
         })}
       />
@@ -238,7 +233,7 @@ export default function BottomNavigator() {
         component={Chat}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            handleTabPress("chat", navigation);
+            handleTabPress("Chat", "Chat", navigation);
           },
         })}
       />

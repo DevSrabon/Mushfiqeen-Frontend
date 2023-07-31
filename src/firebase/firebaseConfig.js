@@ -1,4 +1,4 @@
-import { getApps, initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -23,7 +23,8 @@ const firebaseConfig = {
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
 }
-
+const fbApp = getApp();
+const fbStorage = getStorage();
 const listFiles = async () => {
   const storage = getStorage();
 
@@ -72,4 +73,4 @@ const uploadToFirebase = async (uri, name, onProgress) => {
   });
 };
 
-export { listFiles, uploadToFirebase };
+export { fbApp, fbStorage, listFiles, uploadToFirebase };

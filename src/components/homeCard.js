@@ -17,7 +17,6 @@ import colors from "../theme/Colors";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
-  console.log(post?.user);
 
   const onLikes = async () => {
     try {
@@ -34,7 +33,11 @@ const HomeCard = ({ post }) => {
       setRefetch(true);
       console.log("Like updated successfully");
     } catch (error) {
-      console.error("Error updating like:", error);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     } finally {
       setRefetch(false);
     }
@@ -55,7 +58,11 @@ const HomeCard = ({ post }) => {
       setRefetch(true);
       console.log("Like updated successfully");
     } catch (error) {
-      alert(error.response.data.message);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     } finally {
       setRefetch(false);
     }

@@ -1,42 +1,18 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, View } from "react-native";
-import {
-  Extrapolate,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
+
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
 
 const IconContainer = ({ onLikes, userData, post }) => {
+  console.log("🚀 ~ file: iconContainer.js:10 ~ IconContainer ~ post:", post);
   const navigation = useNavigation();
   const { setPostId } = useAuth();
 
   const isLiked = post?.likers?.includes(userData?.data?._id);
 
-  const liked = useSharedValue(0);
-  const outlineStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: interpolate(liked.value, [0, 1], [1, 0], Extrapolate.CLAMP),
-        },
-      ],
-    };
-  });
-
-  const fillStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: liked.value,
-        },
-      ],
-    };
-  });
   const onNavigate = () => {
     setPostId(post);
     navigation.navigate("postDetails");
