@@ -20,7 +20,6 @@ const BayanPost = () => {
   const [description, setDescription] = useState("");
   const { userData } = useAuth();
   const navigation = useNavigation();
-  console.log(userData.accessToken);
   const config = {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
@@ -42,7 +41,11 @@ const BayanPost = () => {
 
       console.log(res.data);
     } catch (error) {
-      alert(error.response.data.error);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     }
   };
 

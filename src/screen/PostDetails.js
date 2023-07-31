@@ -1,9 +1,7 @@
-import { AntDesign } from "@expo/vector-icons";
-import { useRoute } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   Pressable,
   ScrollView,
   StatusBar,
@@ -12,29 +10,24 @@ import {
   TextInput,
   View,
 } from "react-native";
-import icons from "../../assets/icons";
-import {
-  Comments,
-  HorizantalBar,
-  IconContainer,
-  Reactions,
-  Row,
-  SubRow,
-  SubTitle,
-  TextSmall,
-  Title,
-} from "../components";
+import { Comments, Reactions, Title } from "../components";
+import SkeletonMain from "../components/Skeleton/SkeletonMain";
 import Container from "../components/container";
+import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 const PostDetails = () => {
   const [texts, setTexts] = useState("");
   const [post, setPost] = useState([]);
-  const { loading, setLoading, postId, userData } = useAuth();
-  // console.log("🚀 ~ file: PostDetails.js:34 ~ PostDetails ~ postId:", postId);
+  const {
+    loading,
+    setLoading,
+    postId,
+    userData,
+    refetch: isRefetch,
+  } = useAuth();
   const [refetch, setRefetch] = useState(false);
-  const route = useRoute();
-  // const {  } = route.params;
+  const isFocused = useIsFocused();
 
   const config = {
     headers: {
@@ -96,69 +89,15 @@ const PostDetails = () => {
       }
     };
     fetchComments();
-  }, [refetch]);
+  }, [refetch, isFocused && isRefetch]);
 
-  // if (loading) return <Loading />;
+  if (loading) return <SkeletonMain />;
   return (
     <Container style={{ marginTop: StatusBar.currentHeight }}>
       <ScrollView style={{ backgroundColor: colors.bg }}>
         <View style={styles.container}>
-          <Row>
-            <SubRow>
-              <Image
-                source={icons.user}
-                resizeMode="cover"
-                style={styles.userImg}
-              />
-              <View>
-                <Title>{post?.user?.fullName}</Title>
-                <SubTitle>Sub title of user</SubTitle>
-              </View>
-            </SubRow>
-            <SubRow>
-              <AntDesign name="plussquareo" size={16} color={colors.primary} />
-              <Title style={{ color: colors.primary }}>Follow</Title>
-            </SubRow>
-          </Row>
-          <View
-            style={{
-              marginVertical: 5,
-              marginHorizontal: 10,
-            }}
-          >
-            <SubTitle>{post?.description}</SubTitle>
-          </View>
-          <Row>
-            <SubRow>
-              <AntDesign
-                name="like1"
-                size={12}
-                color={colors.primary}
-                style={styles.icon}
-              />
-              <TextSmall>{post?.likes}</TextSmall>
-            </SubRow>
-            <SubRow style={{ gap: 3 }}>
-              <TextSmall style={{ color: colors.primary }}>
-                {post?.commentsLength}
-              </TextSmall>
-              <TextSmall>Comments</TextSmall>
-              <View
-                style={{
-                  borderColor: colors.white,
-                  borderWidth: 3,
-                  borderRadius: 25,
-                  alignSelf: "center",
-                }}
-              />
-              <TextSmall style={{ color: colors.primary }}>2</TextSmall>
-              <TextSmall>Share</TextSmall>
-            </SubRow>
-          </Row>
-
-          <HorizantalBar />
-          <IconContainer onLikes={onLikes} userData={userData} post={post} />
-          <Reactions />
+          <HomeCard post={postId} />
+          <Reactions post={post} />
           <View
             style={{
               borderColor: "grey",

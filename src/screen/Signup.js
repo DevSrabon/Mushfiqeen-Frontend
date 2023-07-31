@@ -42,7 +42,11 @@ const Signup = () => {
         navigation.navigate("verifyCode", (state = { email }));
       }
     } catch (error) {
-      console.error("Error signing up:", error);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     } finally {
       setLoading(false);
     }
