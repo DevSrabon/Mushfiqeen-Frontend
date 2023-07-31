@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import Container from "../components/container";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
@@ -49,65 +49,62 @@ const Login = () => {
   }, [navigation, userData?.data?.role]);
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <Container style={{ alignItems: "center" }}>
-        <Header style={{ marginTop: 50 }}>Login</Header>
+    <Container style={{ alignItems: "center", padding: 20 }}>
+      <Header style={{ marginTop: 50 }}>Login</Header>
 
-        <InputField
-          style={{ marginTop: 50 }}
-          placeholder="Your Email"
-          value={email}
-          setValue={setEmail}
-          keyboardType="email-address"
-          error={error.email}
-        />
-        <InputField
-          placeholder="Your Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-          error={error.password}
-        />
+      <InputField
+        style={{ marginTop: 50 }}
+        placeholder="Your Email"
+        value={email}
+        setValue={setEmail}
+        keyboardType="email-address"
+        error={error.email}
+      />
+      <InputField
+        placeholder="Your Password"
+        value={password}
+        setValue={setPassword}
+        secureTextEntry={true}
+        error={error.password}
+      />
 
-        <View style={{ flex: 1, width: "90%", gap: 10, marginTop: 20 }}>
-          <CustomButton
-            text="Login"
-            onPress={onSignInPressed}
-            type="primary"
-            loading={loading}
-            disabled={loading}
-          />
-        </View>
+      <CustomButton
+        text="Login"
+        onPress={onSignInPressed}
+        type="primary"
+        loading={loading}
+        disabled={loading}
+      />
+      {/* <View style={{ flex: 1, gap: 10, marginTop: 20 }}></View> */}
 
-        <View
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 3,
+        }}
+      >
+        <Text
           style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 3,
+            fontFamily: "SemiBold",
           }}
         >
+          Don't have an account?
+        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("signup")}>
           <Text
             style={{
               fontFamily: "SemiBold",
+              color: "#B4AAF2",
             }}
           >
-            Don't have an account?
+            Signup
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("signup")}>
-            <Text
-              style={{
-                fontFamily: "SemiBold",
-                color: "#B4AAF2",
-              }}
-            >
-              Signup
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </Container>
-    </ScrollView>
+        </TouchableOpacity>
+      </View>
+    </Container>
   );
 };
 
