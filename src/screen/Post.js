@@ -8,20 +8,22 @@ import {
   Text,
   TextInput,
 } from "react-native";
+import { SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import { SubContainer } from "../components";
 
 const Post = () => {
   const [description, setDescription] = useState("");
   const navigation = useNavigation();
   const { userData, setRefetch } = useAuth();
+  const [loading, setLoading] = useState(false);
   const onPost = async () => {
     const headers = {
       Authorization: `Bearer ${userData?.accessToken}`,
       "Content-Type": "application/json",
     };
     try {
+      setLoading(true);
       const response = await axios.post(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/create`,
         { description },
@@ -29,19 +31,21 @@ const Post = () => {
       );
       setRefetch(true);
       if (response.status === 201) {
-        setDescription("");
         navigation.navigate("Home");
       }
     } catch (error) {
       console.error("Error from post:", error);
+      alert(error.response.data.error);
     } finally {
+      setDescription("");
+      setLoading(false);
       setRefetch(false);
     }
   };
 
   return (
     <SubContainer>
-      <Pressable onPress={onPost}>
+      <Pressable onPress={onPost} disabled={loading}>
         <Text style={styles.button}>Post</Text>
       </Pressable>
       <ScrollView>
