@@ -48,8 +48,8 @@ const Signup = () => {
     }
   };
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <Container style={{ alignItems: "center" }}>
+    <Container style={{ alignItems: "center" }}>
+      <ScrollView>
         <Header style={{ marginTop: 50 }}>Signup</Header>
 
         <InputField
@@ -107,15 +107,14 @@ const Signup = () => {
           </Text>
         </View>
 
-        <View style={{ flex: 1, width: "90%" }}>
-          <CustomButton
-            text="Continue"
-            loading={loading || imgLoading}
-            disabled={loading || imgLoading}
-            onPress={onSignup}
-            type="primary"
-          />
-        </View>
+        <CustomButton
+          text="Continue"
+          loading={loading || imgLoading}
+          disabled={loading || imgLoading}
+          onPress={onSignup}
+          type="primary"
+        />
+        {/* <View style={{ flex: 1, width: "90%" }}></View> */}
         <View
           style={{
             flex: 1,
@@ -143,8 +142,8 @@ const Signup = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </Container>
-    </ScrollView>
+      </ScrollView>
+    </Container>
   );
 };
 

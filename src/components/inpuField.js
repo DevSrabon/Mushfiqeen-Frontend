@@ -16,7 +16,7 @@ const InputField = ({
   style,
   inputStyles,
   error,
-  width = "90%",
+  width = "100%",
   ...restOfProps
 }) => {
   const inputref = useRef();
