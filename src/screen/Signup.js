@@ -40,7 +40,7 @@ const Signup = () => {
       );
 
       if (response.status === 200) {
-        navigation.navigate("verifyCode");
+        navigation.navigate("verifyCode", (state = { email }));
       }
     } catch (error) {
       console.error("Error signing up:", error);
