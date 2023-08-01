@@ -44,7 +44,7 @@ const DrawerNavigation = () => {
           <Pressable onPress={navigation.toggleDrawer}>
             <Image
               size={32}
-              source={icons.user}
+              source={{ uri: userData?.data?.imageURL }}
               style={{
                 height: 40,
                 width: 40,
