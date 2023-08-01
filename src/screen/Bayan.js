@@ -2,10 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 import { BayanCard, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import { FlatList } from "react-native-gesture-handler";
 
 const Bayan = () => {
   const navigation = useNavigation();
@@ -53,19 +53,29 @@ const Bayan = () => {
         }}
       >
         <Pressable onPress={() => setLang("BN")}>
-          <Text style={styles.button}>বাংলা</Text>
+          <Text style={[styles.button, lang === "BN" && styles.focus]}>
+            বাংলা
+          </Text>
         </Pressable>
         <Pressable onPress={() => setLang("EN")}>
-          <Text style={styles.button}>English</Text>
+          <Text style={[styles.button, lang === "EN" && styles.focus]}>
+            English
+          </Text>
         </Pressable>
         <Pressable onPress={() => setLang("FR")}>
-          <Text style={styles.button}>Français</Text>
+          <Text style={[styles.button, lang === "FR" && styles.focus]}>
+            Français
+          </Text>
         </Pressable>
         <Pressable onPress={() => setLang("UR")}>
-          <Text style={styles.button}>اردو</Text>
+          <Text style={[styles.button, lang === "UR" && styles.focus]}>
+            اردو
+          </Text>
         </Pressable>
         <Pressable onPress={() => setLang("AR")}>
-          <Text style={styles.button}>عربي</Text>
+          <Text style={[styles.button, lang === "AR" && styles.focus]}>
+            عربي
+          </Text>
         </Pressable>
       </View>
       <FlatList
@@ -91,6 +101,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 25,
     paddingHorizontal: 10,
+  },
+  focus: {
+    backgroundColor: colors.lightBg,
   },
   postButton: {
     fontFamily: "SemiBold",
