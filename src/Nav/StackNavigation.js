@@ -1,10 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createStackNavigator, TransitionSpecs } from '@react-navigation/stack';
+import { createStackNavigator } from "@react-navigation/stack";
 
 import React from "react";
 import { useAuth } from "../contexts/useAuth";
 import { BayanPost, Login, PostDetails, Signup } from "../screen";
+import ForgetPass from "../screen/ForgetPass";
 import VerifyCode from "../screen/VerifyCode";
 import Parent from "./Parent";
 // import UpdateProfile from "../screen/UpdateProfile";
@@ -13,9 +14,8 @@ import Parent from "./Parent";
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
-
   const config = {
-    animation: 'spring',
+    animation: "spring",
     config: {
       stiffness: 1000,
       damping: 500,
@@ -26,14 +26,13 @@ const StackNavigation = () => {
     },
   };
 
-
   const { loading } = useAuth();
   // if (loading) return <Loading />;
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-      // initialRouteName="verifyCode"
+        // initialRouteName="login"
       >
         {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
         {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
@@ -41,7 +40,6 @@ const StackNavigation = () => {
         <Stack.Screen name="parent" component={Parent} />
         <Stack.Screen
           name="postDetails"
-
           options={{
             transitionSpec: {
               open: config,
@@ -53,6 +51,7 @@ const StackNavigation = () => {
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={Signup} />
         <Stack.Screen name="verifyCode" component={VerifyCode} />
+        <Stack.Screen name="forgetPass" component={ForgetPass} />
         <Stack.Screen
           name="bayanPost"
           component={BayanPost}
