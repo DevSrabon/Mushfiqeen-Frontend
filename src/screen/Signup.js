@@ -98,7 +98,7 @@ const Signup = () => {
         />
         <View
           style={{
-            marginVertical: 15
+            marginVertical: 15,
           }}
         >
           <Text
@@ -112,12 +112,13 @@ const Signup = () => {
             }}
           >
             By signing up you agree to our{" "}
-            <Text
-              style={{ fontSize: 16, color: colors.white }
-              }>Terms & Conditions</Text> and{" "}
-            <Text
-              style={{ fontSize: 16, color: colors.white }
-              }>Privacy Policy.*</Text>
+            <Text style={{ fontSize: 16, color: colors.white }}>
+              Terms & Conditions
+            </Text>{" "}
+            and{" "}
+            <Text style={{ fontSize: 16, color: colors.white }}>
+              Privacy Policy.*
+            </Text>
           </Text>
         </View>
 
@@ -141,7 +142,7 @@ const Signup = () => {
           <Text
             style={{
               fontFamily: "SemiBold",
-              color: colors.white,
+              color: colors.primary,
             }}
           >
             Already signed up ?

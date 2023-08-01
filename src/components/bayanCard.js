@@ -40,7 +40,9 @@ const BayanCard = ({ item }) => {
           marginHorizontal: 10,
         }}
       >
-        <SubTitle>{item?.description}</SubTitle>
+        <SubTitle style={{ textAlign: "justify" }}>
+          {item?.description}
+        </SubTitle>
       </View>
       <Row>
         <SubRow>
