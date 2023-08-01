@@ -2,16 +2,15 @@ import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import {
-  HorizantalBar,
-  IconContainer,
-  Row,
-  SubRow,
-  SubTitle,
-  TextSmall,
-  Title,
-} from "../components";
+import Row from "./row";
+
 import colors from "../theme/Colors";
+import SubRow from "./subRow";
+import Title from "./title";
+import SubTitle from "./subTitle";
+import TextSmall from "./textSmall";
+import HorizantalBar from "./horizontalBar";
+import IconContainer from "./iconContainer";
 
 const BayanCard = ({ item }) => {
   return (
@@ -52,7 +51,7 @@ const BayanCard = ({ item }) => {
             color={colors.primary}
             style={styles.icon}
           />
-          <TextSmall>2</TextSmall>
+          <TextSmall> 2</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
           <TextSmall style={{ color: colors.primary }}>3</TextSmall>
