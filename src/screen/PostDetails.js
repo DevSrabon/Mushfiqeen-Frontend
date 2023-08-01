@@ -99,12 +99,14 @@ const PostDetails = () => {
           <HomeCard post={postId} />
           <Reactions post={post} />
           <View
-            style={{
-              borderColor: "grey",
-              borderWidth: 1,
-              borderRadius: 5,
-              marginHorizontal: 5,
-            }}
+            style={
+              {
+                // borderColor: "grey",
+                // borderWidth: 1,
+                // borderRadius: 5,
+                // marginHorizontal: 5,
+              }
+            }
           >
             <Pressable onPress={onComment} disabled={loading}>
               <Text style={styles.button}>Comment</Text>
