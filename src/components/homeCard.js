@@ -1,5 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
+import moment from "moment";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
@@ -88,9 +89,14 @@ const HomeCard = ({ post }) => {
           )}
           <View>
             <Title>{post?.user?.fullName}</Title>
-            <SubTitle>
-              {post?.user?.designation || "Sub title of user"}
-            </SubTitle>
+            <View
+              style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+            >
+              <SubTitle>
+                {post?.user?.designation || "Sub title of user"}
+              </SubTitle>
+              <TextSmall>{moment(post?.createdAt).fromNow()}</TextSmall>
+            </View>
           </View>
         </SubRow>
         {isFollowing ? (

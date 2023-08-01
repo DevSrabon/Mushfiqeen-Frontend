@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
+import moment from "moment";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import icons from "../../assets/icons";
 import {
   HorizantalBar,
   IconContainer,
@@ -19,13 +19,13 @@ const BayanCard = ({ item }) => {
       <Row>
         <SubRow>
           <Image
-            source={icons.user}
+            source={{ uri: item?.user?.imageURL }}
             resizeMode="cover"
             style={styles.userImg}
           />
           <View>
             <Title>{item?.user?.fullName}</Title>
-            <SubTitle>Sub title of user</SubTitle>
+            <SubTitle>{moment(item?.createdAt).fromNow()}</SubTitle>
           </View>
         </SubRow>
         <SubRow>

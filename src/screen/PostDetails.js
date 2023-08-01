@@ -109,7 +109,7 @@ const PostDetails = () => {
               marginHorizontal: 5,
             }}
           >
-            <Pressable onPress={onComment} disabled={loading}>
+            <Pressable onPress={onComment} disabled={loading || !texts}>
               <Text style={styles.button}>Comment</Text>
             </Pressable>
             <ScrollView>
