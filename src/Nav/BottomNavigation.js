@@ -24,8 +24,6 @@ export default function BottomNavigator() {
       }).start();
       Animated.timing(borderColorRef, {
         // Animate the border color change
-      Animated.timing(borderColorRef, {
-        // Animate the border color change
         toValue: 1,
         duration: 300,
         useNativeDriver: false,
