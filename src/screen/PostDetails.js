@@ -54,6 +54,9 @@ const PostDetails = () => {
   };
 
   const onComment = async () => {
+    if (!texts) {
+      return alert("Comment can't be empty");
+    }
     try {
       setLoading(true);
       await axios.put(

@@ -11,7 +11,7 @@ const Bayan = () => {
   const navigation = useNavigation();
   const [lang, setLang] = useState("BN");
   const { userData } = useAuth();
-
+  const [refetch, setRefetch] = useState(false);
   const [data, setData] = useState([]);
 
   const config = {
@@ -33,12 +33,14 @@ const Bayan = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [lang]);
+  }, [lang, refetch]);
   return (
     <SubContainer>
       <Pressable
         style={{ marginBottom: 10 }}
-        onPress={() => navigation.navigate("bayanPost")}
+        onPress={() =>
+          navigation.navigate("bayanPost", (state = { setRefetch }))
+        }
       >
         <Text style={styles.postButton}>Post Bayan</Text>
       </Pressable>

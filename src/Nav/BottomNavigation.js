@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
-import { Animated, TouchableOpacity, View } from "react-native";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+import React, { useRef, useState } from "react";
+import { Animated, TouchableOpacity, View } from "react-native";
+import { Bayan, Chat, Home, Post } from "../screen";
 import colors from "../theme/Colors";
-import { Home, Post, Bayan, Chat } from "../screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +24,8 @@ export default function BottomNavigator() {
       }).start();
       Animated.timing(borderColorRef, {
         // Animate the border color change
+      Animated.timing(borderColorRef, {
+        // Animate the border color change
         toValue: 1,
         duration: 300,
         useNativeDriver: false,
@@ -41,7 +43,6 @@ export default function BottomNavigator() {
       useNativeDriver: false,
     }).start();
   };
-
   return (
     <Tab.Navigator
       // backBehavior="Main"

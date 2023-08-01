@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { useState } from "react";
 import {
@@ -20,6 +20,8 @@ const BayanPost = () => {
   const [description, setDescription] = useState("");
   const { userData } = useAuth();
   const navigation = useNavigation();
+  const router = useRoute();
+  console.log(router.params);
   const config = {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
