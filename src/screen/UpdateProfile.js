@@ -135,8 +135,8 @@ const UpdateProfile = ({ navigation }) => {
             <Image
               source={{ uri: userData?.data?.imageURL || selectedImage }}
               style={{
-                height: 170,
-                width: 170,
+                height: 90,
+                width: 90,
                 borderRadius: 85,
                 borderWidth: 2,
                 borderColor: colors.primary,
