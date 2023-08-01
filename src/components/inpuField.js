@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
   labelContainer: {
     position: "absolute",
     left: 16,
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
     
   },
   labelFocusContainer: {
     position: "absolute",
-    left: 16,
+    left: 6,
     // paddingHorizontal: 7,
-    paddingVertical: 1,
+    // paddingVertical: 1,
     backgroundColor: colors.bg,
     // borderWidth: 1,
     // borderRadius: 5,
