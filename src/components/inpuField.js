@@ -107,13 +107,15 @@ const styles = StyleSheet.create({
   error: { color: "red" },
   input: {
     width: "100%",
-    backgroundColor: colors.lightBg,
-    borderWidth: 1,
-    borderRadius: 5,
+    backgroundColor: colors.bg,
+    borderBottomWidth: 2,
+    borderColor: "red",
+    // borderRadius: 5,
     paddingHorizontal: 10,
     fontFamily: "Medium",
     height: 50,
     fontSize: 17,
+    
   },
 
   errorBorder: {
@@ -121,27 +123,31 @@ const styles = StyleSheet.create({
     color: "red",
   },
   successBorder: {
-    borderColor: "#B4AAF2",
-    color: "white",
+    borderColor:colors.lightGray,
+    color: colors.lightGray,
+    
   },
   labelContainer: {
     position: "absolute",
     left: 16,
     paddingHorizontal: 5,
+    
   },
   labelFocusContainer: {
     position: "absolute",
     left: 16,
     // paddingHorizontal: 7,
     paddingVertical: 1,
-    backgroundColor: colors.lightBg,
-    borderWidth: 1,
-    borderRadius: 5,
+    backgroundColor: colors.bg,
+    // borderWidth: 1,
+    // borderRadius: 5,
+    
   },
 
   textInput: {
-    borderWidth: 1,
+    // borderWidth: 1,
     color: colors.white,
-    backgroundColor: colors.lightGray,
+    // backgroundColor: colors.lightGray,
+    borderColor:colors.lightGray,
   },
 });
