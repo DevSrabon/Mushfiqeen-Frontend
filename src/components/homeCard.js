@@ -133,10 +133,7 @@ const HomeCard = ({ post }) => {
           <TextSmall>{post?.likes}</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
-          <TextSmall style={{ color: colors.primary }}>
-            {post?.commentsLength}
-          </TextSmall>
-          <TextSmall>Comments</TextSmall>
+          <TextSmall>2 hours ago</TextSmall>
           <View
             style={{
               borderColor: colors.white,
@@ -145,8 +142,14 @@ const HomeCard = ({ post }) => {
               alignSelf: "center",
             }}
           />
-          <TextSmall style={{ color: colors.primary }}>2</TextSmall>
-          <TextSmall>Share</TextSmall>
+
+          <TextSmall style={{ color: colors.primary }}>
+            {post?.commentsLength}
+          </TextSmall>
+          <TextSmall>Comments</TextSmall>
+
+          {/* <TextSmall style={{ color: colors.primary }}>2</TextSmall>
+          <TextSmall>Share</TextSmall> */}
         </SubRow>
       </Row>
 
