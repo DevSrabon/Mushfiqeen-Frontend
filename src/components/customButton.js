@@ -6,6 +6,7 @@ import {
   Text,
   TouchableWithoutFeedback,
 } from "react-native";
+import colors from "../theme/Colors";
 
 const CustomButton = ({
   onPress,
@@ -73,13 +74,15 @@ const styles = StyleSheet.create({
     width: "100%",
     maxHeight: 50,
     padding: 15,
-    marginVertical: 5,
+    paddingVertical: 5,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
   },
   container_primary: {
-    backgroundColor: "#B4AAF2",
+    backgroundColor: colors.bg,
+    borderColor: colors.lightGray,
+    borderWidth: 2,
   },
   container_tertiary: {
     width: "30%",
