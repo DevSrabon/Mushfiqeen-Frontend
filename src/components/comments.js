@@ -2,7 +2,6 @@ import axios from "axios";
 import moment from "moment";
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import icons from "../../assets/icons";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import CustomModal from "./customModal";
@@ -11,7 +10,6 @@ import NormalText from "./normalText";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
 const Comments = ({ comment, postId, config, setRefetch }) => {
-  // console.log("🚀 ~ file: comments.js:14 ~ Comments ~ comment:", comment);
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState("");
 
@@ -52,7 +50,10 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
     <View>
       <View style={styles.container}>
         <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
-          <Image source={icons.user} style={styles.userImg} />
+          <Image
+            source={{ uri: comment?.userId?.imageURL }}
+            style={styles.userImg}
+          />
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
               <SubTitle>{comment?.userId?.fullName}</SubTitle>
@@ -95,7 +96,10 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           .map((reply) => (
             <View key={reply?._id} style={styles.subContainer}>
               <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
-                <Image source={icons.user} style={styles.userImg} />
+                <Image
+                  source={{ uri: reply?.userId?.imageURL }}
+                  style={styles.userImg}
+                />
                 <View style={styles.subCommentBox}>
                   <View style={{ padding: 10 }}>
                     <SubTitle>{reply?.userId?.fullName}</SubTitle>

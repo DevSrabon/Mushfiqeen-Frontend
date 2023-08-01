@@ -43,6 +43,14 @@ const Signup = () => {
         navigation.navigate("verifyCode", (state = { email }));
       }
     } catch (error) {
+      console.log(error.response.data.error);
+      switch (error) {
+        case error.toLowerCase.includes("email"):
+          setError();
+
+        default:
+          break;
+      }
       if (error.response.data.message) {
         alert(error.response.data.message);
       } else if (error.response.data.error) {

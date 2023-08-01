@@ -2,16 +2,20 @@ import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, View } from "react-native";
 
+import { useLayoutEffect } from "react";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
 
 const IconContainer = ({ onLikes, userData, post }) => {
-  console.log("🚀 ~ file: iconContainer.js:10 ~ IconContainer ~ post:", post);
   const navigation = useNavigation();
   const { setPostId } = useAuth();
 
   const isLiked = post?.likers?.includes(userData?.data?._id);
+
+  useLayoutEffect(() => {
+    setPostId(post);
+  }, [post]);
 
   const onNavigate = () => {
     setPostId(post);
