@@ -7,5 +7,4 @@ export { default as BayanPost } from "./BayanPost";
 export { default as Post } from "./Post";
 export { default as PostDetails } from "./PostDetails";
 export { default as Settings } from "./Settings";
-export { default as Profile } from "./Profile";
 export { default as Chat } from "./Chat";
