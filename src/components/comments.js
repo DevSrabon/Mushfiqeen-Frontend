@@ -10,7 +10,6 @@ import NormalText from "./normalText";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
 const Comments = ({ comment, postId, config, setRefetch }) => {
-  console.log("🚀 ~ file: comments.js:14 ~ Comments ~ comment:", comment);
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState("");
 
