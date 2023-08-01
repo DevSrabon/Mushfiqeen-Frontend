@@ -36,7 +36,7 @@ const StackNavigation = () => {
       // initialRouteName="login"
       >
         {/* <Stack.Screen name="ProfileInfo" component={ProfileInfo} /> */}
-        <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+
         <Stack.Screen name="parent" component={Parent} />
         <Stack.Screen
           name="postDetails"
@@ -48,7 +48,7 @@ const StackNavigation = () => {
           }}
           component={PostDetails}
         />
-        {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
+        <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={Signup} />
         <Stack.Screen name="verifyCode" component={VerifyCode} />
