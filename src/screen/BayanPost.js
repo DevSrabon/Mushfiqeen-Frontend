@@ -22,12 +22,14 @@ const BayanPost = () => {
   const navigation = useNavigation();
   const router = useRoute();
   console.log(router.params);
+  const [loading, setLoading] = useState(false);
   const config = {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
     },
   };
   const onBayan = async () => {
+    setLoading(true);
     try {
       const res = await axios.post(
         `https://musfiqeen-backend.vercel.app/api/v1/bayans/create`,
@@ -48,12 +50,14 @@ const BayanPost = () => {
       } else if (error.response.data.error) {
         alert(error.response.data.error);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <SubContainer>
-      <Pressable onPress={onBayan}>
+      <Pressable onPress={onBayan} disabled={loading}>
         <Text style={styles.button}>Post</Text>
       </Pressable>
 

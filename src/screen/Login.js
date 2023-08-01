@@ -9,7 +9,6 @@ import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
-
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
 
@@ -74,6 +73,7 @@ const Login = () => {
         keyboardType="email-address"
         error={error.email}
       />
+
       <InputField
         placeholder="Your Password"
         value={password}
@@ -89,21 +89,36 @@ const Login = () => {
         loading={loading}
         disabled={loading}
       />
+
       {/* <View style={{ flex: 1, gap: 10, marginTop: 20 }}></View> */}
+      <View style={{ width: "100%", alignItems: "flex-end" }}>
+        <TouchableOpacity onPress={() => navigation.navigate("forgetPass")}>
+          <Text
+            style={{
+              fontFamily: "SemiBold",
+              color: "#B4AAF2",
+              textAlign: "right",
+            }}
+          >
+            Forget Password?
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <View
         style={{
           flex: 1,
           flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
+          alignItems: "flex-end",
+          alignSelf: "center",
+
           gap: 3,
         }}
       >
         <Text
           style={{
             fontFamily: "SemiBold",
-            color:colors.white,
+            color: colors.primary,
           }}
         >
           Don't have an account?
