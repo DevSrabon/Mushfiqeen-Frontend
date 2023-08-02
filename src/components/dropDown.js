@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import colors from "../theme/Colors";
@@ -11,7 +11,11 @@ const DropDown = ({ category, setCategory }) => {
     { key: "UR", value: "Urdu" },
     { key: "AR", value: "Arabic" },
   ];
-
+  let defaultOption = categories.find((item) => item.key === category) || {
+    key: "BN",
+    value: "Bangla",
+  };
+  console.log("🚀 ~ file: dropDown.js:16 ~ DropDown ~ item:", defaultOption);
   return (
     <SelectList
       search={false}
@@ -23,7 +27,7 @@ const DropDown = ({ category, setCategory }) => {
       setSelected={setCategory}
       data={categories}
       placeholder="Select Your Role"
-      defaultOption={{ key: "BN", value: "Bangla" }}
+      defaultOption={defaultOption}
     />
   );
 };
