@@ -5,12 +5,11 @@ import {
     TouchableOpacity,
     useWindowDimensions,
     FlatList,
-    StyleSheet,
     ScrollView
 } from "react-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Fontisto, FontAwesome } from "@expo/vector-icons";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
 import { Container, SubTitle, Title } from "../components";
@@ -19,7 +18,7 @@ import colors from "../theme/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 const PostRoutes = () => (
-    <View style={{ flex: 1 ,backgroundColor: colors.lightGray}}>
+    <View style={{ flex: 1, backgroundColor: colors.lightGray }}>
         <FlatList
             data={"Post"}
             // data={Post}
@@ -84,7 +83,7 @@ const ProfileInfo = () => {
 
     const [routes] = useState([
         { key: "first", title: "Posts" },
-        { key: "second", title:"Bayan"  },
+        { key: "second", title: "Bayan" },
     ]);
 
     const renderTabBar = (props) => (
@@ -119,7 +118,7 @@ const ProfileInfo = () => {
                         source={icons.user}
                         resizeMode="cover"
                         style={{
-                            height: 180,
+                            height: 110,
                             width: "100%",
                         }}
                     />
@@ -130,14 +129,33 @@ const ProfileInfo = () => {
                         source={icons.user}
                         resizeMode="contain"
                         style={{
-                            height: 140,
-                            width: 140,
+                            height: 100,
+                            width: 100,
                             borderRadius: 999,
                             borderColor: colors.lightGray,
-                            borderWidth: 2,
-                            marginTop: -90,
+                            borderWidth: 3,
+                            marginTop: -53,
                         }}
                     />
+
+                    <TouchableOpacity
+
+                        style={{
+                            width: 120,
+                            height: 35,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: colors.lightBg,
+                            borderRadius: 20,
+                            marginHorizontal: 20 * 2,
+                            marginTop:5,
+                        }}
+                        onPress={() => onUpdateNavigate()}
+                    >
+                        <Text style={{ color: colors.white }}>
+                            Update Profile
+                        </Text>
+                    </TouchableOpacity>
 
                     <Title style={{
                         color: colors.white,
@@ -162,6 +180,25 @@ const ProfileInfo = () => {
                         <Text style={{ marginLeft: 4, color: colors.lightGray }}>
                             Dhaka, Bangladesh
                         </Text>
+                    </View>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            marginVertical: 6,
+                            // alignItems: "center",
+                        }}
+                    >
+
+                        <Fontisto name="mobile" size={20} color={colors.lightGray} />
+                        <Text style={{ marginLeft: 8, marginRight: 22, color: colors.lightGray }}>
+                            +1234567890
+                        </Text>
+                        <FontAwesome name="birthday-cake" size={17} color={colors.lightGray} />
+                        <Text style={{ marginLeft: 8, color: colors.lightGray }}>
+                            01/01/2023
+                        </Text>
+                        <View>
+                        </View>
                     </View>
 
                     <View style={{
@@ -211,7 +248,7 @@ const ProfileInfo = () => {
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: "row" }}>
+                    {/* <View style={{ flexDirection: "row" }}>
                         <TouchableOpacity
 
                             style={{
@@ -245,10 +282,10 @@ const ProfileInfo = () => {
                                 Add Friend
                             </Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </View>
 
-                <View style={{ flex: 1, marginHorizontal: 12, marginTop: 190 }}>
+                <View style={{ flex: 1, marginHorizontal: 10, marginTop: 90 }}>
                     <TabView
                         navigationState={{ index, routes }}
                         renderScene={renderScene}
@@ -262,8 +299,4 @@ const ProfileInfo = () => {
     )
 }
 
-export default ProfileInfo
-
-const styles = StyleSheet.create({
-
-})
+export default ProfileInfo;
