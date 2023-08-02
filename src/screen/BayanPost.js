@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -15,7 +15,8 @@ import colors from "../theme/Colors";
 
 const BayanPost = () => {
   const router = useRoute();
-  const { post } = router.params;
+  const params = router?.params;
+  const post = params?.post;
 
   const [lang, setLang] = useState("BN");
   const [date, setDate] = useState("");
@@ -25,8 +26,8 @@ const BayanPost = () => {
   const navigation = useNavigation();
 
   const [loading, setLoading] = useState(false);
-  useLayoutEffect(() => {
-    if (post) {
+  useEffect(() => {
+    if (post?._id) {
       setPlace(post?.place);
       setDate(post?.date);
       setDescription(post?.description);
@@ -66,7 +67,7 @@ const BayanPost = () => {
         config
       );
       if (res.data) {
-        setRefetch((prev) => !prev);
+        setBayanRefetch((prev) => !prev);
         setDate("");
         setDescription("");
         setPlace("");
@@ -87,7 +88,7 @@ const BayanPost = () => {
 
   return (
     <SubContainer>
-      {post ? (
+      {post?._id ? (
         <Pressable onPress={onUpdate} disabled={loading}>
           <Text style={styles.button}>Update</Text>
         </Pressable>
