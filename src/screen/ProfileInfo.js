@@ -1,9 +1,10 @@
 import { FontAwesome, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Image,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -11,71 +12,109 @@ import {
 } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
-import { Container, SubTitle, Title } from "../components";
+import { Container, SubRow, SubTitle, Title } from "../components";
 import colors from "../theme/Colors";
 // import CustomButton from "../components/customButton";
-import { useNavigation } from "@react-navigation/native";
-
-const PostRoutes = () => (
-  <View style={{ flex: 1, backgroundColor: colors.lightGray }}>
-    <FlatList
-      data={"Post"}
-      // data={Post}
-      numColumns={3}
-      renderItem={({ item, index }) => (
-        <View
-          style={{
-            flex: 1,
-            margin: 3,
-          }}
-        >
-          <View
-            key={index}
-            source={item}
-            style={{ width: "100%", height: "100%", borderRadius: 12 }}
-          />
-        </View>
-      )}
-    />
-  </View>
-);
-
-const BayanRoutes = () => (
-  <View style={{ flex: 1, backgroundColor: colors.primary }}>
-    <FlatList
-      data={"Bayan"}
-      // data={Bayan}
-      numColumns={3}
-      renderItem={({ item, index }) => (
-        <View
-          style={{
-            flex: 1,
-            // aspectRatio: 1,
-            margin: 3,
-            padding: 22,
-          }}
-        >
-          <View
-            key={index}
-            source={item}
-            style={{ width: "100%", height: "100%", borderRadius: 12 }}
-          />
-        </View>
-      )}
-    />
-  </View>
-);
-
-const renderScene = SceneMap({
-  first: PostRoutes,
-  second: BayanRoutes,
-});
-
+import { useNavigation, useRoute } from "@react-navigation/native";
+import axios from "axios";
+import { useAuth } from "../contexts/useAuth";
 const ProfileInfo = () => {
+  const [profile, setProfile] = useState({});
+  const router = useRoute();
+
+  const params = router.params;
+
+  const PostRoutes = () => (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.lightGray,
+        paddingHorizontal: 10,
+      }}
+    >
+      <FlatList
+        data={profile?.posts}
+        // data={Post}
+        // numColumns={2}
+        renderItem={({ item, index }) => (
+          <View
+            style={{
+              flex: 1,
+              marginBottom: 20,
+            }}
+          >
+            <View
+              key={index}
+              source={profile?.fullName}
+              style={{ width: "100%", height: "100%", borderRadius: 12 }}
+            />
+            <SubRow>
+              {profile?.imageURL && (
+                <Image
+                  source={{ uri: profile?.imageURL }}
+                  resizeMode="cover"
+                  style={styles.userImg}
+                />
+              )}
+              <View>
+                <Title>{profile?.fullName}</Title>
+                <View
+                  style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+                >
+                  <SubTitle>
+                    {profile?.designation || "Sub title of user"}
+                  </SubTitle>
+                </View>
+              </View>
+            </SubRow>
+
+            <SubTitle>{item?.description}</SubTitle>
+            <SubRow>
+              <SubTitle>Likes: {item?.likes}</SubTitle>
+              <SubTitle>Comments: {item?.commentsLength}</SubTitle>
+            </SubRow>
+          </View>
+        )}
+      />
+    </View>
+  );
+
+  const BayanRoutes = () => (
+    <View style={{ flex: 1, backgroundColor: colors.primary }}>
+      <FlatList
+        data={"Bayan"}
+        // data={Bayan}
+        numColumns={3}
+        renderItem={({ item, index }) => (
+          <View
+            style={{
+              flex: 1,
+              // aspectRatio: 1,
+              margin: 3,
+              padding: 22,
+            }}
+          >
+            <View
+              key={index}
+              source={item}
+              style={{ width: "100%", height: "100%", borderRadius: 12 }}
+            />
+          </View>
+        )}
+      />
+    </View>
+  );
+
+  const renderScene = SceneMap({
+    first: PostRoutes,
+    second: BayanRoutes,
+  });
+
   const navigation = useNavigation();
   const onUpdateNavigate = () => {
     navigation.navigate("UpdateProfile");
   };
+  const { userData } = useAuth();
 
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -102,6 +141,33 @@ const ProfileInfo = () => {
       )}
     />
   );
+  const paramsId = params?.id ?? null;
+  useEffect(() => {
+    let id = userData?.data?._id;
+
+    if (paramsId) {
+      id = paramsId;
+    } else {
+      id = userData?.data?._id;
+    }
+
+    if (id !== null) {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get(
+            `https://musfiqeen-backend.vercel.app/api/v1/users/getUser/${id}`
+          );
+
+          if (res.data.data) {
+            setProfile(res.data.data);
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+      fetchData();
+    }
+  }, [userData?.data?._id, paramsId]);
 
   return (
     <Container
@@ -113,45 +179,72 @@ const ProfileInfo = () => {
       <>
         <StatusBar backgroundColor={colors.lightGray} />
         <View style={{ width: "100%" }}>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={{
-              height: 110,
-              width: "100%",
-            }}
-          />
+          {userData?.data ? (
+            <Image
+              source={{ uri: profile?.imageURL }}
+              resizeMode="cover"
+              style={{
+                height: 110,
+                width: "100%",
+              }}
+            />
+          ) : (
+            <Image
+              source={icons.user}
+              resizeMode="cover"
+              style={{
+                height: 110,
+                width: "100%",
+              }}
+            />
+          )}
         </View>
 
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Image
-            source={icons.user}
-            resizeMode="contain"
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 999,
-              borderColor: colors.lightGray,
-              borderWidth: 3,
-              marginTop: -53,
-            }}
-          />
-
-          <TouchableOpacity
-            style={{
-              width: 120,
-              height: 35,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: colors.lightBg,
-              borderRadius: 20,
-              marginHorizontal: 20 * 2,
-              marginTop: 5,
-            }}
-            onPress={() => onUpdateNavigate()}
-          >
-            <Text style={{ color: colors.white }}>Update Profile</Text>
-          </TouchableOpacity>
+          {profile ? (
+            <Image
+              source={{ uri: profile?.imageURL }}
+              resizeMode="contain"
+              style={{
+                height: 100,
+                width: 100,
+                borderRadius: 999,
+                borderColor: colors.lightGray,
+                borderWidth: 3,
+                marginTop: -53,
+              }}
+            />
+          ) : (
+            <Image
+              source={icons.user}
+              resizeMode="contain"
+              style={{
+                height: 100,
+                width: 100,
+                borderRadius: 999,
+                borderColor: colors.lightGray,
+                borderWidth: 3,
+                marginTop: -53,
+              }}
+            />
+          )}
+          {userData?.data?._id === profile?._id && (
+            <TouchableOpacity
+              style={{
+                width: 120,
+                height: 35,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: colors.lightBg,
+                borderRadius: 20,
+                marginHorizontal: 20 * 2,
+                marginTop: 5,
+              }}
+              onPress={() => onUpdateNavigate()}
+            >
+              <Text style={{ color: colors.white }}>Update Profile</Text>
+            </TouchableOpacity>
+          )}
 
           <Title
             style={{
@@ -161,9 +254,11 @@ const ProfileInfo = () => {
               fontFamily: "SemiBold",
             }}
           >
-            Mahbub Morshed
+            {profile?.fullName}
           </Title>
-          <SubTitle style={{ color: colors.lightGray }}>3D Designer</SubTitle>
+          <SubTitle style={{ color: colors.lightGray }}>
+            {profile?.designation}
+          </SubTitle>
 
           <View
             style={{
@@ -178,7 +273,7 @@ const ProfileInfo = () => {
               color={colors.lightGray}
             />
             <Text style={{ marginLeft: 4, color: colors.lightGray }}>
-              Dhaka, Bangladesh
+              {profile?.address || "Dhaka, Bangladesh"}
             </Text>
           </View>
           <View
@@ -196,7 +291,7 @@ const ProfileInfo = () => {
                 color: colors.lightGray,
               }}
             >
-              +1234567890
+              {profile?.contactNumber}
             </Text>
             <FontAwesome
               name="birthday-cake"
@@ -204,7 +299,7 @@ const ProfileInfo = () => {
               color={colors.lightGray}
             />
             <Text style={{ marginLeft: 8, color: colors.lightGray }}>
-              01/01/2023
+              {profile?.dateOfBirth}
             </Text>
             <View></View>
           </View>
@@ -222,7 +317,9 @@ const ProfileInfo = () => {
                 marginHorizontal: 20,
               }}
             >
-              <Text style={{ color: colors.white }}>122</Text>
+              <Text style={{ color: colors.white }}>
+                {profile?.followers?.length + 1 || "0"}
+              </Text>
               <Text style={{ color: colors.white }}>Followers</Text>
             </View>
 
@@ -233,7 +330,9 @@ const ProfileInfo = () => {
                 marginHorizontal: 20,
               }}
             >
-              <Text style={{ color: colors.white }}>67</Text>
+              <Text style={{ color: colors.white }}>
+                {profile?.following?.length + 1 || "0"}
+              </Text>
               <Text style={{ color: colors.white }}>Followings</Text>
             </View>
 
@@ -244,7 +343,9 @@ const ProfileInfo = () => {
                 marginHorizontal: 22,
               }}
             >
-              <Text style={{ color: colors.white }}>7K</Text>
+              <Text style={{ color: colors.white }}>
+                {profile?.posts?.length + 1 || "0"}
+              </Text>
               <Text style={{ color: colors.white }}>Posts</Text>
             </View>
           </View>
@@ -301,3 +402,24 @@ const ProfileInfo = () => {
 };
 
 export default ProfileInfo;
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.bg,
+    width: "100%",
+    // height: 400,
+    marginBottom: 10,
+    // marginTop: 10,
+  },
+  userImg: {
+    height: 40,
+    width: 40,
+    borderRadius: 50,
+    alignSelf: "center",
+  },
+  icon: {
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 25,
+    padding: 3,
+  },
+});

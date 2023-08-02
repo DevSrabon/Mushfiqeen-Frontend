@@ -19,6 +19,7 @@ const useImagePicker = () => {
   }, []);
 
   const takePhoto = async () => {
+    if (imageURL?.length) return;
     setLoading(true);
     try {
       const cameraResp = await ImagePicker.launchImageLibraryAsync({
