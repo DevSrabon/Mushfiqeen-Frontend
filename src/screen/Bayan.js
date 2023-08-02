@@ -36,7 +36,7 @@ const Bayan = () => {
   }, [lang, bayanRefetch]);
   return (
     <SubContainer>
-      {userData?.data?.role === "author" && (
+      {userData?.data?.status === "author" && (
         <Pressable
           style={{ marginBottom: 10 }}
           onPress={() =>
