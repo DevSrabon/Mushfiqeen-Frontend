@@ -11,13 +11,21 @@ import {
   TextSmall,
   Title,
 } from "../components";
+
+import Row from "./row";
+
+
 import colors from "../theme/Colors";
+import SubRow from "./subRow";
+import Title from "./title";
+import SubTitle from "./subTitle";
+import TextSmall from "./textSmall";
+import HorizantalBar from "./horizontalBar";
+import IconContainer from "./iconContainer";
 
 const BayanCard = ({ item }) => {
   const [seeMore, setSeeMore] = useState(false);
-  console.log("🚀 ~ file: bayanCard.js:18 ~ BayanCard ~ seeMore:", seeMore);
   const [showLess, setShowLess] = useState(false);
-  console.log("🚀 ~ file: bayanCard.js:20 ~ BayanCard ~ showLess:", showLess);
   let description;
   if (item.description?.length < 500) {
     description = item.description;
@@ -90,7 +98,7 @@ const BayanCard = ({ item }) => {
             color={colors.primary}
             style={styles.icon}
           />
-          <TextSmall>2</TextSmall>
+          <TextSmall> 2</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
           <TextSmall style={{ color: colors.primary }}>3</TextSmall>
