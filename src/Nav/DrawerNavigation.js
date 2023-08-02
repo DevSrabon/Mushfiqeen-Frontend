@@ -9,7 +9,9 @@ import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import { useAuth } from "../contexts/useAuth";
-import { Profile, Settings } from "../screen";
+// import { Profile, Settings } from "../screen";
+import { Settings } from "../screen";
+import Profile from "../screen/Profile";
 import UpdateProfile from "../screen/UpdateProfile";
 import colors from "../theme/Colors";
 

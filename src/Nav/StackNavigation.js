@@ -8,7 +8,6 @@ import { BayanPost, Login, PostDetails, Signup } from "../screen";
 import ForgetPass from "../screen/ForgetPass";
 import VerifyCode from "../screen/VerifyCode";
 import Parent from "./Parent";
-import UpdateProfile from "../screen/UpdateProfile";
 // import ProfileInfo from "../screen/ProfileInfo";
 
 const Stack = createStackNavigator();
@@ -34,9 +33,9 @@ const StackNavigation = () => {
         screenOptions={{ headerShown: false }}
         // initialRouteName="login"
       >
-        {/* <Stack.Screen name="ProfileInfo" component={ProfileInfo} /> */}
-        <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
         <Stack.Screen name="parent" component={Parent} />
+        {/* <Stack.Screen name="ProfileInfo" component={ProfileInfo} /> */}
+        {/* <Stack.Screen name="UpdateProfile" component={UpdateProfile} /> */}
         <Stack.Screen
           name="postDetails"
           options={{
