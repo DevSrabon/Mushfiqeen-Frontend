@@ -59,7 +59,7 @@ const BayanCard = ({ item }) => {
           <>
             <SubTitle style={{ textAlign: "justify" }}>{description}</SubTitle>
             <Pressable onPress={(prev) => setSeeMore(!seeMore)}>
-              <TextSmall>...See More</TextSmall>
+              <TextSmall style={{ textAlign: "right" }}>...See More</TextSmall>
             </Pressable>
           </>
         )}
@@ -91,7 +91,7 @@ const BayanCard = ({ item }) => {
           />
           <TextSmall>2</TextSmall>
         </SubRow>
-        <SubRow style={{ gap: 3 }}>
+        {/* <SubRow style={{ gap: 3 }}>
           <TextSmall style={{ color: colors.primary }}>3</TextSmall>
           <TextSmall>Comments</TextSmall>
           <View
@@ -104,7 +104,7 @@ const BayanCard = ({ item }) => {
           />
           <TextSmall style={{ color: colors.primary }}>2</TextSmall>
           <TextSmall>Share</TextSmall>
-        </SubRow>
+        </SubRow> */}
       </Row>
 
       <HorizantalBar />
