@@ -95,7 +95,6 @@ const HomeCard = ({ post }) => {
               <SubTitle>
                 {post?.user?.designation || "Sub title of user"}
               </SubTitle>
-              <TextSmall>{moment(post?.createdAt).fromNow()}</TextSmall>
             </View>
           </View>
         </SubRow>
@@ -133,7 +132,7 @@ const HomeCard = ({ post }) => {
           <TextSmall>{post?.likes}</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
-          <TextSmall>2 hours ago</TextSmall>
+          <TextSmall>{moment(post?.createdAt).fromNow()}</TextSmall>
           <View
             style={{
               borderColor: colors.white,
