@@ -12,9 +12,8 @@ import { useAuth } from "../contexts/useAuth";
 // import { Profile, Settings } from "../screen";
 import { Settings } from "../screen";
 import Profile from "../screen/Profile";
-import UpdateProfile from "../screen/UpdateProfile";
-import colors from "../theme/Colors";
 import ProfileInfo from "../screen/ProfileInfo";
+import colors from "../theme/Colors";
 
 const Drawer = createDrawerNavigator();
 
@@ -45,16 +44,29 @@ const DrawerNavigation = () => {
       screenOptions={({ navigation }) => ({
         headerLeft: () => (
           <Pressable onPress={navigation.toggleDrawer}>
-            <Image
-              size={32}
-              source={{ uri: userData?.data?.imageURL }}
-              style={{
-                height: 40,
-                width: 40,
-                borderRadius: 50,
-                marginLeft: 10,
-              }}
-            />
+            {!userData?.data?.imageURL ? (
+              <Image
+                size={32}
+                source={icons.user}
+                style={{
+                  height: 40,
+                  width: 40,
+                  borderRadius: 50,
+                  marginLeft: 10,
+                }}
+              />
+            ) : (
+              <Image
+                size={32}
+                source={{ uri: userData?.data?.imageURL }}
+                style={{
+                  height: 40,
+                  width: 40,
+                  borderRadius: 50,
+                  marginLeft: 10,
+                }}
+              />
+            )}
           </Pressable>
         ),
         drawerStyle: {
@@ -139,7 +151,7 @@ const DrawerNavigation = () => {
           drawerLabel: "Home",
           title: "Home",
           drawerIcon: () => (
-            <Image source={{ uri: userData?.data?.imageURL }} />
+            <SimpleLineIcons name="home" size={20} color={colors.white} />
           ),
         }}
         component={Profile}

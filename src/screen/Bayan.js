@@ -36,14 +36,16 @@ const Bayan = () => {
   }, [lang, bayanRefetch]);
   return (
     <SubContainer>
-      <Pressable
-        style={{ marginBottom: 10 }}
-        onPress={() =>
-          navigation.navigate("bayanPost", (state = { setRefetch }))
-        }
-      >
-        <Text style={styles.postButton}>Post Bayan</Text>
-      </Pressable>
+      {userData?.data?.status === "author" && (
+        <Pressable
+          style={{ marginBottom: 10 }}
+          onPress={() =>
+            navigation.navigate("bayanPost", (state = { setRefetch }))
+          }
+        >
+          <Text style={styles.postButton}>Post Bayan</Text>
+        </Pressable>
+      )}
       <View
         style={{
           flexDirection: "row",
