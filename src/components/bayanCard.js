@@ -3,6 +3,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { Button, Image, Pressable, StyleSheet, View } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
@@ -16,9 +17,9 @@ import Title from "./title";
 
 const BayanCard = ({ item, setRefetch, config }) => {
   const [seeMore, setSeeMore] = useState(false);
-
   const [showLess, setShowLess] = useState(false);
-  const { userData } = useAuth();
+  const { userData, setBayanRefetch } = useAuth();
+  const navigation = useNavigation();
   let description;
   if (item.description?.length < 500) {
     description = item.description;
@@ -32,10 +33,14 @@ const BayanCard = ({ item, setRefetch, config }) => {
         `https://musfiqeen-backend.vercel.app/api/v1/bayans/delete/${id}`,
         config
       );
-      setRefetch((prev) => !prev);
+      setBayanRefetch((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const onEdit = async (post) => {
+    navigation.navigate("bayanPost", (state = { post }));
   };
 
   return (
@@ -98,7 +103,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
       </View>
       {userData?.data._id === item?.user?._id && (
         <>
-          <Button title="Edit" />
+          <Button title="Edit" onPress={() => onEdit(item)} />
           <Button title="Delete" onPress={() => onDelete(item?._id)} />
         </>
       )}
