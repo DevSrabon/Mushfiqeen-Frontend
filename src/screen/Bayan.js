@@ -10,8 +10,8 @@ import colors from "../theme/Colors";
 const Bayan = () => {
   const navigation = useNavigation();
   const [lang, setLang] = useState("BN");
-  const { userData } = useAuth();
-  const [refetch, setRefetch] = useState(false);
+  const { userData, bayanRefetch } = useAuth();
+
   const [data, setData] = useState([]);
 
   const config = {
@@ -33,7 +33,7 @@ const Bayan = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [lang, refetch]);
+  }, [lang, bayanRefetch]);
   return (
     <SubContainer>
       <Pressable
@@ -80,9 +80,7 @@ const Bayan = () => {
       </View>
       <FlatList
         data={data}
-        renderItem={({ item }) => (
-          <BayanCard item={item} setRefetch={setRefetch} config={config} />
-        )}
+        renderItem={({ item }) => <BayanCard item={item} config={config} />}
         keyExtractor={(item) => item._id}
       />
     </SubContainer>

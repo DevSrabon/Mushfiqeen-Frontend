@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -14,19 +14,48 @@ import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
 const BayanPost = () => {
+  const router = useRoute();
+  const { post } = router.params;
+
   const [lang, setLang] = useState("BN");
   const [date, setDate] = useState("");
   const [place, setPlace] = useState("");
   const [description, setDescription] = useState("");
-  const { userData } = useAuth();
+  const { userData, setBayanRefetch } = useAuth();
   const navigation = useNavigation();
-  const router = useRoute();
-  console.log(router.params);
+
   const [loading, setLoading] = useState(false);
+  useLayoutEffect(() => {
+    if (post) {
+      setPlace(post?.place);
+      setDate(post?.date);
+      setDescription(post?.description);
+      setLang(post?.lang);
+    }
+  }, []);
+
   const config = {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
     },
+  };
+  const onUpdate = async () => {
+    try {
+      const res = await axios.put(
+        `https://musfiqeen-backend.vercel.app/api/v1/bayans/update/${post?._id}`,
+        { description, lang, place, date },
+        config
+      );
+      if (res.data) {
+        setBayanRefetch((prev) => !prev);
+        setDate("");
+        setDescription("");
+        setPlace("");
+        navigation.navigate("Bayan");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onBayan = async () => {
     setLoading(true);
@@ -37,6 +66,7 @@ const BayanPost = () => {
         config
       );
       if (res.data) {
+        setRefetch((prev) => !prev);
         setDate("");
         setDescription("");
         setPlace("");
@@ -57,9 +87,15 @@ const BayanPost = () => {
 
   return (
     <SubContainer>
-      <Pressable onPress={onBayan} disabled={loading}>
-        <Text style={styles.button}>Post</Text>
-      </Pressable>
+      {post ? (
+        <Pressable onPress={onUpdate} disabled={loading}>
+          <Text style={styles.button}>Update</Text>
+        </Pressable>
+      ) : (
+        <Pressable onPress={onBayan} disabled={loading}>
+          <Text style={styles.button}>Post</Text>
+        </Pressable>
+      )}
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -68,6 +104,7 @@ const BayanPost = () => {
           selectionColor={colors.white}
           style={styles.input}
           onChangeText={setDate}
+          value={date}
         />
         <TextInput
           placeholder="Recorded Place"
@@ -75,6 +112,7 @@ const BayanPost = () => {
           selectionColor={colors.white}
           style={styles.input}
           onChangeText={setPlace}
+          value={place}
         />
       </View>
       <DropDown category={lang} setCategory={setLang} />
