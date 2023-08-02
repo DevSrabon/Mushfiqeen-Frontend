@@ -1,8 +1,11 @@
 import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, View } from "react-native";
+import { Button, Image, Pressable, StyleSheet, View } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import HorizantalBar from "./horizontalBar";
 import IconContainer from "./iconContainer";
@@ -12,17 +15,34 @@ import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
 import Title from "./title";
 
-const BayanCard = ({ item }) => {
+const BayanCard = ({ item, setRefetch, config }) => {
   const [seeMore, setSeeMore] = useState(false);
-
   const [showLess, setShowLess] = useState(false);
-
+  const { userData, setBayanRefetch } = useAuth();
+  const navigation = useNavigation();
   let description;
   if (item.description?.length < 500) {
     description = item.description;
   } else if (item.description?.length >= 500) {
     description = item.description.slice(0, 500);
   }
+
+  const onDelete = async (id) => {
+    try {
+      await axios.delete(
+        `https://musfiqeen-backend.vercel.app/api/v1/bayans/delete/${id}`,
+        config
+      );
+      setBayanRefetch((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onEdit = async (post) => {
+    navigation.navigate("bayanPost", (state = { post }));
+  };
+
   return (
     <View style={styles.container} key={item?._id}>
       <Row>
@@ -81,6 +101,13 @@ const BayanCard = ({ item }) => {
           </SubTitle>
         )}
       </View>
+      {userData?.data._id === item?.user?._id && (
+        <>
+          <Button title="Edit" onPress={() => onEdit(item)} />
+          <Button title="Delete" onPress={() => onDelete(item?._id)} />
+        </>
+      )}
+
       <Row>
         <SubRow>
           <AntDesign
