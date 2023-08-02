@@ -80,7 +80,9 @@ const Bayan = () => {
       </View>
       <FlatList
         data={data}
-        renderItem={({ item }) => <BayanCard item={item} />}
+        renderItem={({ item }) => (
+          <BayanCard item={item} setRefetch={setRefetch} config={config} />
+        )}
         keyExtractor={(item) => item._id}
       />
     </SubContainer>
