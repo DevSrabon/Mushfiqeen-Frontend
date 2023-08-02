@@ -1,20 +1,30 @@
 import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
-import React from "react";
-import { Image, StyleSheet, View } from "react-native";
-import Row from "./row";
+import React, { useState } from "react";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 
 import colors from "../theme/Colors";
-import SubRow from "./subRow";
-import Title from "./title";
-import SubTitle from "./subTitle";
-import TextSmall from "./textSmall";
 import HorizantalBar from "./horizontalBar";
 import IconContainer from "./iconContainer";
+import Row from "./row";
+import SubRow from "./subRow";
+import SubTitle from "./subTitle";
+import TextSmall from "./textSmall";
+import Title from "./title";
 
 const BayanCard = ({ item }) => {
+  const [seeMore, setSeeMore] = useState(false);
+
+  const [showLess, setShowLess] = useState(false);
+
+  let description;
+  if (item.description?.length < 500) {
+    description = item.description;
+  } else if (item.description?.length >= 500) {
+    description = item.description.slice(0, 500);
+  }
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={item?._id}>
       <Row>
         <SubRow>
           <Image
@@ -27,10 +37,16 @@ const BayanCard = ({ item }) => {
             <SubTitle>{moment(item?.createdAt).fromNow()}</SubTitle>
           </View>
         </SubRow>
-        <SubRow>
-          <AntDesign name="plussquareo" size={16} color={colors.primary} />
-          <Title style={{ color: colors.primary }}>Follow</Title>
-        </SubRow>
+        <View>
+          <SubRow>
+            <AntDesign name="clockcircleo" size={16} color={colors.primary} />
+            <Title style={{ color: colors.primary }}>{item?.date}</Title>
+          </SubRow>
+          <SubRow>
+            <AntDesign name="arrowright" size={16} color={colors.primary} />
+            <Title style={{ color: colors.primary }}>{item?.place}</Title>
+          </SubRow>
+        </View>
       </Row>
       <View
         style={{
@@ -39,9 +55,31 @@ const BayanCard = ({ item }) => {
           marginHorizontal: 10,
         }}
       >
-        <SubTitle style={{ textAlign: "justify" }}>
-          {item?.description}
-        </SubTitle>
+        {item?.description?.length >= 500 && !seeMore && !showLess && (
+          <>
+            <SubTitle style={{ textAlign: "justify" }}>{description}</SubTitle>
+            <Pressable onPress={(prev) => setSeeMore(!seeMore)}>
+              <TextSmall>...See More</TextSmall>
+            </Pressable>
+          </>
+        )}
+        {item?.description.length > 500 && seeMore && !showLess && (
+          <SubTitle style={{ textAlign: "justify" }}>
+            {item?.description}
+            <Pressable
+              onPress={(prev) => {
+                setShowLess(!prev), setSeeMore(!prev);
+              }}
+            >
+              <SubTitle>...Show Less</SubTitle>
+            </Pressable>
+          </SubTitle>
+        )}
+        {item?.description.length < 500 && (
+          <SubTitle style={{ textAlign: "justify" }}>
+            {item?.description}
+          </SubTitle>
+        )}
       </View>
       <Row>
         <SubRow>
@@ -51,7 +89,7 @@ const BayanCard = ({ item }) => {
             color={colors.primary}
             style={styles.icon}
           />
-          <TextSmall> 2</TextSmall>
+          <TextSmall>2</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
           <TextSmall style={{ color: colors.primary }}>3</TextSmall>
