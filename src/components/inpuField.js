@@ -71,9 +71,9 @@ const InputField = ({
               top: value
                 ? -9
                 : focusAnim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [13, -9],
-                  }),
+                  inputRange: [0, 1],
+                  outputRange: [13, -9],
+                }),
             },
           ]}
         >
@@ -86,9 +86,9 @@ const InputField = ({
                 fontSize: value
                   ? -14
                   : focusAnim.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [15, 14],
-                    }),
+                    inputRange: [0, 1],
+                    outputRange: [15, 14],
+                  }),
               },
             ]}
           >
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     fontFamily: "Medium",
     height: 50,
     fontSize: 17,
-    
+
   },
 
   errorBorder: {
@@ -123,31 +123,31 @@ const styles = StyleSheet.create({
     color: "red",
   },
   successBorder: {
-    borderColor:colors.lightGray,
+    borderColor: colors.lightGray,
     color: colors.lightGray,
-    
+
   },
   labelContainer: {
     position: "absolute",
     left: 6,
     // paddingHorizontal: 5,
-    
+
   },
   labelFocusContainer: {
     position: "absolute",
     left: 6,
     // paddingHorizontal: 7,
     // paddingVertical: 1,
-    backgroundColor: colors.bg,
+    // backgroundColor: colors.bg,
     // borderWidth: 1,
     // borderRadius: 5,
-    
+
   },
 
   textInput: {
     // borderWidth: 1,
     color: colors.white,
     // backgroundColor: colors.lightGray,
-    borderColor:colors.lightGray,
+    borderColor: colors.lightGray,
   },
 });
