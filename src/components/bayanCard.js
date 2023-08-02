@@ -2,16 +2,15 @@ import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import {
-  HorizantalBar,
-  IconContainer,
-  Row,
-  SubRow,
-  SubTitle,
-  TextSmall,
-  Title,
-} from "../components";
+
 import colors from "../theme/Colors";
+import HorizantalBar from "./horizontalBar";
+import IconContainer from "./iconContainer";
+import Row from "./row";
+import SubRow from "./subRow";
+import SubTitle from "./subTitle";
+import TextSmall from "./textSmall";
+import Title from "./title";
 
 const BayanCard = ({ item }) => {
   const [seeMore, setSeeMore] = useState(false);
