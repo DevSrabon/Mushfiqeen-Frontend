@@ -11,7 +11,6 @@ import Parent from "./Parent";
 import UpdateProfile from "../screen/UpdateProfile";
 // import ProfileInfo from "../screen/ProfileInfo";
 
-
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
@@ -33,7 +32,7 @@ const StackNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-      // initialRouteName="login"
+        // initialRouteName="login"
       >
         {/* <Stack.Screen name="ProfileInfo" component={ProfileInfo} /> */}
         <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
