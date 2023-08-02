@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     position: "absolute",
-    left: 16,
+    left: 6,
     // paddingHorizontal: 5,
     
   },
