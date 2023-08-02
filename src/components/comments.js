@@ -57,7 +57,6 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
               <SubTitle>{comment?.userId?.fullName}</SubTitle>
-              <TextSmall>Subtitle</TextSmall>
               <TextSmall>{moment(comment?.createdAt).fromNow()}</TextSmall>
               <NormalText style={{ marginVertical: 5 }}>
                 {comment?.comment}
