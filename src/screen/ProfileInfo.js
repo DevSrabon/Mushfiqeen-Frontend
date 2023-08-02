@@ -15,11 +15,11 @@ import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
 import { Container, SubTitle, Title } from "../components";
 import colors from "../theme/Colors";
-import CustomButton from "../components/customButton";
+// import CustomButton from "../components/customButton";
 import { useNavigation } from "@react-navigation/native";
 
 const PostRoutes = () => (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 ,backgroundColor: colors.lightGray}}>
         <FlatList
             data={"Post"}
             // data={Post}
@@ -43,7 +43,7 @@ const PostRoutes = () => (
 );
 
 const BayanRoutes = () => (
-    <View style={{ flex: 1, backgroundColor: "red" }}>
+    <View style={{ flex: 1, backgroundColor: colors.primary }}>
         <FlatList
             data={"Bayan"}
             // data={Bayan}
@@ -76,15 +76,15 @@ const renderScene = SceneMap({
 const ProfileInfo = () => {
     const navigation = useNavigation();
     const onUpdateNavigate = () => {
-        navigation.navigate("updateProfile");
+        navigation.navigate("UpdateProfile");
     };
 
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
 
     const [routes] = useState([
-        { key: "first", title: "Bayan" },
-        { key: "second", title: "Posts" },
+        { key: "first", title: "Posts" },
+        { key: "second", title:"Bayan"  },
     ]);
 
     const renderTabBar = (props) => (
@@ -119,7 +119,7 @@ const ProfileInfo = () => {
                         source={icons.user}
                         resizeMode="cover"
                         style={{
-                            height: 228,
+                            height: 180,
                             width: "100%",
                         }}
                     />
@@ -130,8 +130,8 @@ const ProfileInfo = () => {
                         source={icons.user}
                         resizeMode="contain"
                         style={{
-                            height: 155,
-                            width: 155,
+                            height: 140,
+                            width: 140,
                             borderRadius: 999,
                             borderColor: colors.lightGray,
                             borderWidth: 2,
@@ -248,7 +248,7 @@ const ProfileInfo = () => {
                     </View>
                 </View>
 
-                <View style={{ flex: 1, marginHorizontal: 12, marginTop: 140 }}>
+                <View style={{ flex: 1, marginHorizontal: 12, marginTop: 190 }}>
                     <TabView
                         navigationState={{ index, routes }}
                         renderScene={renderScene}

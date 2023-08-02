@@ -14,6 +14,7 @@ import { Settings } from "../screen";
 import Profile from "../screen/Profile";
 import UpdateProfile from "../screen/UpdateProfile";
 import colors from "../theme/Colors";
+import ProfileInfo from "../screen/ProfileInfo";
 
 const Drawer = createDrawerNavigator();
 
@@ -152,7 +153,7 @@ const DrawerNavigation = () => {
             <SimpleLineIcons name="user" size={20} color={colors.white} />
           ),
         }}
-        component={UpdateProfile}
+        component={ProfileInfo}
       />
 
       <Drawer.Screen
