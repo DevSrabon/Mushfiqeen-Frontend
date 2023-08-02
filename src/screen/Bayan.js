@@ -39,9 +39,7 @@ const Bayan = () => {
       {userData?.data?.status === "author" && (
         <Pressable
           style={{ marginBottom: 10 }}
-          onPress={() =>
-            navigation.navigate("bayanPost", (state = { setRefetch }))
-          }
+          onPress={() => navigation.navigate("bayanPost")}
         >
           <Text style={styles.postButton}>Post Bayan</Text>
         </Pressable>
