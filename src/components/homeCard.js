@@ -1,4 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import moment from "moment";
 import React from "react";
@@ -18,7 +19,7 @@ import colors from "../theme/Colors";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
-
+  const navigation = useNavigation();
   const onLikes = async () => {
     try {
       const res = await axios.put(
@@ -69,24 +70,30 @@ const HomeCard = ({ post }) => {
     }
   };
   const isFollowing = post?.user?.followers?.includes(userData?.data?._id);
-
+  const onNavigate = () => {};
   return (
     <View style={styles.container}>
       <Row>
         <SubRow>
-          {post?.user?.imageURL ? (
-            <Image
-              source={{ uri: post?.user?.imageURL }}
-              resizeMode="cover"
-              style={styles.userImg}
-            />
-          ) : (
-            <Image
-              source={icons.user}
-              resizeMode="cover"
-              style={styles.userImg}
-            />
-          )}
+          <Pressable
+            onPress={() => {
+              navigation.navigate("profile", { id: post?.user?._id });
+            }}
+          >
+            {post?.user?.imageURL ? (
+              <Image
+                source={{ uri: post?.user?.imageURL }}
+                resizeMode="cover"
+                style={styles.userImg}
+              />
+            ) : (
+              <Image
+                source={icons.user}
+                resizeMode="cover"
+                style={styles.userImg}
+              />
+            )}
+          </Pressable>
           <View>
             <Title>{post?.user?.fullName}</Title>
             <View

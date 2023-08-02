@@ -15,7 +15,7 @@ const DropDown = ({ category, setCategory }) => {
     key: "BN",
     value: "Bangla",
   };
-  console.log("🚀 ~ file: dropDown.js:16 ~ DropDown ~ item:", defaultOption);
+
   return (
     <SelectList
       search={false}
