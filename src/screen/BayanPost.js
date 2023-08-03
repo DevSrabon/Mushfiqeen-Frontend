@@ -9,9 +9,10 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { DropDown, SubContainer } from "../components";
+import { DropDown, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 const BayanPost = () => {
   const router = useRoute();
@@ -89,9 +90,18 @@ const BayanPost = () => {
   return (
     <SubContainer>
       {post?._id ? (
-        <Pressable onPress={onUpdate} disabled={loading}>
-          <Text style={styles.button}>Update</Text>
-        </Pressable>
+        <Row>
+          <FontAwesome
+            name="trash-o"
+            size={24}
+            color={colors.primary}
+            onPress={() => onDelete(item?._id)}
+          />
+
+          <Pressable onPress={onUpdate} disabled={loading}>
+            <Text style={styles.button}>Update</Text>
+          </Pressable>
+        </Row>
       ) : (
         <Pressable onPress={onBayan} disabled={loading}>
           <Text style={styles.button}>Post</Text>
