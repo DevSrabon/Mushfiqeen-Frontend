@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import colors from "../../theme/Colors";
 const Skeleton = ({ width, height, style }) => {
     const translateX = useRef(new Animated.Value(-width)).current;
 
@@ -21,7 +21,7 @@ const Skeleton = ({ width, height, style }) => {
                 {
                     width: width,
                     height: height,
-                    backgroundColor: "rgba(0,0,0,0.12)",
+                    backgroundColor: colors.lightBg,
                     overflow: "hidden",
                 },
                 style,
@@ -36,7 +36,7 @@ const Skeleton = ({ width, height, style }) => {
             >
                 <LinearGradient
                     style={{ width: "100%", height: "100%" }}
-                    colors={["transparent", "rgba(0,0,0,0.5)", "transparent"]}
+                    colors={["transparent", colors.lightGray, "transparent"]}
                     start={{ x: 1, y: 1 }}
                 />
             </Animated.View>
