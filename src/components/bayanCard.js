@@ -1,7 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 import React, { useState } from "react";
-import { Button, Image, Pressable, StyleSheet, View } from "react-native";
+import {
+  TouchableOpacity,
+  Image,
+  Pressable,
+  StyleSheet,
+  View,
+} from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -27,17 +33,17 @@ const BayanCard = ({ item, setRefetch, config }) => {
     description = item.description.slice(0, 500);
   }
 
-  const onDelete = async (id) => {
-    try {
-      await axios.delete(
-        `https://musfiqeen-backend.vercel.app/api/v1/bayans/delete/${id}`,
-        config
-      );
-      setBayanRefetch((prev) => !prev);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const onDelete = async (id) => {
+  //   try {
+  //     await axios.delete(
+  //       `https://musfiqeen-backend.vercel.app/api/v1/bayans/delete/${id}`,
+  //       config
+  //     );
+  //     setBayanRefetch((prev) => !prev);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const onEdit = async (post) => {
     navigation.navigate("bayanPost", (state = { post }));
@@ -77,23 +83,28 @@ const BayanCard = ({ item, setRefetch, config }) => {
       >
         {item?.description?.length >= 500 && !seeMore && !showLess && (
           <>
-            <SubTitle style={{ textAlign: "justify" }}>{description}</SubTitle>
+            <Title style={{ textAlign: "justify" }}>{description}</Title>
+
             <Pressable onPress={(prev) => setSeeMore(!seeMore)}>
-              <TextSmall style={{ textAlign: "right" }}>...See More</TextSmall>
+              <Title style={{ textAlign: "right", color: colors.primary }}>
+                ...See More
+              </Title>
             </Pressable>
           </>
         )}
         {item?.description.length > 500 && seeMore && !showLess && (
-          <SubTitle style={{ textAlign: "justify" }}>
+          <Title style={{ textAlign: "justify" }}>
             {item?.description}
             <Pressable
               onPress={(prev) => {
                 setShowLess(!prev), setSeeMore(!prev);
               }}
             >
-              <SubTitle>...Show Less</SubTitle>
+              <Title style={{ textAlign: "right", color: colors.primary }}>
+                ...Show Less
+              </Title>
             </Pressable>
-          </SubTitle>
+          </Title>
         )}
         {item?.description.length < 500 && (
           <SubTitle style={{ textAlign: "justify" }}>
@@ -101,12 +112,12 @@ const BayanCard = ({ item, setRefetch, config }) => {
           </SubTitle>
         )}
       </View>
-      {userData?.data._id === item?.user?._id && (
+      {/* {userData?.data._id === item?.user?._id && (
         <>
-          <Button title="Edit" onPress={() => onEdit(item)} />
+        
           <Button title="Delete" onPress={() => onDelete(item?._id)} />
         </>
-      )}
+      )} */}
 
       <Row>
         <SubRow>
@@ -118,24 +129,32 @@ const BayanCard = ({ item, setRefetch, config }) => {
           />
           <TextSmall>2</TextSmall>
         </SubRow>
-        {/* <SubRow style={{ gap: 3 }}>
-          <TextSmall style={{ color: colors.primary }}>3</TextSmall>
-          <TextSmall>Comments</TextSmall>
-          <View
+        {userData?.data._id === item?.user?._id && (
+          <TouchableOpacity
+            onPress={() => onEdit(item)}
             style={{
-              borderColor: colors.white,
-              borderWidth: 3,
+              borderWidth: 1,
+              borderColor: colors.primary,
               borderRadius: 25,
-              alignSelf: "center",
             }}
-          />
-          <TextSmall style={{ color: colors.primary }}>2</TextSmall>
-          <TextSmall>Share</TextSmall>
-        </SubRow> */}
+          >
+            <>
+              <Title
+                style={{
+                  color: colors.primary,
+                  paddingHorizontal: 10,
+                  paddingVertical: 1,
+                }}
+              >
+                Edit
+              </Title>
+            </>
+          </TouchableOpacity>
+        )}
       </Row>
 
       <HorizantalBar />
-      <IconContainer />
+      {/* <IconContainer /> */}
     </View>
   );
 };
