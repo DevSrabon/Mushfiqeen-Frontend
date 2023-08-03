@@ -159,6 +159,7 @@ const DrawerNavigation = () => {
       <Drawer.Screen
         name="profile"
         options={{
+          headerShown: false,
           drawerLabel: "Profile",
           title: "Profile",
           drawerIcon: () => (

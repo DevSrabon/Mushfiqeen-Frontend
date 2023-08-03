@@ -12,12 +12,12 @@ import {
 } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
-import { Container, SubRow, SubTitle, Title } from "../components";
+import { Container, Row, SubRow, SubTitle, Title } from "../components";
 import colors from "../theme/Colors";
-// import CustomButton from "../components/customButton";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { useAuth } from "../contexts/useAuth";
+
 const ProfileInfo = () => {
   const [profile, setProfile] = useState({});
   const router = useRoute();
@@ -30,6 +30,8 @@ const ProfileInfo = () => {
         flex: 1,
         backgroundColor: colors.lightGray,
         paddingHorizontal: 10,
+        width: "100%",
+        // height: "100%",
       }}
     >
       <FlatList
@@ -184,7 +186,7 @@ const ProfileInfo = () => {
               source={{ uri: profile?.imageURL }}
               resizeMode="cover"
               style={{
-                height: 110,
+                height: 150,
                 width: "100%",
               }}
             />
@@ -193,39 +195,25 @@ const ProfileInfo = () => {
               source={icons.user}
               resizeMode="cover"
               style={{
-                height: 110,
+                height: 150,
                 width: "100%",
               }}
             />
           )}
         </View>
 
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={{ alignItems: "center" }}>
           {profile ? (
             <Image
               source={{ uri: profile?.imageURL }}
               resizeMode="contain"
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 999,
-                borderColor: colors.lightGray,
-                borderWidth: 3,
-                marginTop: -53,
-              }}
+              style={styles.profileImg}
             />
           ) : (
             <Image
               source={icons.user}
               resizeMode="contain"
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 999,
-                borderColor: colors.lightGray,
-                borderWidth: 3,
-                marginTop: -53,
-              }}
+              style={styles.profileImg}
             />
           )}
           {userData?.data?._id === profile?._id && (
@@ -233,40 +221,27 @@ const ProfileInfo = () => {
               style={{
                 width: 120,
                 height: 35,
-                alignItems: "center",
+                alignSelf: "flex-end",
                 justifyContent: "center",
                 backgroundColor: colors.lightBg,
                 borderRadius: 20,
-                marginHorizontal: 20 * 2,
+                // marginHorizontal: 20 * 2,
                 marginTop: 5,
               }}
               onPress={() => onUpdateNavigate()}
             >
-              <Text style={{ color: colors.white }}>Update Profile</Text>
+              <Text style={{ color: colors.white, alignSelf: "center" }}>
+                Update Profile
+              </Text>
             </TouchableOpacity>
           )}
 
-          <Title
-            style={{
-              color: colors.white,
-              marginVertical: 8,
-              fontSize: 15,
-              fontFamily: "SemiBold",
-            }}
-          >
-            {profile?.fullName}
-          </Title>
+          <Title>{profile?.fullName}</Title>
           <SubTitle style={{ color: colors.lightGray }}>
             {profile?.designation}
           </SubTitle>
 
-          <View
-            style={{
-              flexDirection: "row",
-              marginVertical: 6,
-              alignItems: "center",
-            }}
-          >
+          <Row>
             <MaterialIcons
               name="location-on"
               size={24}
@@ -275,7 +250,7 @@ const ProfileInfo = () => {
             <Text style={{ marginLeft: 4, color: colors.lightGray }}>
               {profile?.address || "Dhaka, Bangladesh"}
             </Text>
-          </View>
+          </Row>
           <View
             style={{
               flexDirection: "row",
@@ -304,51 +279,22 @@ const ProfileInfo = () => {
             <View></View>
           </View>
 
-          <View
-            style={{
-              paddingVertical: 8,
-              flexDirection: "row",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-                marginHorizontal: 20,
-              }}
-            >
-              <Text style={{ color: colors.white }}>
-                {profile?.followers?.length + 1 || "0"}
-              </Text>
-              <Text style={{ color: colors.white }}>Followers</Text>
+          <Row>
+            <View style={styles.infoDiv}>
+              <SubTitle>{profile?.followers?.length + 1 || "0"}</SubTitle>
+              <SubTitle>Followers</SubTitle>
             </View>
 
-            <View
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-                marginHorizontal: 20,
-              }}
-            >
-              <Text style={{ color: colors.white }}>
-                {profile?.following?.length + 1 || "0"}
-              </Text>
-              <Text style={{ color: colors.white }}>Followings</Text>
+            <View style={styles.infoDiv}>
+              <SubTitle>{profile?.following?.length + 1 || "0"}</SubTitle>
+              <SubTitle>Followings</SubTitle>
             </View>
 
-            <View
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-                marginHorizontal: 22,
-              }}
-            >
-              <Text style={{ color: colors.white }}>
-                {profile?.posts?.length + 1 || "0"}
-              </Text>
-              <Text style={{ color: colors.white }}>Posts</Text>
+            <View style={styles.infoDiv}>
+              <SubTitle>{profile?.posts?.length + 1 || "0"}</SubTitle>
+              <SubTitle>Posts</SubTitle>
             </View>
-          </View>
+          </Row>
 
           {/* <View style={{ flexDirection: "row" }}>
                         <TouchableOpacity
@@ -387,7 +333,7 @@ const ProfileInfo = () => {
                     </View> */}
         </View>
 
-        <View style={{ flex: 1, marginHorizontal: 10, marginTop: 90 }}>
+        <View style={{ flex: 1 }}>
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
@@ -403,6 +349,18 @@ const ProfileInfo = () => {
 
 export default ProfileInfo;
 const styles = StyleSheet.create({
+  profileImg: {
+    height: 100,
+    width: 100,
+    borderRadius: 999,
+    borderColor: colors.lightGray,
+    borderWidth: 3,
+    marginTop: -53,
+  },
+  infoDiv: {
+    alignItems: "center",
+    marginHorizontal: 20,
+  },
   container: {
     backgroundColor: colors.bg,
     width: "100%",
