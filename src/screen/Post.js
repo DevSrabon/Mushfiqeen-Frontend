@@ -1,6 +1,5 @@
-import { AntDesign } from "@expo/vector-icons";
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Pressable,
   ScrollView,
@@ -9,6 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import NavStr from "../Nav/NavStr";
+import { AntDesign } from "@expo/vector-icons";
 import { Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
@@ -60,7 +60,7 @@ const Post = (props) => {
             style={[
               styles.button,
               loading || description === ""
-                ? { color: colors.lightBg }
+                ? { color: colors.lightGray }
                 : { color: colors.primary },
             ]}
           >
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
   button: {
     fontFamily: "SemiBold",
     fontSize: 20,
-
     alignSelf: "flex-end",
     marginRight: 20,
     paddingVertical: 10,

@@ -13,6 +13,7 @@ import { DropDown, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const BayanPost = () => {
   const router = useRoute();
@@ -91,6 +92,12 @@ const BayanPost = () => {
     <SubContainer>
       {post?._id ? (
         <Row>
+          <AntDesign
+            name="arrowleft"
+            size={30}
+            color={colors.white}
+            onPress={() => navigation.goBack()}
+          />
           <FontAwesome
             name="trash-o"
             size={24}
