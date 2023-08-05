@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import {
   Pressable,
@@ -8,7 +7,7 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { Container, Row, SubContainer } from "../components";
+import { Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import { AntDesign } from "@expo/vector-icons";
@@ -17,7 +16,6 @@ import NavStr from "../Nav/NavStr";
 const Post = (props) => {
   const { navigation } = props;
   const [description, setDescription] = useState("");
-  // const navigation = useNavigation();
   const { userData, setRefetch } = useAuth();
   const [loading, setLoading] = useState(false);
 

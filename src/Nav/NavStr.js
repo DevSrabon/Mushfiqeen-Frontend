@@ -12,4 +12,5 @@ export default {
   SIGNUP: "Signup",
   VERIFYCODE: "verifyCode",
   FORGET: "forgetPassword",
+  PARENT: "Parent",
 };
