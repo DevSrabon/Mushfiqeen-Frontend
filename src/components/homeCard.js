@@ -16,6 +16,7 @@ import {
 } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import NavStr from "../Nav/NavStr";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
@@ -77,7 +78,7 @@ const HomeCard = ({ post }) => {
         <SubRow>
           <Pressable
             onPress={() => {
-              navigation.navigate("profile", { id: post?.user?._id });
+              navigation.navigate(NavStr.PROFILE, { id: post?.user?._id });
             }}
           >
             {post?.user?.imageURL ? (

@@ -1,0 +1,15 @@
+export default {
+  HOME: "Home",
+  PROFILE: "Profile",
+  PROFILE_UPDATE: "profileUpdate",
+  SETTINGS: "Settings",
+  POST: "Post",
+  POSTDETAILS: "postDetails",
+  BAYAN: "Bayan",
+  BAYAN_POST: "bayanPost",
+  CHAT: "Chat",
+  LOGIN: "Login",
+  SIGNUP: "Signup",
+  VERIFYCODE: "verifyCode",
+  FORGET: "forgetPassword",
+};

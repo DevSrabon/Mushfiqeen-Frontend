@@ -8,6 +8,7 @@ import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import NavStr from "../Nav/NavStr";
 
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
@@ -92,7 +93,7 @@ const Login = () => {
 
       {/* <View style={{ flex: 1, gap: 10, marginTop: 20 }}></View> */}
       <View style={{ width: "100%", alignItems: "flex-end" }}>
-        <TouchableOpacity onPress={() => navigation.navigate("forgetPass")}>
+        <TouchableOpacity onPress={() => navigation.navigate(NavStr.FORGET)}>
           <Text
             style={{
               fontFamily: "SemiBold",
@@ -123,7 +124,7 @@ const Login = () => {
         >
           Don't have an account?
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+        <TouchableOpacity onPress={() => navigation.navigate(NavStr.SIGNUP)}>
           <Text
             style={{
               fontFamily: "SemiBold",

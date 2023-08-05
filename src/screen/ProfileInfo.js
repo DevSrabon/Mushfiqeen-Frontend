@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  ScrollView
-} from "react-native";
+import { ScrollView } from "react-native";
 
 import ProfilePage from "./ProfilePage";
 // import { ScrollView } from "react-native-gesture-handler";
