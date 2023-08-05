@@ -1,6 +1,6 @@
 import { useFonts } from "expo-font";
+import StackNavigation from "./src/Nav/StackNavigation";
 import AuthProvider from "./src/contexts/useAuth";
-import DrawerNavigation from "./src/Nav/DrawerNavigation";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -13,10 +13,11 @@ export default function App() {
   if (!loaded) {
     return null;
   }
+
   return (
     <>
       <AuthProvider>
-        <DrawerNavigation />
+        <StackNavigation />
       </AuthProvider>
     </>
   );

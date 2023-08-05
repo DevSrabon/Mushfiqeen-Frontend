@@ -20,6 +20,7 @@ import SubRow from "./subRow";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
 import Title from "./title";
+import NavStr from "../Nav/NavStr";
 
 const BayanCard = ({ item, setRefetch, config }) => {
   const [seeMore, setSeeMore] = useState(false);
@@ -46,7 +47,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
   // };
 
   const onEdit = async (post) => {
-    navigation.navigate("bayanPost", (state = { post }));
+    navigation.navigate(NavStr.BAYAN_POST, (state = { post }));
   };
 
   return (
