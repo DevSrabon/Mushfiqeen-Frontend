@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useAuth } from "../contexts/useAuth";
@@ -9,13 +8,16 @@ import InputField from "./inpuField";
 import NormalText from "./normalText";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
+import { timeAgo } from "./timeConvert";
 const Comments = ({ comment, postId, config, setRefetch }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { userData } = useAuth();
   const isLiked = comment?.likes?.includes(userData?.data?._id);
   const onCommentsLikes = async () => {
+    setLoading((prev) => !prev);
     try {
       await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/${postId}/comments/${comment?._id}/like`,
@@ -27,6 +29,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
       console.log(error);
     } finally {
       setRefetch(false);
+      setLoading((prev) => !prev);
     }
   };
   const onReply = async () => {
@@ -46,6 +49,8 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
       setRefetch(false);
     }
   };
+
+  const date = timeAgo(comment?.createdAt);
   return (
     <View>
       <View style={styles.container}>
@@ -57,7 +62,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
               <SubTitle>{comment?.userId?.fullName}</SubTitle>
-              <TextSmall>{moment(comment?.createdAt).fromNow()}</TextSmall>
+              <TextSmall>{date}</TextSmall>
               <NormalText style={{ marginVertical: 5 }}>
                 {comment?.comment}
               </NormalText>
@@ -77,7 +82,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           <Pressable onPress={onCommentsLikes}>
             <SubTitle>
               {comment.commentLikes}{" "}
-              <Text style={isLiked && { color: "blue" }}>
+              <Text style={isLiked && { color: colors.primary }}>
                 {isLiked ? "Liked" : "Like"}
               </Text>
             </SubTitle>
@@ -103,7 +108,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
                   <View style={{ padding: 10 }}>
                     <SubTitle>{reply?.userId?.fullName}</SubTitle>
                     {/* <TextSmall>Subtitle</TextSmall> */}
-                    <TextSmall>{moment(reply?.createdAt).fromNow()}</TextSmall>
+                    <TextSmall>{timeAgo(reply?.createdAt)}</TextSmall>
                     <NormalText style={{ marginVertical: 5 }}>
                       {reply?.reply}
                     </NormalText>
@@ -122,7 +127,11 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
             setValue={setValue}
             value={value}
           />
-          <Text onPress={onReply} style={styles.btn}>
+          <Text
+            onPress={onReply}
+            disabled={loading || !value}
+            style={styles.btn}
+          >
             Submit
           </Text>
         </CustomModal>
@@ -158,7 +167,9 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   btn: {
-    backgroundColor: "#B4AAF2",
+    backgroundColor: colors.bg,
+    borderColor: colors.lightGray,
+    borderWidth: 2,
     width: "90%",
     textAlign: "center",
     textAlignVertical: "center",

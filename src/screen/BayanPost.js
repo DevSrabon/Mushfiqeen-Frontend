@@ -1,3 +1,4 @@
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -12,8 +13,6 @@ import {
 import { DropDown, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import { FontAwesome } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 
 const BayanPost = () => {
   const router = useRoute();
@@ -41,6 +40,18 @@ const BayanPost = () => {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
     },
+  };
+  const onDelete = async (id) => {
+    try {
+      await axios.delete(
+        `https://musfiqeen-backend.vercel.app/api/v1/bayans/delete/${id}`,
+        config
+      );
+      setBayanRefetch((prev) => !prev);
+      navigation.goBack();
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onUpdate = async () => {
     try {
@@ -102,16 +113,37 @@ const BayanPost = () => {
             name="trash-o"
             size={24}
             color={colors.primary}
-            onPress={() => onDelete(item?._id)}
+            onPress={() => onDelete(post?._id)}
           />
 
-          <Pressable onPress={onUpdate} disabled={loading}>
-            <Text style={styles.button}>Update</Text>
+          <Pressable
+            onPress={onUpdate}
+            disabled={loading || description === ""}
+          >
+            <Text
+              style={[
+                styles.button,
+                loading || description === ""
+                  ? { color: colors.lightGray }
+                  : { color: colors.primary },
+              ]}
+            >
+              Update
+            </Text>
           </Pressable>
         </Row>
       ) : (
-        <Pressable onPress={onBayan} disabled={loading}>
-          <Text style={styles.button}>Post</Text>
+        <Pressable onPress={onBayan} disabled={loading || description === ""}>
+          <Text
+            style={[
+              styles.button,
+              loading || description === ""
+                ? { color: colors.lightGray }
+                : { color: colors.primary },
+            ]}
+          >
+            Post
+          </Text>
         </Pressable>
       )}
 
