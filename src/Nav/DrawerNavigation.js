@@ -1,186 +1,34 @@
-import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  DrawerItemList,
-  createDrawerNavigator,
-} from "@react-navigation/drawer";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, Pressable, Text, View } from "react-native";
-import icons from "../../assets/icons";
-import { useAuth } from "../contexts/useAuth";
-// import { Profile, Settings } from "../screen";
-import { Settings } from "../screen";
-import Profile from "../screen/Profile";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Login, Settings, Signup } from "../screen";
 import ProfileInfo from "../screen/ProfileInfo";
-import colors from "../theme/Colors";
+import CustomDrawer from "./components/CustomDrawer";
+import BottomNavigator from "./BottomNavigation";
+import NavStr from "./NavStr";
+import { NavigationContainer } from "@react-navigation/native";
+import UpdateProfile from "../screen/UpdateProfile";
+import ForgetPass from "../screen/ForgetPass";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = () => {
-  const { setToken, setUserData, setLoading, userData } = useAuth();
-  const navigation = useNavigation();
-
-  const onLogOut = async () => {
-    try {
-      setLoading(true);
-      await AsyncStorage.removeItem("token");
-      setToken(null);
-      setUserData(null);
-    } catch (error) {
-      console.error("Error logging out:", error);
-    } finally {
-      setLoading(false);
-      navigation.navigate("login");
-    }
-  };
-
-  const onSignIn = () => {
-    navigation.navigate("login");
-  };
-
   return (
-    <Drawer.Navigator
-      screenOptions={({ navigation }) => ({
-        headerLeft: () => (
-          <Pressable onPress={navigation.toggleDrawer}>
-            {!userData?.data?.imageURL ? (
-              <Image
-                size={32}
-                source={icons.user}
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 50,
-                  marginLeft: 10,
-                }}
-              />
-            ) : (
-              <Image
-                size={32}
-                source={{ uri: userData?.data?.imageURL }}
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 50,
-                  marginLeft: 10,
-                }}
-              />
-            )}
-          </Pressable>
-        ),
-        drawerStyle: {
-          backgroundColor: colors.bg,
-          width: 250,
-        },
-        headerStyle: {
-          backgroundColor: colors.bg,
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
-        drawerLabelStyle: {
-          color: colors.white,
-        },
-      })}
-      drawerContent={(props) => (
-        <>
-          <View
-            style={{
-              marginTop: 30,
-              height: 200,
-              width: "100%",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              paddingLeft: 10,
-            }}
-          >
-            <Image
-              source={{ uri: userData?.data?.imageURL } || icons.user}
-              style={{
-                height: 70,
-                width: 70,
-                borderRadius: 50,
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 22,
-                marginVertical: 6,
-                fontFamily: "SemiBold",
-                color: colors.white,
-              }}
-            >
-              {userData?.data?.fullName || "Test user"}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: "Medium",
-                color: colors.white,
-              }}
-            >
-              Main Manager
-            </Text>
-          </View>
-          <DrawerItemList {...props} />
-          {userData?.data ? (
-            <Pressable onPress={onLogOut}>
-              <Text
-                style={{ textAlign: "center", marginTop: 10, color: "white" }}
-              >
-                Log Out
-              </Text>
-            </Pressable>
-          ) : (
-            <Pressable onPress={onSignIn}>
-              <Text
-                style={{ textAlign: "center", marginTop: 10, color: "white" }}
-              >
-                Sign In
-              </Text>
-            </Pressable>
-          )}
-        </>
-      )}
-    >
-      <Drawer.Screen
-        name="home"
-        options={{
-          drawerLabel: "Home",
-          title: "Home",
-          drawerIcon: () => (
-            <SimpleLineIcons name="home" size={20} color={colors.white} />
-          ),
-        }}
-        component={Profile}
-      />
-      <Drawer.Screen
-        name="profile"
-        options={{
+    <NavigationContainer>
+      <Drawer.Navigator
+        screenOptions={{
           headerShown: false,
-          drawerLabel: "Profile",
-          title: "Profile",
-          drawerIcon: () => (
-            <SimpleLineIcons name="user" size={20} color={colors.white} />
-          ),
         }}
-        component={ProfileInfo}
-      />
-
-      <Drawer.Screen
-        name="settings"
-        options={{
-          drawerLabel: "Settings",
-          title: "Settings",
-          drawerIcon: () => (
-            <MaterialIcons name="settings" size={20} color={colors.white} />
-          ),
-        }}
-        component={Settings}
-      />
-    </Drawer.Navigator>
+        drawerContent={(props) => <CustomDrawer {...props} />}
+      >
+        <Drawer.Screen name={NavStr.HOME} component={BottomNavigator} />
+        <Drawer.Screen name={NavStr.PROFILE} component={ProfileInfo} />
+        <Drawer.Screen name={NavStr.PROFILE_UPDATE} component={UpdateProfile} />
+        <Drawer.Screen name={NavStr.SETTINGS} component={Settings} />
+        <Drawer.Screen name={NavStr.LOGIN} component={Login} />
+        <Drawer.Screen name={NavStr.SIGNUP} component={Signup} />
+        <Drawer.Screen name={NavStr.FORGET} component={ForgetPass} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 };
 

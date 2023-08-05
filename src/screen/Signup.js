@@ -10,6 +10,7 @@ import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import useImagePicker from "../hooks/useImagePicker";
 import colors from "../theme/Colors";
+import NavStr from "../Nav/NavStr";
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
   const navigation = useNavigation();
@@ -155,7 +156,7 @@ const Signup = () => {
           >
             Already signed up ?
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("login")}>
+          <TouchableOpacity onPress={() => navigation.navigate(NavStr.LOGIN)}>
             <Text
               style={{
                 fontFamily: "SemiBold",
