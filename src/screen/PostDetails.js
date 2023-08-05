@@ -10,6 +10,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { Protect } from "../Nav/ProtectedRoute";
 import { Comments, Reactions, Title } from "../components";
 import SkeletonMain from "../components/Skeleton/SkeletonMain";
 import Container from "../components/container";
@@ -180,4 +181,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostDetails;
+export default Protect(PostDetails);

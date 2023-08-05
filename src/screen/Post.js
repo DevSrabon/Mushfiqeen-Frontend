@@ -70,6 +70,7 @@ const Post = (props) => {
           maxHeight={450}
           selectionColor={colors.white}
           onChangeText={setDescription}
+          value={description}
           style={{
             backgroundColor: colors.bg,
             color: colors.white,

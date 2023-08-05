@@ -9,26 +9,35 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
-import { Title } from "../components";
+import NavStr from "../Nav/NavStr";
+import { Loading, Title } from "../components";
 import CustomButton from "../components/customButton";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
 const UpdateProfile = ({ navigation }) => {
-  const { userData } = useAuth();
+  const { userData, fetchUserData } = useAuth();
   const [selectedImage, setSelectedImage] = useState(
     `https://i.ibb.co/PzWs7jW/user.jpg`
   );
   // const [selectedImage, setSelectedImage] = useState(imagesDataURL[0]);
   const [name, setName] = useState(userData?.data?.fullName);
   const [email, setEmail] = useState(userData?.data?.email);
-  const [address, setAddress] = useState("Dhaka");
-  const [country, setCountry] = useState("Bangladesh");
-  const [bio, setBio] = useState("");
-  const [designation, setDesignation] = useState(userData?.data?.designation);
-  const [contactNumber, setContactNumber] = useState("1234567890");
+  const [address, setAddress] = useState(userData?.data?.address || "Dhaka");
+
+  const [country, setCountry] = useState(
+    userData?.data?.country || "Bangladesh"
+  );
+  const [bio, setBio] = useState(userData?.data?.bio || "");
+  const [designation, setDesignation] = useState(
+    userData?.data?.designation || ""
+  );
+  const [contactNumber, setContactNumber] = useState(
+    userData?.data?.contactNumber || "1234567890"
+  );
 
   const navigations = useNavigation();
 
@@ -36,27 +45,13 @@ const UpdateProfile = ({ navigation }) => {
     const cleanedValue = value.replace(/[^0-9]/g, "");
     setContactNumber(cleanedValue);
   };
-
-  // const handleImageSelection = async () => {
-  //     let result = await ImagePicker.launchImageLibraryAsync({
-  //         mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //         allowsEditing: true,
-  //         aspect: [4, 4],
-  //         quality: 1,
-  //     });
-
-  //     console.log(result);
-
-  //     if (!result.canceled) {
-  //         setSelectedImage(result.assets[0].uri);
-  //     }
-  // };
-
+  const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [selectDate, setSelectDate] = useState("");
-  const dateOfBirth = new Date(selectDate);
+  const dateOfBirth = date;
+
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
@@ -78,6 +73,7 @@ const UpdateProfile = ({ navigation }) => {
   };
 
   const handleSaveChanges = async () => {
+    setLoading(true);
     try {
       const body = {
         name,
@@ -94,7 +90,8 @@ const UpdateProfile = ({ navigation }) => {
         body
       );
       if (res.status === 200) {
-        navigations.navigate("home");
+        await fetchUserData();
+        navigations.navigate(NavStr.PROFILE);
       }
     } catch (error) {
       if (error.response.data.message) {
@@ -102,8 +99,11 @@ const UpdateProfile = ({ navigation }) => {
       } else if (error.response.data.error) {
         alert(error.response.data.error);
       }
+    } finally {
+      setLoading(false);
     }
   };
+  if (loading) return <Loading />;
   return (
     <ScrollView
       style={{
@@ -111,6 +111,7 @@ const UpdateProfile = ({ navigation }) => {
         backgroundColor: colors.bg,
         paddingHorizontal: 22,
       }}
+      keyboardShouldPersistTaps="handled"
     >
       <View
         style={{
@@ -196,13 +197,25 @@ const UpdateProfile = ({ navigation }) => {
             }}
           ></View>
         </View>
-        <View>
-          <InputField
-            placeholder="District"
-            value={address}
-            setValue={setAddress}
-          />
-        </View>
+
+        <GooglePlacesAutocomplete
+          placeholder="Location"
+          fetchDetails={true}
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            setAddress(data.description);
+          }}
+          query={{
+            key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
+            language: "en",
+          }}
+          styles={{
+            textInput: {
+              backgroundColor: colors.lightBg,
+              color: colors.white,
+            },
+          }}
+        />
         <View>
           <InputField
             placeholder="Country"

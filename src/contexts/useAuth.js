@@ -95,6 +95,7 @@ const AuthProvider = ({ children }) => {
     setPostId,
     bayanRefetch,
     setBayanRefetch,
+    fetchUserData,
   };
 
   return (
