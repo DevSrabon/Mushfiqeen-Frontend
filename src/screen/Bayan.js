@@ -1,18 +1,20 @@
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { BayanCard, SubContainer } from "../components";
+import { BayanCard, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import NavStr from "../Nav/NavStr";
+import { AntDesign } from "@expo/vector-icons";
 
-const Bayan = () => {
-  const navigation = useNavigation();
+const Bayan = (props) => {
+  const { navigation } = props;
   const [lang, setLang] = useState("BN");
   const { userData, bayanRefetch } = useAuth();
 
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const config = {
     headers: {
@@ -36,14 +38,23 @@ const Bayan = () => {
   }, [lang, bayanRefetch]);
   return (
     <SubContainer>
-      {userData?.data?.status === "author" && (
-        <Pressable
-          style={{ marginBottom: 10 }}
-          onPress={() => navigation.navigate("bayanPost")}
-        >
-          <Text style={styles.postButton}>Post Bayan</Text>
-        </Pressable>
-      )}
+      <Row style={{ paddingVertical: 0 }}>
+        <AntDesign
+          name="arrowleft"
+          size={30}
+          color={colors.white}
+          onPress={() => navigation.goBack()}
+        />
+        {userData?.data?.status === "author" && (
+          <Pressable
+            style={{ marginBottom: 10 }}
+            onPress={() => navigation.navigate(NavStr.BAYAN_POST)}
+          >
+            <Text style={styles.buttonPost}>Post Bayan</Text>
+          </Pressable>
+        )}
+      </Row>
+
       <View
         style={{
           flexDirection: "row",
@@ -88,6 +99,13 @@ const Bayan = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonPost: {
+    fontFamily: "SemiBold",
+    fontSize: 20,
+    color: colors.primary,
+    alignSelf: "flex-end",
+    paddingVertical: 10,
+  },
   btnContainer: {
     minWidth: 100,
   },

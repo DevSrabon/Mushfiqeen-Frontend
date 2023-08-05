@@ -3,10 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { BayanPost, Login, PostDetails, Signup } from "../screen";
 import ForgetPass from "../screen/ForgetPass";
 import VerifyCode from "../screen/VerifyCode";
-import UpdateProfile from "../screen/UpdateProfile";
 import ProfileInfo from "../screen/ProfileInfo";
 import NavStr from "./NavStr";
-import AuthProvider from "../contexts/useAuth";
 import { NavigationContainer } from "@react-navigation/native";
 import Parent from "./Parent";
 
