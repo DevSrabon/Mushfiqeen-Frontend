@@ -41,7 +41,7 @@ const Signup = () => {
       );
 
       if (response.status === 200) {
-        navigation.navigate("verifyCode", (state = { email }));
+        navigation.navigate(NavStr.VERIFYCODE, (state = { email }));
       }
     } catch (error) {
       console.log(error.response.data.error);

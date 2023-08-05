@@ -2,10 +2,11 @@ import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
-import { Container, Loading } from "../components";
+import SearchHeader from "../Nav/components/searchHeader";
+import { Container } from "../components";
+import SkeletonMain from "../components/Skeleton/SkeletonMain";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
-import SearchHeader from "../Nav/components/searchHeader";
 
 const Home = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -15,6 +16,7 @@ const Home = ({ navigation }) => {
 
   const { refetch, userData } = useAuth();
   const fetchPosts = async () => {
+    setLoading(true);
     try {
       const limit = 10;
       const response = await axios.get(
@@ -35,7 +37,6 @@ const Home = ({ navigation }) => {
   };
 
   useEffect(() => {
-    console.log("fetch");
     if (refetch) {
       setSkip(0);
       fetchPosts();
@@ -50,7 +51,7 @@ const Home = ({ navigation }) => {
     }
   };
 
-  if (loading && skip === 0) return <Loading />;
+  if (loading && skip === 0) return <SkeletonMain />;
 
   const estimatedItemSize = parseInt(total) || 100;
 

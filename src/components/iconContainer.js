@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Pressable, View } from "react-native";
 
 import { useLayoutEffect } from "react";
+import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
@@ -19,7 +20,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
 
   const onNavigate = () => {
     setPostId(post);
-    navigation.navigate("postDetails");
+    navigation.navigate(NavStr.POSTDETAILS);
   };
   return (
     <View
