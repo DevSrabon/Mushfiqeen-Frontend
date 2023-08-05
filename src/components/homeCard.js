@@ -1,7 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
-import moment from "moment";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
@@ -17,6 +16,7 @@ import {
 } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import { timeAgo } from "./timeConvert";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
@@ -32,8 +32,8 @@ const HomeCard = ({ post }) => {
           },
         }
       );
-
       setRefetch(true);
+
       console.log("Like updated successfully");
     } catch (error) {
       if (error.response.data.message) {
@@ -72,26 +72,6 @@ const HomeCard = ({ post }) => {
   };
   const isFollowing = post?.user?.followers?.includes(userData?.data?._id);
 
-  const timeAgo = (createdAt) => {
-    const duration = moment.duration(moment().diff(moment(createdAt)));
-    const seconds = duration.seconds();
-    const minutes = duration.minutes();
-    const hours = duration.hours();
-    const days = duration.days();
-    const years = duration.years();
-
-    if (years > 0) {
-      return `${years}y ago`;
-    } else if (days > 0) {
-      return `${days}d ago`;
-    } else if (hours > 0) {
-      return `${hours}h ago`;
-    } else if (minutes > 0) {
-      return `${minutes}m ago`;
-    } else {
-      return `${seconds}s ago`;
-    }
-  };
   const date = timeAgo(post?.createdAt);
   const onNavigate = () => {};
   return (

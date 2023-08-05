@@ -111,7 +111,16 @@ const PostDetails = () => {
             }}
           >
             <Pressable onPress={onComment} disabled={loading || !texts}>
-              <Text style={styles.button}>Comment</Text>
+              <Text
+                style={[
+                  styles.button,
+                  loading || texts === ""
+                    ? { color: colors.lightGray }
+                    : { color: colors.primary },
+                ]}
+              >
+                Comment
+              </Text>
             </Pressable>
             <ScrollView>
               <TextInput
