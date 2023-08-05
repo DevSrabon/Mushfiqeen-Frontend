@@ -110,9 +110,17 @@ const BayanPost = () => {
           </Pressable>
         </Row>
       ) : (
-        <Pressable onPress={onBayan} disabled={loading}>
-          <Text style={styles.button}>Post</Text>
-        </Pressable>
+        <Row>
+          <AntDesign
+            name="arrowleft"
+            size={30}
+            color={colors.white}
+            onPress={() => navigation.goBack()}
+          />
+          <Pressable onPress={onBayan} disabled={loading}>
+            <Text style={styles.button}>Post</Text>
+          </Pressable>
+        </Row>
       )}
 
       <View style={styles.inputContainer}>
@@ -163,8 +171,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.primary,
     alignSelf: "flex-end",
-    marginRight: 20,
-    paddingVertical: 10,
+    // marginRight: 20,
+    // paddingVertical: 10,
   },
   input: {
     paddingVertical: 5,
