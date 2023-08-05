@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, SafeAreaView, StyleSheet } from "react-native";
+import { Dimensions, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 
 const Container = (props) => {
   return (
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-    // marginTop: StatusBar.currentHeight,
+    marginTop: StatusBar.currentHeight,
     backgroundColor: "#000000",
   },
 });

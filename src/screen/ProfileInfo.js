@@ -17,6 +17,7 @@ import colors from "../theme/Colors";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { useAuth } from "../contexts/useAuth";
+import NavStr from "../Nav/NavStr";
 
 const ProfileInfo = () => {
   const [profile, setProfile] = useState({});
@@ -113,8 +114,9 @@ const ProfileInfo = () => {
   });
 
   const navigation = useNavigation();
+
   const onUpdateNavigate = () => {
-    navigation.navigate("UpdateProfile");
+    navigation.navigate(NavStr.PROFILE_UPDATE);
   };
   const { userData } = useAuth();
 

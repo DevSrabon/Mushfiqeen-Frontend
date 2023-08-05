@@ -1,15 +1,12 @@
-import { NavigationContainer } from "@react-navigation/native";
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createStackNavigator } from "@react-navigation/stack";
-
 import React from "react";
-import { useAuth } from "../contexts/useAuth";
+import { createStackNavigator } from "@react-navigation/stack";
 import { BayanPost, Login, PostDetails, Signup } from "../screen";
 import ForgetPass from "../screen/ForgetPass";
 import VerifyCode from "../screen/VerifyCode";
-import Parent from "./Parent";
 import UpdateProfile from "../screen/UpdateProfile";
 import ProfileInfo from "../screen/ProfileInfo";
+import NavStr from "./NavStr";
+import AuthProvider from "../contexts/useAuth";
 
 const Stack = createStackNavigator();
 
@@ -27,17 +24,12 @@ const StackNavigation = () => {
   };
 
   const { loading } = useAuth();
-  // if (loading) return <Loading />;
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-      // initialRouteName="login"
-      >
 
-        <Stack.Screen name="parent" component={Parent} />
+  return (
+    <AuthProvider>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen
-          name="postDetails"
+          name={NavStr.POSTDETAILS}
           options={{
             transitionSpec: {
               open: config,
@@ -46,19 +38,11 @@ const StackNavigation = () => {
           }}
           component={PostDetails}
         />
-        <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
-        <Stack.Screen name="ProfileInfo" component={ProfileInfo} />
-        <Stack.Screen name="login" component={Login} />
-        <Stack.Screen name="signup" component={Signup} />
-        <Stack.Screen name="verifyCode" component={VerifyCode} />
-        <Stack.Screen name="forgetPass" component={ForgetPass} />
-        <Stack.Screen
-          name="bayanPost"
-          component={BayanPost}
-          options={{ headerShown: true }}
-        />
+        <Stack.Screen name={NavStr.PROFILE} component={ProfileInfo} />
+        <Stack.Screen name={NavStr.VERIFYCODE} component={VerifyCode} />
+        <Stack.Screen name={NavStr.BAYAN_POST} component={BayanPost} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </AuthProvider>
   );
 };
 

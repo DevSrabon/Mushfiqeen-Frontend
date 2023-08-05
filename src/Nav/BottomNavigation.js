@@ -1,10 +1,11 @@
+import React, { useRef, useState } from "react";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import React, { useRef, useState } from "react";
-import { Animated, TouchableOpacity, View } from "react-native";
+import { Animated, TouchableOpacity, View, StyleSheet } from "react-native";
 import { Bayan, Chat, Home, Post } from "../screen";
 import colors from "../theme/Colors";
+import NavStr from "./NavStr";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,8 +44,7 @@ export default function BottomNavigator() {
   };
   return (
     <Tab.Navigator
-      // backBehavior="Main"
-      initialRouteName="Home"
+      initialRouteName={NavStr.HOME}
       screenOptions={({ route }) => ({
         tabBarInactiveTintColor: colors.lightGray,
         tabBarActiveTintColor: colors.white,
@@ -85,11 +85,7 @@ export default function BottomNavigator() {
 
           return (
             <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={styles.btn}
               onPress={() => handleTabPress(tabName, route.name)}
               onBlur={handleTabBlur}
             >
@@ -109,39 +105,11 @@ export default function BottomNavigator() {
                     name="home"
                     size={24}
                     color={focused ? colors.white : colors.lightGray}
-                    style={
-                      focused && {
-                        borderTopWidth: 3,
-                        borderLeftWidth: 3,
-                        borderRightWidth: 3,
-                        borderRadius: 7,
-                        borderColor: colors.white,
-                        paddingRight: 5,
-                        paddingLeft: 11,
-
-                        borderColor: colors.white,
-                        paddingTop: 1,
-                        alignItems: "center",
-                      }
-                    }
+                    style={focused && styles.homeFocused}
                   />
                 )}
                 {tabName === "Post" && (
-                  <View
-                    style={
-                      focused && {
-                        borderTopWidth: 3,
-                        borderLeftWidth: 3,
-                        borderRightWidth: 3,
-                        borderRadius: 7,
-
-                        paddingHorizontal: 9,
-                        borderColor: colors.white,
-                        paddingTop: 1,
-                        alignItems: "center",
-                      }
-                    }
-                  >
+                  <View style={focused && styles.focused}>
                     <MaterialIcons
                       name="post-add"
                       size={24}
@@ -150,21 +118,7 @@ export default function BottomNavigator() {
                   </View>
                 )}
                 {tabName === "Bayan" && (
-                  <View
-                    style={
-                      focused && {
-                        borderTopWidth: 3,
-                        borderLeftWidth: 3,
-                        borderRightWidth: 3,
-                        borderRadius: 7,
-
-                        paddingHorizontal: 9,
-                        borderColor: colors.white,
-                        paddingTop: 1,
-                        alignItems: "center",
-                      }
-                    }
-                  >
+                  <View style={focused && styles.focused}>
                     <Entypo
                       name="sound"
                       size={24}
@@ -173,20 +127,7 @@ export default function BottomNavigator() {
                   </View>
                 )}
                 {tabName === "Chat" && (
-                  <View
-                    style={
-                      focused && {
-                        borderTopWidth: 3,
-                        borderLeftWidth: 3,
-                        borderRightWidth: 3,
-                        borderRadius: 7,
-                        paddingHorizontal: 9,
-                        borderColor: colors.white,
-                        paddingTop: 1,
-                        alignItems: "center",
-                      }
-                    }
-                  >
+                  <View style={focused && styles.focused}>
                     <MaterialIcons
                       name="chat"
                       size={24}
@@ -201,7 +142,7 @@ export default function BottomNavigator() {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name={NavStr.HOME}
         component={Home}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
@@ -210,7 +151,7 @@ export default function BottomNavigator() {
         })}
       />
       <Tab.Screen
-        name="Post"
+        name={NavStr.POST}
         component={Post}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
@@ -219,7 +160,7 @@ export default function BottomNavigator() {
         })}
       />
       <Tab.Screen
-        name="Bayan"
+        name={NavStr.BAYAN}
         component={Bayan}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
@@ -228,7 +169,7 @@ export default function BottomNavigator() {
         })}
       />
       <Tab.Screen
-        name="Chat"
+        name={NavStr.CHAT}
         component={Chat}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
@@ -239,3 +180,34 @@ export default function BottomNavigator() {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  btn: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  focused: {
+    borderTopWidth: 3,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderRadius: 7,
+    paddingHorizontal: 9,
+    borderColor: colors.white,
+    paddingTop: 1,
+    alignItems: "center",
+  },
+  homeFocused: {
+    borderTopWidth: 3,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    borderRadius: 7,
+    borderColor: colors.white,
+    paddingRight: 5,
+    paddingLeft: 11,
+
+    borderColor: colors.white,
+    paddingTop: 1,
+    alignItems: "center",
+  },
+});
