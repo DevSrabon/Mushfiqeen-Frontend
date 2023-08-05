@@ -98,12 +98,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingVertical: 5,
     borderColor: colors.primary,
-    borderWidth: 1,
+    borderWidth: 0.6,
     borderRadius: 25,
     paddingHorizontal: 10,
   },
   focus: {
-    backgroundColor: colors.lightBg,
+    backgroundColor: colors.primary,
+    opacity: 0.8,
   },
   postButton: {
     fontFamily: "SemiBold",
