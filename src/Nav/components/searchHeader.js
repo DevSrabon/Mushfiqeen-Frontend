@@ -1,24 +1,16 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Image,
-  StyleSheet,
-} from "react-native";
 import React from "react";
+import { TouchableOpacity, TextInput, Image, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../theme/Colors";
 import { Row } from "../../components";
 import { useAuth } from "../../contexts/useAuth";
 import icons from "../../../assets/icons";
-// import { useNavigation } from "@react-navigation/native";
 
-const HeaderImg = (props) => {
+const SearchHeader = (props) => {
   const { navigation } = props;
-  const { setToken, setUserData, setLoading, userData } = useAuth();
+  const { userData } = useAuth();
   return (
-    <Row>
+    <Row style={{ backgroundColor: colors.bg }}>
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         {!userData?.data?.imageURL ? (
           <Image size={32} source={icons.user} style={styles.headerImg} />
@@ -30,43 +22,34 @@ const HeaderImg = (props) => {
           />
         )}
       </TouchableOpacity>
-      <TextInput />
-      <Ionicons
-        name="notifications-circle-outline"
-        size={20}
-        color={colors.white}
+      <TextInput
+        style={styles.input}
+        placeholder="Search User"
+        placeholderTextColor={colors.lightGray}
+        selectionColor={colors.lightGray}
       />
+      <Ionicons name="notifications" size={30} color={colors.white} />
     </Row>
   );
 };
 
 const styles = StyleSheet.create({
+  input: {
+    width: "75%",
+    backgroundColor: colors.bg,
+    borderWidth: 0.5,
+    borderRadius: 25,
+    borderColor: colors.lightGray,
+    paddingHorizontal: 10,
+    color: colors.white,
+    height: 40,
+    fontSize: 14,
+  },
   headerImg: {
     height: 40,
     width: 40,
     borderRadius: 50,
-    marginLeft: 10,
-  },
-  img: {
-    height: 70,
-    width: 70,
-    borderRadius: 50,
-  },
-  content: {
-    marginTop: 30,
-    height: 200,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    paddingLeft: 10,
   },
 });
 
-export default HeaderImg;
-{
-  /* <Ionicons
-          name="ios-return-down-back-sharp"
-          size={24}
-          color={colors.white}
-        /> */
-}
+export default SearchHeader;

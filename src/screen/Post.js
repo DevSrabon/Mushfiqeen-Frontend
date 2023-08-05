@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -8,15 +8,19 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { Container, SubContainer } from "../components";
+import { Container, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import { AntDesign } from "@expo/vector-icons";
+import NavStr from "../Nav/NavStr";
 
-const Post = () => {
+const Post = (props) => {
+  const { navigation } = props;
   const [description, setDescription] = useState("");
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const { userData, setRefetch } = useAuth();
   const [loading, setLoading] = useState(false);
+
   const onPost = async () => {
     const headers = {
       Authorization: `Bearer ${userData?.accessToken}`,
@@ -31,7 +35,7 @@ const Post = () => {
       );
       setRefetch(true);
       if (response.status === 201) {
-        navigation.navigate("Home");
+        navigation.navigate(NavStr.HOME);
         setDescription("");
       }
     } catch (error) {
@@ -46,9 +50,18 @@ const Post = () => {
 
   return (
     <SubContainer>
-      <Pressable onPress={onPost} disabled={loading}>
-        <Text style={styles.button}>Post</Text>
-      </Pressable>
+      <Row style={{ paddingVertical: 0 }}>
+        <AntDesign
+          name="arrowleft"
+          size={30}
+          color={colors.white}
+          onPress={() => navigation.goBack()}
+        />
+        <Pressable onPress={onPost} disabled={loading}>
+          <Text style={styles.button}>Post</Text>
+        </Pressable>
+      </Row>
+
       <ScrollView>
         <TextInput
           placeholder="What do you want to talk about?"
