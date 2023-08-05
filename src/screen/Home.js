@@ -1,13 +1,11 @@
 import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { Container, Loading } from "../components";
-
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
-import colors from "../theme/Colors";
-import HeaderImg from "../Nav/components/HeaderImg";
+import SearchHeader from "../Nav/components/searchHeader";
 
 const Home = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -58,8 +56,7 @@ const Home = ({ navigation }) => {
 
   return (
     <Container>
-      {/* <View style={{ flex: 1, backgroundColor: colors.lightBg }}> */}
-      <HeaderImg navigation={navigation} />
+      <SearchHeader navigation={navigation} />
       <FlashList
         data={posts}
         renderItem={({ item }) => <HomeCard post={item} />}
@@ -73,7 +70,6 @@ const Home = ({ navigation }) => {
           )
         }
       />
-      {/* </View> */}
     </Container>
   );
 };
