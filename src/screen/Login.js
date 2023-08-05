@@ -2,13 +2,13 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import NavStr from "../Nav/NavStr";
 import Container from "../components/container";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import NavStr from "../Nav/NavStr";
 
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
@@ -56,9 +56,9 @@ const Login = () => {
   useEffect(() => {
     if (userData?.data && userData?.data?.role !== "inactive") {
       // navigation.navigate(router?.params?.from || "parent");
-      navigation.navigate("parent");
+      navigation.navigate(NavStr.PARENT);
     } else if (userData?.data?.status === "inactive") {
-      navigation.navigate("verifyCode");
+      navigation.navigate(NavStr.VERIFYCODE);
     }
   }, [navigation, userData?.data?.role]);
 

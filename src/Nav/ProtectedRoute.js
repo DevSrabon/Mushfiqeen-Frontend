@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Loading } from "../components";
 import { useAuth } from "../contexts/useAuth";
+import NavStr from "./NavStr";
 
 export function Protect(Component) {
   return function ProtectedComponent(props) {
@@ -13,7 +14,7 @@ export function Protect(Component) {
     useEffect(() => {
       if (!loading) {
         if (userData?.data?.status === "inactive" || !token) {
-          navigation.replace("login", { from: router.name });
+          navigation.replace(NavStr.LOGIN, { from: router.name });
         } else {
           setScreenLoading(false);
         }

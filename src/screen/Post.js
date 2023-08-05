@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
+import React, { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -7,11 +8,10 @@ import {
   Text,
   TextInput,
 } from "react-native";
+import NavStr from "../Nav/NavStr";
 import { Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import { AntDesign } from "@expo/vector-icons";
-import NavStr from "../Nav/NavStr";
 
 const Post = (props) => {
   const { navigation } = props;
@@ -55,8 +55,17 @@ const Post = (props) => {
           color={colors.white}
           onPress={() => navigation.goBack()}
         />
-        <Pressable onPress={onPost} disabled={loading}>
-          <Text style={styles.button}>Post</Text>
+        <Pressable onPress={onPost} disabled={loading || description === ""}>
+          <Text
+            style={[
+              styles.button,
+              loading || description === ""
+                ? { color: colors.lightBg }
+                : { color: colors.primary },
+            ]}
+          >
+            Post
+          </Text>
         </Pressable>
       </Row>
 
@@ -87,7 +96,7 @@ const styles = StyleSheet.create({
   button: {
     fontFamily: "SemiBold",
     fontSize: 20,
-    color: colors.primary,
+
     alignSelf: "flex-end",
     marginRight: 20,
     paddingVertical: 10,
