@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import AddImages from "../components/AddImages";
 import Container from "../components/container";
 import CustomButton from "../components/customButton";
@@ -11,6 +11,9 @@ import { useAuth } from "../contexts/useAuth";
 import useImagePicker from "../hooks/useImagePicker";
 import colors from "../theme/Colors";
 import NavStr from "../Nav/NavStr";
+import icons from "../../assets/icons";
+import { FontAwesome, Fontisto, MaterialIcons } from "@expo/vector-icons";
+
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
   const navigation = useNavigation();
@@ -24,6 +27,7 @@ const Signup = () => {
   const fullName = firstName + " " + lastName;
 
   const { imageURL, loading: imgLoading, takePhoto } = useImagePicker();
+
   console.log(imageURL?.[0]);
   const onSignup = async () => {
     try {
@@ -64,7 +68,75 @@ const Signup = () => {
   return (
     <Container style={{ alignItems: "center" }}>
       <ScrollView>
-        <Header style={{ marginTop: 50 }}>Signup</Header>
+        <Header style={{ marginVertical: 40 }}>Signup</Header>
+
+        <View style={{ alignItems: "center" }}>
+          {!imageURL.length ? (
+            <>
+              <TouchableOpacity
+                onPress={takePhoto}
+                style={{ width: "100%", height: "10%", borderColor: "red" }}
+              >
+                {loading ? (
+                  <>
+                    <View style={{}}>
+                      <ActivityIndicator style={{ color: "yellow" }} />
+                    </View>
+                  </>
+                ) : (
+                  <View
+                    style={{
+                      height: "auto",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      source={icons.user}
+                      style={{
+                        height: 90,
+                        width: 90,
+                        borderRadius: 85,
+                        borderWidth: 2,
+                        borderColor:colors.lightGray,
+                      }}
+                    />
+
+                    <View
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        right: 10,
+                        zIndex: 9999,
+                      }}
+                    >
+                      <MaterialIcons
+                        // backgroundColor="white"
+                        marginRight={90}
+                        marginBottom={-10}
+                        name="photo-camera"
+                        size={30}
+                        color={colors.lightGray}
+                      />
+                    </View>
+
+                    {error && <Text style={{ color: "red" }}>{error}</Text>}
+                  </View>
+                )}
+              </TouchableOpacity>
+            </>
+          ) : (
+            <View style={{ height: 80}}>
+              {imageURL?.length && (
+                <Image
+                  style={{ height: 60, width: 60, borderRadius: 50 }}
+                  source={{ uri: imageURL?.[imageURL.length - 1] }}
+                />
+              )}
+            </View>
+          )}
+        </View>
+
 
         <InputField
           style={{ marginTop: 50 }}
@@ -80,11 +152,11 @@ const Signup = () => {
           setValue={setLastName}
           error={error.lastName}
         />
-        <AddImages
+        {/* <AddImages
           imageUrls={imageURL}
           takePhoto={takePhoto}
           error={error.errorImg}
-        />
+        /> */}
         <InputField
           placeholder="Occupation"
           value={designation}

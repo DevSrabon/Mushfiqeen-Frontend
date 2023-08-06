@@ -345,21 +345,3 @@ const styles = StyleSheet.create({
     padding: 3,
   },
 });
-
-// import React from "react";
-// import {
-//   ScrollView
-// } from "react-native";
-
-// import ProfilePage from "./ProfilePage";
-// // import { ScrollView } from "react-native-gesture-handler";
-
-// const ProfileInfo = () => {
-//   return (
-//     <ScrollView>
-//       <ProfilePage />
-//     </ScrollView>
-//   );
-// };
-
-// export default ProfileInfo;
