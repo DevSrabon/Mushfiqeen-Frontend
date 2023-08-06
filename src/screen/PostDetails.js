@@ -1,23 +1,25 @@
+import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 import {
+  Image,
   Pressable,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
-  View,
 } from "react-native";
 import { Protect } from "../Nav/ProtectedRoute";
-import { Comments, Reactions, Title } from "../components";
+import { Comments, Reactions, Row, SubContainer, Title } from "../components";
 import SkeletonMain from "../components/Skeleton/SkeletonMain";
-import Container from "../components/container";
+import { AntDesign } from "@expo/vector-icons";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-const PostDetails = () => {
+import icons from "../../assets/icons";
+
+const PostDetails = (props) => {
+  const { navigation } = props;
   const [texts, setTexts] = useState("");
   const [post, setPost] = useState([]);
   const {
@@ -96,75 +98,84 @@ const PostDetails = () => {
   }, [refetch, isFocused && isRefetch]);
 
   if (loading) return <SkeletonMain />;
+
   return (
-    <Container style={{ marginTop: StatusBar.currentHeight }}>
-      <ScrollView style={{ backgroundColor: colors.bg }}>
-        <View style={styles.container}>
-          <HomeCard post={postId} />
+    <SubContainer>
+      <ScrollView>
+        <Row>
+          <AntDesign
+            name="arrowleft"
+            size={30}
+            color={colors.white}
+            onPress={() => navigation.goBack()}
+          />
           <Reactions post={post} />
-          <View
-            style={{
-              borderColor: "grey",
-              borderWidth: 1,
-              borderRadius: 5,
-              marginHorizontal: 5,
-            }}
-          >
-            <Pressable onPress={onComment} disabled={loading || !texts}>
-              <Text style={styles.button}>Comment</Text>
-            </Pressable>
-            <ScrollView>
-              <TextInput
-                placeholder="What do you want to talk about?"
-                placeholderTextColor={colors.lightGray}
-                textAlignVertical={"top"}
-                multiline={true}
-                numberOfLines={5}
-                value={texts}
-                selectionColor={colors.white}
-                onChangeText={setTexts}
-                style={{
-                  backgroundColor: colors.bg,
-                  color: colors.white,
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                }}
-              />
-            </ScrollView>
-          </View>
-          <Title>Comments</Title>
-          {/* <FlatList
-            data={post?.comments}
-            renderItem={({ item }) => <Comments comment={item} />}
-            keyExtractor={(item) => item._id}
-          /> */}
-          {post?.comments?.map((comment) => (
-            <Comments
-              comment={comment}
-              key={comment?._id}
-              setRefetch={setRefetch}
-              postId={post?._id}
-              config={config}
+        </Row>
+
+        <HomeCard post={postId} />
+
+        <Row style={{ gap: 5 }}>
+          <Image source={icons.user} style={styles.userImg} />
+          <ScrollView>
+            <TextInput
+              placeholder="Leave Your Thoughts ?"
+              placeholderTextColor={colors.lightGray}
+              multiline={true}
+              value={texts}
+              selectionColor={colors.white}
+              onChangeText={setTexts}
+              style={styles.input}
             />
-          ))}
-        </View>
+          </ScrollView>
+          <Pressable onPress={onComment} disabled={loading || !texts}>
+            <Text
+              style={[
+                styles.button,
+                loading || texts === ""
+                  ? { color: colors.lightGray }
+                  : { color: colors.primary },
+              ]}
+            >
+              Post
+            </Text>
+          </Pressable>
+        </Row>
+
+        {post?.comments?.map((comment) => (
+          <Comments
+            comment={comment}
+            key={comment?._id}
+            setRefetch={setRefetch}
+            postId={post?._id}
+            config={config}
+          />
+        ))}
       </ScrollView>
-    </Container>
+    </SubContainer>
   );
 };
 const styles = StyleSheet.create({
-  container: {
+  userImg: {
+    height: 35,
+    width: 35,
+    borderRadius: 50,
+    alignSelf: "flex-start",
+  },
+  input: {
     backgroundColor: colors.bg,
-    width: "100%",
-    marginBottom: 10,
-    // height: 400,
+    color: colors.white,
+    fontSize: 18,
+    borderColor: colors.lightBg,
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   button: {
     fontFamily: "SemiBold",
     fontSize: 16,
     color: colors.primary,
     alignSelf: "flex-end",
-    marginRight: 20,
     paddingVertical: 10,
   },
   userImg: {

@@ -1,5 +1,4 @@
 import { AntDesign } from "@expo/vector-icons";
-import moment from "moment";
 import React, { useState } from "react";
 import {
   Image,
@@ -18,6 +17,7 @@ import Row from "./row";
 import SubRow from "./subRow";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
+import { timeAgo } from "./timeConvert";
 import Title from "./title";
 
 const BayanCard = ({ item, setRefetch, config }) => {
@@ -47,26 +47,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
   const onEdit = async (post) => {
     navigation.navigate(NavStr.BAYAN_POST, (state = { post }));
   };
-  const timeAgo = (createdAt) => {
-    const duration = moment.duration(moment().diff(moment(createdAt)));
-    const seconds = duration.seconds();
-    const minutes = duration.minutes();
-    const hours = duration.hours();
-    const days = duration.days();
-    const years = duration.years();
 
-    if (years > 0) {
-      return `${years}y ago`;
-    } else if (days > 0) {
-      return `${days}d ago`;
-    } else if (hours > 0) {
-      return `${hours}h ago`;
-    } else if (minutes > 0) {
-      return `${minutes}m ago`;
-    } else {
-      return `${seconds}s ago`;
-    }
-  };
   const date = timeAgo(item?.createdAt);
 
   return (

@@ -1,11 +1,13 @@
+import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
-import moment from "moment";
-import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
 import NavStr from "../Nav/NavStr";
+import { useAuth } from "../contexts/useAuth";
+import colors from "../theme/Colors";
+import { timeAgo } from "./timeConvert";
 import {
   HorizantalBar,
   IconContainer,
@@ -15,8 +17,6 @@ import {
   TextSmall,
   Title,
 } from "../components";
-import { useAuth } from "../contexts/useAuth";
-import colors from "../theme/Colors";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
@@ -32,9 +32,7 @@ const HomeCard = ({ post }) => {
           },
         }
       );
-
       setRefetch(true);
-      console.log("Like updated successfully");
     } catch (error) {
       if (error.response.data.message) {
         alert(error.response.data.message);
@@ -57,9 +55,7 @@ const HomeCard = ({ post }) => {
           },
         }
       );
-
       setRefetch(true);
-      console.log("Like updated successfully");
     } catch (error) {
       if (error.response.data.message) {
         alert(error.response.data.message);
@@ -72,26 +68,6 @@ const HomeCard = ({ post }) => {
   };
   const isFollowing = post?.user?.followers?.includes(userData?.data?._id);
 
-  const timeAgo = (createdAt) => {
-    const duration = moment.duration(moment().diff(moment(createdAt)));
-    const seconds = duration.seconds();
-    const minutes = duration.minutes();
-    const hours = duration.hours();
-    const days = duration.days();
-    const years = duration.years();
-
-    if (years > 0) {
-      return `${years}y ago`;
-    } else if (days > 0) {
-      return `${days}d ago`;
-    } else if (hours > 0) {
-      return `${hours}h ago`;
-    } else if (minutes > 0) {
-      return `${minutes}m ago`;
-    } else {
-      return `${seconds}s ago`;
-    }
-  };
   const date = timeAgo(post?.createdAt);
   const onNavigate = () => {};
   return (
@@ -119,23 +95,19 @@ const HomeCard = ({ post }) => {
           </Pressable>
           <View>
             <Title>{post?.user?.fullName}</Title>
-            <View
-              style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
-            >
-              <SubTitle>
-                {post?.user?.designation || "Sub title of user"}
-              </SubTitle>
-            </View>
+            <SubTitle>
+              {post?.user?.designation || "Sub title of user"}
+            </SubTitle>
           </View>
         </SubRow>
         {isFollowing ? (
-          <SubRow>
+          <SubRow style={{ gap: 0 }}>
             <AntDesign name="Safety" size={16} color={colors.primary} />
             <Title style={{ color: colors.primary }}>Followed</Title>
           </SubRow>
         ) : (
           <Pressable onPress={onFollow}>
-            <SubRow>
+            <SubRow style={{ gap: 0 }}>
               <AntDesign name="plussquareo" size={16} color={colors.primary} />
               <Title style={{ color: colors.primary }}>Follow</Title>
             </SubRow>
@@ -163,22 +135,12 @@ const HomeCard = ({ post }) => {
         </SubRow>
         <SubRow style={{ gap: 3 }}>
           <TextSmall>{date}</TextSmall>
-          <View
-            style={{
-              borderColor: colors.white,
-              borderWidth: 3,
-              borderRadius: 25,
-              alignSelf: "center",
-            }}
-          />
+          <SubTitle>||</SubTitle>
 
           <TextSmall style={{ color: colors.primary }}>
             {post?.commentsLength}
           </TextSmall>
           <TextSmall>Comments</TextSmall>
-
-          {/* <TextSmall style={{ color: colors.primary }}>2</TextSmall>
-          <TextSmall>Share</TextSmall> */}
         </SubRow>
       </Row>
 

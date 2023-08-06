@@ -2,24 +2,15 @@ import { AntDesign, Entypo } from "@expo/vector-icons";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import colors from "../theme/Colors";
-import SubTitle from "./subTitle";
+import { useNavigation } from "@react-navigation/native";
+import NavStr from "../Nav/NavStr";
 
 const Reactions = ({ post }) => {
+  const navigation = useNavigation();
   const imageArr = post?.likers;
-  console.log(imageArr);
   return (
     <>
-      <SubTitle style={{ marginLeft: 20 }}>Reactions</SubTitle>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
-          gap: 5,
-          marginVertical: 10,
-          paddingHorizontal: 20,
-        }}
-      >
+      <View style={styles.container}>
         {imageArr
           ?.slice(0)
           .reverse()
@@ -42,102 +33,8 @@ const Reactions = ({ post }) => {
             </Pressable>
           ))}
 
-        {/* <Pressable style={{ alignItems: "center" }}>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
-          <View style={styles.iconBox}>
-            <AntDesign
-              name="like1"
-              size={12}
-              color={colors.white}
-              style={styles.icon}
-            />
-          </View>
-        </Pressable>
-
-        <Pressable style={{ alignItems: "center" }}>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
-          <View style={styles.iconBox}>
-            <AntDesign
-              name="like1"
-              size={12}
-              color={colors.white}
-              style={styles.icon}
-            />
-          </View>
-        </Pressable>
-        <Pressable style={{ alignItems: "center" }}>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
-          <View style={styles.iconBox}>
-            <AntDesign
-              name="like1"
-              size={12}
-              color={colors.white}
-              style={styles.icon}
-            />
-          </View>
-        </Pressable>
-        <Pressable style={{ alignItems: "center" }}>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
-          <View style={styles.iconBox}>
-            <AntDesign
-              name="like1"
-              size={12}
-              color={colors.white}
-              style={styles.icon}
-            />
-          </View>
-        </Pressable>
-        <Pressable style={{ alignItems: "center" }}>
-          <Image
-            source={icons.user}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
-          <View style={styles.iconBox}>
-            <AntDesign
-              name="like1"
-              size={12}
-              color={colors.white}
-              style={styles.icon}
-            />
-          </View>
-        </Pressable> */}
-        <Pressable
-          style={{
-            alignItems: "center",
-            height: 40,
-            width: 40,
-            borderRadius: 50,
-          }}
-        >
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              height: 35,
-              width: 35,
-              borderRadius: 50,
-              borderColor: colors.white,
-              borderWidth: 1,
-              bottom: 10,
-            }}
-          >
+        <Pressable onPress={() => navigation.navigate(NavStr.REACTION)}>
+          <View style={styles.threeDots}>
             <Entypo
               name="dots-three-horizontal"
               size={24}
@@ -152,9 +49,19 @@ const Reactions = ({ post }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.bg,
-    width: "100%",
-    // height: 400,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    gap: 10,
+  },
+  threeDots: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 35,
+    width: 35,
+    borderRadius: 50,
+    borderColor: colors.white,
+    borderWidth: 1,
   },
   userImg: {
     height: 35,
@@ -169,12 +76,13 @@ const styles = StyleSheet.create({
     padding: 1,
   },
   iconBox: {
+    position: "absolute",
     backgroundColor: colors.primary,
     borderWidth: 1,
     borderColor: colors.white,
     borderRadius: 25,
-    bottom: 15,
-    left: 15,
+    top: 20,
+    left: 25,
   },
 });
 
