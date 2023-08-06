@@ -1,7 +1,8 @@
-import { getApp, getApps, initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { getFirestore } from "firebase/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -23,12 +24,13 @@ const firebaseConfig = {
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
 }
-const fbApp = getApp();
-const fbStorage = getStorage();
+const db = getFirestore();
+
+// image upload
 const listFiles = async () => {
   const storage = getStorage();
 
-  // Create a reference under which you want to list
+  // Create a reference under the list
   const listRef = ref(storage, "images");
 
   // Find all the prefixes and items.
@@ -73,4 +75,4 @@ const uploadToFirebase = async (uri, name, onProgress) => {
   });
 };
 
-export { fbApp, fbStorage, listFiles, uploadToFirebase };
+export { db, listFiles, uploadToFirebase };

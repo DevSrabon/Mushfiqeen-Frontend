@@ -2,9 +2,17 @@ import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, View } from "react-native";
 
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useLayoutEffect } from "react";
 import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
+import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
 
@@ -21,6 +29,41 @@ const IconContainer = ({ onLikes, userData, post }) => {
   const onNavigate = () => {
     setPostId(post);
     navigation.navigate(NavStr.POSTDETAILS);
+  };
+  const uid = userData?.data?._id;
+  const oid = post?.user?._id;
+  const combinedId = uid > oid ? uid + oid : oid + uid;
+
+  const onSendMessage = async () => {
+    try {
+      const userRef = doc(db, "users", uid);
+      const res = await getDoc(userRef);
+      const data = {
+        [combinedId + ".userInfo"]: {
+          uid: oid,
+          name: post?.user?.fullName,
+          photoURL: post?.user?.imageURL,
+        },
+        [combinedId + ".date"]: serverTimestamp(),
+      };
+      if (!res.exists()) {
+        await setDoc(userRef, {});
+        await updateDoc(userRef, data);
+        navigation.navigate(NavStr.CHAT);
+      } else {
+        await updateDoc(userRef, data);
+        navigation.navigate(NavStr.CHAT);
+      }
+      const chatRef = doc(db, "chats", combinedId);
+      const chatRes = await getDoc(chatRef);
+      if (!chatRes.exists()) {
+        await setDoc(chatRef, { messages: [] });
+      }
+
+      console.log("Document successfully written!");
+    } catch (error) {
+      console.error("Error writing document: ", error);
+    }
   };
   return (
     <View
@@ -51,7 +94,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
         <TextSmall>Share</TextSmall>
       </Pressable>
 
-      <Pressable style={{ alignItems: "center" }}>
+      <Pressable style={{ alignItems: "center" }} onPress={onSendMessage}>
         <FontAwesome name="send" size={18} color={colors.white} />
         <TextSmall>Send</TextSmall>
       </Pressable>
