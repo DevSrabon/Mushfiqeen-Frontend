@@ -13,4 +13,5 @@ export default {
   VERIFYCODE: "verifyCode",
   FORGET: "forgetPassword",
   PARENT: "Parent",
+  REACTION: "reactionDetails",
 };

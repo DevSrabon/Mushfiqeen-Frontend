@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import SearchHeader from "../Nav/components/searchHeader";
-import { Container } from "../components";
+import { Container, Loading } from "../components";
 import SkeletonMain from "../components/Skeleton/SkeletonMain";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
     }
   };
 
-  if (loading && skip === 0) return <SkeletonMain />;
+  if (loading && skip === 0) return <Loading />;
 
   const estimatedItemSize = parseInt(total) || 100;
 

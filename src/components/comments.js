@@ -9,13 +9,15 @@ import NormalText from "./normalText";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
 import { timeAgo } from "./timeConvert";
+
 const Comments = ({ comment, postId, config, setRefetch }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
-
   const { userData } = useAuth();
+
   const isLiked = comment?.likes?.includes(userData?.data?._id);
+
   const onCommentsLikes = async () => {
     setLoading((prev) => !prev);
     try {
@@ -32,6 +34,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
       setLoading((prev) => !prev);
     }
   };
+
   const onReply = async () => {
     try {
       const rest = await axios.put(
@@ -51,6 +54,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
   };
 
   const date = timeAgo(comment?.createdAt);
+
   return (
     <View>
       <View style={styles.container}>
