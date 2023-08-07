@@ -24,87 +24,173 @@ const ProfilePage = () => {
   const router = useRoute();
 
   const params = router.params;
-
-  const PostRoutes = () => (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: colors.lightGray,
-        paddingHorizontal: 10,
-        width: "100%",
-        // height: "100%",
-      }}
-    >
-      <FlatList
-        data={profile?.posts}
-        // data={Post}
-        // numColumns={2}
-        renderItem={({ item, index }) => (
-          <View
-            style={{
-              flex: 1,
-              marginTop: 10,
-              borderWidth: 1,
-              borderColor: colors.bg,
-              padding: 10,
-            }}
-          >
-            <SubRow>
-              {profile?.imageURL && (
-                <Image
-                  source={{ uri: profile?.imageURL }}
-                  resizeMode="cover"
-                  style={styles.userImg}
-                />
-              )}
-              <View>
-                <Title>{profile?.fullName}</Title>
-                <View
-                  style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
-                >
-                  <SubTitle>
-                    {profile?.designation || "Sub title of user"}
-                  </SubTitle>
-                </View>
-              </View>
-            </SubRow>
-
-            <SubTitle>{item?.description}</SubTitle>
-            <SubRow>
-              <SubTitle>Likes: {item?.likes}</SubTitle>
-              <SubTitle>Comments: {item?.commentsLength}</SubTitle>
-            </SubRow>
-          </View>
-        )}
-      />
-    </View>
-  );
-
-  const BayanRoutes = () => (
-    <View style={{ flex: 1, backgroundColor: colors.primary }}>
-      <FlatList
-        data={"Bayan"}
-        // data={Bayan}
-        numColumns={3}
-        renderItem={({ item, index }) => (
-          <View
-            style={{
-              flex: 1,
-              // aspectRatio: 1,
-              margin: 3,
-              padding: 22,
-            }}
-          >
-            <View
-              key={index}
-              source={item}
-              style={{ width: "100%", height: "100%", borderRadius: 12 }}
+  const PostRoutes = () => {
+    const renderPostItem = ({ item, index }) => (
+      <View
+        key={index}
+        style={{
+          flex: 1,
+          // marginTop: 10,
+          borderWidth: 1,
+          borderColor: colors.bg,
+          // backgroundColor:"red",
+          padding: 2,
+          // height:244
+        }}
+      >
+        <SubRow>
+          {profile?.imageURL && (
+            <Image
+              source={{ uri: profile?.imageURL }}
+              resizeMode="cover"
+              style={styles.userImg}
             />
+          )}
+          <View>
+            <Title>{profile?.fullName}</Title>
+            <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+              <SubTitle>{profile?.designation || "Sub title of user"}</SubTitle>
+            </View>
           </View>
-        )}
-      />
-    </View>
-  );
+        </SubRow>
+
+        <SubTitle>{item?.description}</SubTitle>
+        <SubRow>
+          <SubTitle>Likes: {item?.likes}</SubTitle>
+          <SubTitle>Comments: {item?.commentsLength}</SubTitle>
+        </SubRow>
+      </View>
+    );
+
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: colors.lightGray,
+          paddingHorizontal: 10,
+          width: "100%",
+          height:144
+        }}
+      >
+        {profile?.posts?.map((item, index) => renderPostItem({ item, index }))}
+      </View>
+    );
+  };
+
+  // const PostRoutes = () => (
+  //   <View
+  //     style={{
+  //       flex: 1,
+  //       backgroundColor: colors.lightGray,
+  //       paddingHorizontal: 10,
+  //       width: "100%",
+  //       // height: "100%",
+  //     }}
+  //   >
+  //     <FlatList
+  //       data={profile?.posts}
+  //       // data={Post}
+  //       // numColumns={2}
+  //       renderItem={({ item, index }) => (
+  //         <View
+  //           style={{
+  //             flex: 1,
+  //             marginTop: 10,
+  //             borderWidth: 1,
+  //             borderColor: colors.bg,
+  //             padding: 10,
+  //           }}
+  //         >
+  //           <SubRow>
+  //             {profile?.imageURL && (
+  //               <Image
+  //                 source={{ uri: profile?.imageURL }}
+  //                 resizeMode="cover"
+  //                 style={styles.userImg}
+  //               />
+  //             )}
+  //             <View>
+  //               <Title>{profile?.fullName}</Title>
+  //               <View
+  //                 style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+  //               >
+  //                 <SubTitle>
+  //                   {profile?.designation || "Sub title of user"}
+  //                 </SubTitle>
+  //               </View>
+  //             </View>
+  //           </SubRow>
+
+  //           <SubTitle>{item?.description}</SubTitle>
+  //           <SubRow>
+  //             <SubTitle>Likes: {item?.likes}</SubTitle>
+  //             <SubTitle>Comments: {item?.commentsLength}</SubTitle>
+  //           </SubRow>
+  //         </View>
+  //       )}
+  //     />
+  //   </View>
+  // );
+
+  const BayanRoutes = () => {
+    
+    const bayanData = [
+      { key: 1, image: "image_url_1" },
+      { key: 2, image: "image_url_2" },
+      { key: 3, image: "image_url_3" },
+      // Add more data items as needed
+    ];
+  
+    const renderBayanItem = ({ item, index }) => (
+      <View
+        key={index}
+        style={{
+          flex: 1,
+          // aspectRatio: 1,
+          margin: 3,
+          padding: 22,
+        }}
+      >
+        <View
+          source={item.image}
+          style={{ width: "100%", height: "100%", borderRadius: 12 }}
+        />
+      </View>
+    );
+  
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.primary }}>
+        {bayanData.map((item, index) => renderBayanItem({ item, index }))}
+      </View>
+    );
+  };
+  
+
+  // const BayanRoutes = () => (
+  //   <View style={{ flex: 1, backgroundColor: colors.primary }}>
+  //     <FlatList
+  //       data={"Bayan"}
+  //       // data={Bayan}
+  //       numColumns={3}
+  //       renderItem={({ item, index }) => (
+  //         <View
+  //           style={{
+  //             flex: 1,
+  //             // aspectRatio: 1,
+  //             margin: 3,
+  //             padding: 22,
+  //           }}
+  //         >
+  //           <View
+  //             key={index}
+  //             source={item}
+  //             style={{ width: "100%", height: "100%", borderRadius: 12 }}
+  //           />
+  //         </View>
+  //       )}
+  //     />
+  //   </View>
+  // );
 
   const renderScene = SceneMap({
     first: PostRoutes,
