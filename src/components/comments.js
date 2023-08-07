@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
@@ -7,8 +8,10 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
+import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import NormalText from "./normalText";
@@ -23,7 +26,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
   const [loading, setLoading] = useState(false);
   const { userData } = useAuth();
   const isLiked = comment?.likes?.includes(userData?.data?._id);
-
+  const navigation = useNavigation();
   const onCommentsLikes = async () => {
     setLoading((prev) => !prev);
     try {
@@ -65,10 +68,16 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
     <View>
       <View style={styles.container}>
         <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
-          <Image
-            source={{ uri: comment?.userId?.imageURL }}
-            style={styles.userImg}
-          />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(NavStr.PROFILE, { id: comment?.userId?._id });
+            }}
+          >
+            <Image
+              source={{ uri: comment?.userId?.imageURL }}
+              style={styles.userImg}
+            />
+          </TouchableOpacity>
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
               <SubTitle>{comment?.userId?.fullName}</SubTitle>
@@ -141,10 +150,18 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           .map((reply) => (
             <View key={reply?._id} style={styles.subContainer}>
               <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
-                <Image
-                  source={{ uri: reply?.userId?.imageURL }}
-                  style={styles.userImg}
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate(NavStr.PROFILE, {
+                      id: reply?.userId?._id,
+                    });
+                  }}
+                >
+                  <Image
+                    source={{ uri: reply?.userId?.imageURL }}
+                    style={styles.userImg}
+                  />
+                </TouchableOpacity>
                 <View style={styles.subCommentBox}>
                   <View style={{ padding: 10 }}>
                     <SubTitle>{reply?.userId?.fullName}</SubTitle>

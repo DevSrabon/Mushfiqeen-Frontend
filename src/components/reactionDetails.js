@@ -1,6 +1,8 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import NavStr from "../Nav/NavStr";
 import colors from "../theme/Colors";
 import HorizantalBar from "./horizontalBar";
 import Row from "./row";
@@ -11,10 +13,7 @@ import Title from "./title";
 
 const ReactionDetails = (props) => {
   const { likersArr } = props.route.params;
-  console.log(
-    "🚀 ~ file: reactionDetails.js:16 ~ ReactionDetails ~ likersArr:",
-    likersArr
-  );
+  const { navigation } = props;
   return (
     <SubContainer>
       <ScrollView>
@@ -38,7 +37,12 @@ const ReactionDetails = (props) => {
           Total {likersArr?.length}
         </Title>
         {likersArr?.map((liker) => (
-          <View key={liker?._id}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(NavStr.PROFILE, { id: liker?._id });
+            }}
+            key={liker?._id}
+          >
             <Row>
               <SubRow>
                 <Pressable
@@ -60,7 +64,7 @@ const ReactionDetails = (props) => {
               </SubRow>
             </Row>
             <HorizantalBar />
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </SubContainer>

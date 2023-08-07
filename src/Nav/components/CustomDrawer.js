@@ -1,24 +1,25 @@
-import { DrawerContentScrollView } from "@react-navigation/drawer";
+import { AntDesign, MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { MaterialIcons, SimpleLineIcons, AntDesign } from "@expo/vector-icons";
-import NavStr from "../NavStr";
-import colors from "../../theme/Colors";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
 import {
   Image,
   Pressable,
-  View,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from "react-native";
 import icons from "../../../assets/icons";
-import { useAuth } from "../../contexts/useAuth";
 import { SubRow, Title } from "../../components";
+import { useAuth } from "../../contexts/useAuth";
+import colors from "../../theme/Colors";
+import NavStr from "../NavStr";
 
 function CustomDrawer(props) {
   const { setToken, setUserData, setLoading, userData } = useAuth();
   const { navigation } = props;
 
   const moveToScreen = (screen) => {
+    if (!userData?.data) return navigation.navigate(NavStr.LOGIN);
     navigation.navigate(screen);
   };
 
@@ -51,10 +52,14 @@ function CustomDrawer(props) {
             onPress={() => navigation.closeDrawer()}
             style={{ alignSelf: "flex-end" }}
           />
-          <Image
-            source={{ uri: userData?.data?.imageURL } || icons.user}
-            style={styles.img}
-          />
+          {userData?.data ? (
+            <Image
+              source={{ uri: userData?.data?.imageURL }}
+              style={styles.img}
+            />
+          ) : (
+            <Image source={icons.user} style={styles.img} />
+          )}
           <Title>{userData?.data?.fullName || "Test user"}</Title>
         </View>
 

@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   Image,
-  ScrollView,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -31,39 +31,49 @@ const ProfilePage = () => {
   const router = useRoute();
 
   const params = router.params;
-  const PostRoutes = () => {
-    const renderPostItem = ({ item, index }) => (
-      <View
-        key={index}
-        style={{
-          paddingHorizontal: 10,
-          // paddingVertical: 10,
-        }}
-      >
-        <SubTitle style={{ paddingVertical: 5, paddingLeft: 10 }}>
-          {item?.description}
-        </SubTitle>
 
-        <SubRow
+  const PostRoutes = () => {
+    const { setPostId } = useAuth();
+    const navigation = useNavigation();
+    const onNavigate = (item) => {
+      setPostId(item);
+      navigation.navigate(NavStr.POSTDETAILS);
+    };
+    const renderPostItem = ({ item, index }) => (
+      <Pressable onPress={() => onNavigate(item)} key={index}>
+        <View
           style={{
-            gap: 3,
-            alignSelf: "flex-end",
-            paddingVertical: 5,
-            paddingRight: 10,
+            paddingHorizontal: 10,
+            // paddingVertical: 10,
           }}
         >
-          <TextSmall style={{ color: colors.primary }}>{item?.likes}</TextSmall>
-          <TextSmall>Likes</TextSmall>
+          <SubTitle style={{ paddingVertical: 5, paddingLeft: 10 }}>
+            {item?.description}
+          </SubTitle>
 
-          <SubTitle>||</SubTitle>
+          <SubRow
+            style={{
+              gap: 3,
+              alignSelf: "flex-end",
+              paddingVertical: 5,
+              paddingRight: 10,
+            }}
+          >
+            <TextSmall style={{ color: colors.primary }}>
+              {item?.likes}
+            </TextSmall>
+            <TextSmall>Likes</TextSmall>
 
-          <TextSmall style={{ color: colors.primary }}>
-            {item?.commentsLength}
-          </TextSmall>
-          <TextSmall>Comments</TextSmall>
-        </SubRow>
-        <HorizantalBar />
-      </View>
+            <SubTitle>||</SubTitle>
+
+            <TextSmall style={{ color: colors.primary }}>
+              {item?.commentsLength}
+            </TextSmall>
+            <TextSmall>Comments</TextSmall>
+          </SubRow>
+          <HorizantalBar />
+        </View>
+      </Pressable>
     );
 
     return (
@@ -175,6 +185,9 @@ const ProfilePage = () => {
       };
       fetchData();
     }
+    return () => {
+      setProfile(null);
+    };
   }, [userData?.data?._id, paramsId]);
 
   return (

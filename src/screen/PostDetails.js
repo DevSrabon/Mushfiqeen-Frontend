@@ -28,6 +28,7 @@ const PostDetails = (props) => {
     userData,
     refetch: isRefetch,
   } = useAuth();
+  console.log(postId);
   const [refetch, setRefetch] = useState(false);
   const isFocused = useIsFocused();
 

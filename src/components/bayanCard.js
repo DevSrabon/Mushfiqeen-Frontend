@@ -54,11 +54,17 @@ const BayanCard = ({ item, setRefetch, config }) => {
     <View style={styles.container} key={item?._id}>
       <Row>
         <SubRow>
-          <Image
-            source={{ uri: item?.user?.imageURL }}
-            resizeMode="cover"
-            style={styles.userImg}
-          />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(NavStr.PROFILE, { id: item?.user?._id });
+            }}
+          >
+            <Image
+              source={{ uri: item?.user?.imageURL }}
+              resizeMode="cover"
+              style={styles.userImg}
+            />
+          </TouchableOpacity>
           <View>
             <Title>{item?.user?.fullName}</Title>
             <SubTitle>{date}</SubTitle>
