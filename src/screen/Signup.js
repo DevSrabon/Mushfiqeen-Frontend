@@ -2,8 +2,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import AddImages from "../components/AddImages";
-import Container from "../components/container";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
@@ -11,8 +9,7 @@ import { useAuth } from "../contexts/useAuth";
 import useImagePicker from "../hooks/useImagePicker";
 import colors from "../theme/Colors";
 import NavStr from "../Nav/NavStr";
-import icons from "../../assets/icons";
-import { FontAwesome, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import SubContainer from "../components/subContainer";
 
 const Signup = () => {
@@ -119,7 +116,6 @@ const Signup = () => {
         </View>
 
         <InputField
-          // style={{ marginTop: 50 }}
           placeholder="Your First Name"
           value={firstName}
           setValue={setFirstName}
@@ -132,11 +128,6 @@ const Signup = () => {
           setValue={setLastName}
           error={error.lastName}
         />
-        {/* <AddImages
-          imageUrls={imageURL}
-          takePhoto={takePhoto}
-          error={error.errorImg}
-        /> */}
         <InputField
           placeholder="Occupation"
           value={designation}
@@ -191,7 +182,6 @@ const Signup = () => {
           type="primary"
           style={{ alignSelf: "center" }}
         />
-        {/* <View style={{ flex: 1, width: "90%" }}></View> */}
         <View
           style={{
             flex: 1,
