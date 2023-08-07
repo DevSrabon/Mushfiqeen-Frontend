@@ -77,7 +77,10 @@ const PostDetails = (props) => {
       }
     };
     fetchComments();
-  }, [refetch, isFocused && isRefetch]);
+    return () => {
+      setPost(null);
+    };
+  }, [refetch, isFocused, isRefetch]);
 
   if (loading) return <SkeletonMain />;
 
