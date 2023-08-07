@@ -13,6 +13,7 @@ import colors from "../theme/Colors";
 import NavStr from "../Nav/NavStr";
 import icons from "../../assets/icons";
 import { FontAwesome, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import SubContainer from "../components/subContainer";
 
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
@@ -66,16 +67,16 @@ const Signup = () => {
     }
   };
   return (
-    <Container style={{ alignItems: "center" }}>
+    <SubContainer>
       <ScrollView>
-        <Header style={{ marginVertical: 40 }}>Signup</Header>
+        <Header>Signup</Header>
 
         <View style={{ alignItems: "center" }}>
           {!imageURL.length ? (
             <>
               <TouchableOpacity
                 onPress={takePhoto}
-                style={{ width: "100%", height: "10%", borderColor: "red" }}
+                style={{ borderColor: "red" }}
               >
                 {loading ? (
                   <>
@@ -89,44 +90,24 @@ const Signup = () => {
                       height: "auto",
                       justifyContent: "center",
                       alignItems: "center",
+                      borderWidth: 2,
+                      borderColor: colors.lightBg,
+                      padding: 20,
+                      borderRadius: 50,
                     }}
                   >
-                    <Image
-                      source={icons.user}
-                      style={{
-                        height: 90,
-                        width: 90,
-                        borderRadius: 85,
-                        borderWidth: 2,
-                        borderColor:colors.lightGray,
-                      }}
+                    <MaterialIcons
+                      name="photo-camera"
+                      size={50}
+                      color={colors.lightGray}
                     />
-
-                    <View
-                      style={{
-                        position: "absolute",
-                        bottom: 0,
-                        right: 10,
-                        zIndex: 9999,
-                      }}
-                    >
-                      <MaterialIcons
-                        // backgroundColor="white"
-                        marginRight={90}
-                        marginBottom={-10}
-                        name="photo-camera"
-                        size={30}
-                        color={colors.lightGray}
-                      />
-                    </View>
-
                     {error && <Text style={{ color: "red" }}>{error}</Text>}
                   </View>
                 )}
               </TouchableOpacity>
             </>
           ) : (
-            <View style={{ height: 80}}>
+            <View style={{ height: 80 }}>
               {imageURL?.length && (
                 <Image
                   style={{ height: 60, width: 60, borderRadius: 50 }}
@@ -137,9 +118,8 @@ const Signup = () => {
           )}
         </View>
 
-
         <InputField
-          style={{ marginTop: 50 }}
+          // style={{ marginTop: 50 }}
           placeholder="Your First Name"
           value={firstName}
           setValue={setFirstName}
@@ -188,7 +168,7 @@ const Signup = () => {
               fontSize: 14,
               lineHeight: 20,
               marginBottom: 10,
-              marginHorizontal: 10,
+              marginHorizontal: 20,
               color: colors.white,
             }}
           >
@@ -204,11 +184,12 @@ const Signup = () => {
         </View>
 
         <CustomButton
-          text="Continue"
+          text="Signup"
           loading={loading || imgLoading}
           disabled={loading || imgLoading}
           onPress={onSignup}
           type="primary"
+          style={{ alignSelf: "center" }}
         />
         {/* <View style={{ flex: 1, width: "90%" }}></View> */}
         <View
@@ -223,7 +204,7 @@ const Signup = () => {
           <Text
             style={{
               fontFamily: "SemiBold",
-              color: colors.primary,
+              color: colors.white,
             }}
           >
             Already signed up ?
@@ -232,7 +213,7 @@ const Signup = () => {
             <Text
               style={{
                 fontFamily: "SemiBold",
-                color: "#B4AAF2",
+                color: colors.primary,
               }}
             >
               Login
@@ -240,7 +221,7 @@ const Signup = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </Container>
+    </SubContainer>
   );
 };
 

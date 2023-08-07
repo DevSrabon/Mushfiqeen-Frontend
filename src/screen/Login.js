@@ -9,6 +9,7 @@ import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import SubContainer from "../components/subContainer";
 
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
@@ -63,7 +64,7 @@ const Login = () => {
   }, [navigation, userData?.data?.role]);
 
   return (
-    <Container style={{ alignItems: "center", padding: 20 }}>
+    <SubContainer>
       <Header style={{ marginTop: 50 }}>Login</Header>
 
       <InputField
@@ -89,6 +90,7 @@ const Login = () => {
         type="primary"
         loading={loading}
         disabled={loading}
+        style={{ alignSelf: "center", marginTop: 30 }}
       />
 
       {/* <View style={{ flex: 1, gap: 10, marginTop: 20 }}></View> */}
@@ -97,8 +99,10 @@ const Login = () => {
           <Text
             style={{
               fontFamily: "SemiBold",
-              color: "#B4AAF2",
+              color: colors.white,
               textAlign: "right",
+              marginRight: 20,
+              marginTop: 10,
             }}
           >
             Forget Password?
@@ -119,7 +123,7 @@ const Login = () => {
         <Text
           style={{
             fontFamily: "SemiBold",
-            color: colors.primary,
+            color: colors.white,
           }}
         >
           Don't have an account?
@@ -128,14 +132,14 @@ const Login = () => {
           <Text
             style={{
               fontFamily: "SemiBold",
-              color: "#B4AAF2",
+              color: colors.primary,
             }}
           >
             Signup
           </Text>
         </TouchableOpacity>
       </View>
-    </Container>
+    </SubContainer>
   );
 };
 
