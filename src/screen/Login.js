@@ -36,7 +36,7 @@ const Login = () => {
       // AsyncStorage.setItem("token", response.data.accessToken);
     } catch (error) {
       if (error.message === "Request failed with status code 402") {
-        navigation.navigate("verifyCode", (state = { email }));
+        navigation.navigate(NavStr.VERIFYCODE, (state = { email }));
       }
       if (
         error.message !== "Request failed with status code 402" &&

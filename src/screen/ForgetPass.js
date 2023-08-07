@@ -1,19 +1,23 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Container } from "../components";
+import { SubContainer } from "../components";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
+import { AntDesign } from "@expo/vector-icons";
+import colors from "../theme/Colors";
 
-const ForgetPass = () => {
+const ForgetPass = (props) => {
+  const { navigation } = props;
   const [email, setEmail] = useState("");
   const [code, setCode] = useState(null);
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setToken } = useAuth();
+
   const onForget = async () => {
     try {
       setLoading(true);
@@ -66,7 +70,14 @@ const ForgetPass = () => {
   };
 
   return (
-    <Container style={{ padding: 20 }}>
+    <SubContainer>
+      <AntDesign
+        name="arrowleft"
+        size={30}
+        color={colors.white}
+        onPress={() => navigation.goBack()}
+        style={{ paddingHorizontal: 20, paddingTop: 10 }}
+      />
       <View style={{ paddingTop: 50 }}>
         <Header>Forget Password</Header>
       </View>
@@ -85,6 +96,7 @@ const ForgetPass = () => {
             type="primary"
             loading={loading}
             disabled={loading}
+            style={{ alignSelf: "center", marginTop: 20 }}
           />
         </>
       ) : (
@@ -111,10 +123,11 @@ const ForgetPass = () => {
             type="primary"
             loading={loading}
             disabled={loading}
+            style={{ alignSelf: "center", marginTop: 20 }}
           />
         </>
       )}
-    </Container>
+    </SubContainer>
   );
 };
 

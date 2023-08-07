@@ -10,13 +10,14 @@ import {
   View,
 } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-
+import { AntDesign } from "@expo/vector-icons";
 import NavStr from "../Nav/NavStr";
-import { Loading, Title } from "../components";
+import { Loading, Row, SubContainer, Title } from "../components";
 import CustomButton from "../components/customButton";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import Header from "../components/header";
 
 const UpdateProfile = ({ navigation }) => {
   const { userData, fetchUserData } = useAuth();
@@ -105,130 +106,142 @@ const UpdateProfile = ({ navigation }) => {
   };
   if (loading) return <Loading />;
   return (
-    <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: colors.bg,
-        paddingHorizontal: 22,
-      }}
-      keyboardShouldPersistTaps="handled"
-    >
-      <View
-        style={{
-          marginHorizontal: 12,
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        <Title style={{ color: "white", fontWeight: "500" }}>
-          Update Profile
-        </Title>
+    <SubContainer>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <AntDesign
+          name="arrowleft"
+          size={30}
+          color={colors.white}
+          onPress={() => navigation.navigate(NavStr.PROFILE)}
+          style={{ paddingHorizontal: 20, paddingTop: 10 }}
+        />
+
+        <Header style={{ paddingHorizontal: 50 }}>Update Profile</Header>
       </View>
+      <ScrollView
+        style={{
+          flex: 1,
+          backgroundColor: colors.bg,
+          paddingHorizontal: 22,
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View>
+          <View
+            style={{
+              alignItems: "center",
+              marginVertical: 22,
+            }}
+          >
+            <TouchableOpacity>
+              <Image
+                source={{ uri: userData?.data?.imageURL || selectedImage }}
+                style={{
+                  height: 90,
+                  width: 90,
+                  borderRadius: 85,
+                  borderWidth: 2,
+                  borderColor: colors.primary,
+                }}
+              />
 
-      <View>
-        <View
-          style={{
-            alignItems: "center",
-            marginVertical: 22,
-          }}
-        >
-          <TouchableOpacity>
-            <Image
-              source={{ uri: userData?.data?.imageURL || selectedImage }}
-              style={{
-                height: 90,
-                width: 90,
-                borderRadius: 85,
-                borderWidth: 2,
-                borderColor: colors.primary,
-              }}
-            />
-
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 10,
-                zIndex: 9999,
-              }}
-            >
-              {/* <MaterialIcons
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 10,
+                  zIndex: 9999,
+                }}
+              >
+                {/* <MaterialIcons
                 name="photo-camera"
                 size={32}
                 color={colors.primary}
               /> */}
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <View>
+              <InputField placeholder="Name" value={name} setValue={setName} />
             </View>
-          </TouchableOpacity>
-        </View>
 
-        <View>
-          <View>
-            <InputField placeholder="Name" value={name} setValue={setName} />
+            <View>
+              <InputField
+                placeholder="Email"
+                value={email}
+                setValue={setEmail}
+                editable={false}
+                keyboardType="email-address"
+              />
+            </View>
+            <View>
+              <InputField
+                placeholder="Mobile"
+                value={contactNumber}
+                setValue={handleInputChange}
+                type="number"
+              />
+            </View>
+            <View>
+              <InputField
+                placeholder="Occupation"
+                value={designation}
+                setValue={setDesignation}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: "column",
+                marginBottom: 6,
+              }}
+            ></View>
           </View>
 
           <View>
             <InputField
-              placeholder="Email"
-              value={email}
-              setValue={setEmail}
-              editable={false}
-              keyboardType="email-address"
+              placeholder="About Yourself"
+              value={bio}
+              setValue={setBio}
+              multiline={true}
+              numberOfLines={10}
             />
           </View>
-          <View>
-            <InputField
-              placeholder="Mobile"
-              value={contactNumber}
-              setValue={handleInputChange}
-              type="number"
-            />
-          </View>
-          <View>
-            <InputField
-              placeholder="Occupation"
-              value={designation}
-              setValue={setDesignation}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: "column",
-              marginBottom: 6,
+
+          <GooglePlacesAutocomplete
+            placeholder="Your Address"
+            fetchDetails={true}
+            onPress={(data, details = null) => {
+              // 'details' is provided when fetchDetails = true
+              setAddress(data.description);
             }}
-          ></View>
-        </View>
-
-        <GooglePlacesAutocomplete
-          placeholder="Location"
-          fetchDetails={true}
-          onPress={(data, details = null) => {
-            // 'details' is provided when fetchDetails = true
-            setAddress(data.description);
-          }}
-          query={{
-            key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
-            language: "en",
-          }}
-          styles={{
-            textInput: {
-              backgroundColor: colors.lightBg,
-              color: colors.white,
-            },
-          }}
-        />
-        <View>
-          <InputField
-            placeholder="Country"
-            value={country}
-            setValue={setCountry}
+            query={{
+              key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
+              language: "en",
+            }}
+            textInputProps={{
+              placeholderTextColor: colors.white,
+              returnKeyType: "search",
+            }}
+            styles={{
+              textInputContainer: {
+                width: "90%",
+                alignSelf: "center",
+                marginTop: 10,
+              },
+              textInput: {
+                backgroundColor: colors.lightBg,
+                color: colors.white,
+              },
+            }}
           />
-        </View>
 
-        {/* Date of Birth */}
-        <View>
+          {/* Date of Birth */}
+
           <CustomButton
-            style={{ alignItems: "left" }}
-            bgColor={colors.lightGray}
+            style={{ alignSelf: "center", marginTop: 20 }}
+            bgColor={colors.lightBg}
             text={selectDate ? selectDate : `Date of Birth `}
             onPress={() => showDateMode("date")}
           />
@@ -240,20 +253,9 @@ const UpdateProfile = ({ navigation }) => {
               onChange={onDateChange}
             />
           )}
-        </View>
 
-        <View>
-          <InputField
-            placeholder="About Yourself"
-            value={bio}
-            setValue={setBio}
-            multiline={true}
-            numberOfLines={10}
-          />
-        </View>
-
-        <View style={{ flex: 1, width: "100%" }}>
           <CustomButton
+            style={{ alignSelf: "center", marginTop: 30 }}
             text="Save Change"
             // loading={loading}
             // disabled={loading}
@@ -261,8 +263,8 @@ const UpdateProfile = ({ navigation }) => {
             type="primary"
           />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SubContainer>
   );
 };
 
