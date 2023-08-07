@@ -27,6 +27,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
   const { userData } = useAuth();
   const isLiked = comment?.likes?.includes(userData?.data?._id);
   const navigation = useNavigation();
+
   const onCommentsLikes = async () => {
     setLoading((prev) => !prev);
     try {

@@ -1,7 +1,6 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, View } from "react-native";
-
 import {
   doc,
   getDoc,
@@ -59,11 +58,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
       if (!chatRes.exists()) {
         await setDoc(chatRef, { messages: [] });
       }
-
-      console.log("Document successfully written!");
-    } catch (error) {
-      console.error("Error writing document: ", error);
-    }
+    } catch (error) {}
   };
   return (
     <View
