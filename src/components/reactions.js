@@ -1,17 +1,17 @@
 import { AntDesign, Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import colors from "../theme/Colors";
-import { useNavigation } from "@react-navigation/native";
 import NavStr from "../Nav/NavStr";
+import colors from "../theme/Colors";
 
 const Reactions = ({ post }) => {
   const navigation = useNavigation();
-  const imageArr = post?.likers;
+  const likersArr = post?.likers;
   return (
     <>
       <View style={styles.container}>
-        {imageArr
+        {likersArr
           ?.slice(0)
           .reverse()
           .slice(0, 5)
@@ -33,7 +33,11 @@ const Reactions = ({ post }) => {
             </Pressable>
           ))}
 
-        <Pressable onPress={() => navigation.navigate(NavStr.REACTION)}>
+        <Pressable
+          onPress={() =>
+            navigation.navigate(NavStr.REACTION, (state = { likersArr }))
+          }
+        >
           <View style={styles.threeDots}>
             <Entypo
               name="dots-three-horizontal"

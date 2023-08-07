@@ -1,11 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import CustomModal from "./customModal";
-import InputField from "./inpuField";
 import NormalText from "./normalText";
+import Row from "./row";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
 import { timeAgo } from "./timeConvert";
@@ -15,7 +22,6 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const { userData } = useAuth();
-
   const isLiked = comment?.likes?.includes(userData?.data?._id);
 
   const onCommentsLikes = async () => {
@@ -44,7 +50,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
       );
 
       setRefetch(true);
-      setModalVisible(false);
+      setModalVisible((prev) => !prev);
       setValue("");
     } catch (error) {
       console.log(error);
@@ -94,10 +100,41 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
 
           <SubTitle>|</SubTitle>
 
-          <Pressable onPress={() => setModalVisible(true)}>
+          <Pressable onPress={() => setModalVisible((prev) => !prev)}>
             <SubTitle>Reply</SubTitle>
           </Pressable>
         </View>
+        {modalVisible && (
+          <Row style={{ gap: 5 }}>
+            <Image
+              source={{ uri: userData?.data?.imageURL }}
+              style={styles.userImg}
+            />
+            <ScrollView>
+              <TextInput
+                placeholder="Leave Your Reply ?"
+                placeholderTextColor={colors.lightGray}
+                multiline={true}
+                value={value}
+                selectionColor={colors.white}
+                onChangeText={setValue}
+                style={styles.input}
+              />
+            </ScrollView>
+            <Pressable onPress={onReply} disabled={loading || !value}>
+              <Text
+                style={[
+                  styles.button,
+                  loading || value === ""
+                    ? { color: colors.lightGray }
+                    : { color: colors.primary },
+                ]}
+              >
+                Reply
+              </Text>
+            </Pressable>
+          </Row>
+        )}
         {comment?.replies
           ?.slice(0)
           .reverse()
@@ -122,7 +159,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
             </View>
           ))}
         {/* modal */}
-        <CustomModal
+        {/* <CustomModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
         >
@@ -138,7 +175,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           >
             Submit
           </Text>
-        </CustomModal>
+        </CustomModal> */}
       </View>
     </View>
   );
@@ -170,18 +207,22 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignSelf: "flex-start",
   },
-  btn: {
+  input: {
     backgroundColor: colors.bg,
-    borderColor: colors.lightGray,
-    borderWidth: 2,
-    width: "90%",
-    textAlign: "center",
-    textAlignVertical: "center",
-    height: 40,
-    color: "white",
+    color: colors.white,
+    fontSize: 18,
+    borderColor: colors.lightBg,
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  button: {
+    fontFamily: "SemiBold",
     fontSize: 16,
-    fontWeight: "500",
-    borderRadius: 5,
+    color: colors.primary,
+    alignSelf: "flex-end",
+    paddingVertical: 10,
   },
 });
 

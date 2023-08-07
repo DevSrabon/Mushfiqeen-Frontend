@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Pressable,
@@ -10,13 +11,11 @@ import {
   TextInput,
 } from "react-native";
 import { Protect } from "../Nav/ProtectedRoute";
-import { Comments, Reactions, Row, SubContainer, Title } from "../components";
+import { Comments, Reactions, Row, SubContainer } from "../components";
 import SkeletonMain from "../components/Skeleton/SkeletonMain";
-import { AntDesign } from "@expo/vector-icons";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import icons from "../../assets/icons";
 
 const PostDetails = (props) => {
   const { navigation } = props;
@@ -36,24 +35,6 @@ const PostDetails = (props) => {
     headers: {
       Authorization: `Bearer ${userData?.accessToken}`,
     },
-  };
-
-  const onLikes = async () => {
-    try {
-      setLoading(true);
-      await axios.put(
-        `https://musfiqeen-backend.vercel.app/api/v1/posts/likes/${post?._id}`,
-        {},
-        config
-      );
-      setRefetch(true);
-      console.log("Like updated successfully");
-    } catch (error) {
-      console.error("Error updating like:", error);
-    } finally {
-      setLoading(false);
-      setRefetch(false);
-    }
   };
 
   const onComment = async () => {
@@ -115,7 +96,10 @@ const PostDetails = (props) => {
         <HomeCard post={postId} />
 
         <Row style={{ gap: 5 }}>
-          <Image source={icons.user} style={styles.userImg} />
+          <Image
+            source={{ uri: userData?.data?.imageURL }}
+            style={styles.userImg}
+          />
           <ScrollView>
             <TextInput
               placeholder="Leave Your Thoughts ?"
@@ -136,7 +120,7 @@ const PostDetails = (props) => {
                   : { color: colors.primary },
               ]}
             >
-              Post
+              Comment
             </Text>
           </Pressable>
         </Row>
