@@ -1,11 +1,10 @@
 import { FontAwesome, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
-  FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,7 +14,15 @@ import {
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
 import NavStr from "../Nav/NavStr";
-import { Container, Row, SubRow, SubTitle, Title } from "../components";
+import {
+  HorizantalBar,
+  Row,
+  SubContainer,
+  SubRow,
+  SubTitle,
+  TextSmall,
+  Title,
+} from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
@@ -29,36 +36,33 @@ const ProfilePage = () => {
       <View
         key={index}
         style={{
-          flex: 1,
-          // marginTop: 10,
-          borderWidth: 1,
-          borderColor: colors.bg,
-          // backgroundColor:"red",
-          padding: 2,
-          // height:244
+          paddingHorizontal: 10,
+          // paddingVertical: 10,
         }}
       >
-        <SubRow>
-          {profile?.imageURL && (
-            <Image
-              source={{ uri: profile?.imageURL }}
-              resizeMode="cover"
-              style={styles.userImg}
-            />
-          )}
-          <View>
-            <Title>{profile?.fullName}</Title>
-            <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-              <SubTitle>{profile?.designation || "Sub title of user"}</SubTitle>
-            </View>
-          </View>
-        </SubRow>
+        <SubTitle style={{ paddingVertical: 5, paddingLeft: 10 }}>
+          {item?.description}
+        </SubTitle>
 
-        <SubTitle>{item?.description}</SubTitle>
-        <SubRow>
-          <SubTitle>Likes: {item?.likes}</SubTitle>
-          <SubTitle>Comments: {item?.commentsLength}</SubTitle>
+        <SubRow
+          style={{
+            gap: 3,
+            alignSelf: "flex-end",
+            paddingVertical: 5,
+            paddingRight: 10,
+          }}
+        >
+          <TextSmall style={{ color: colors.primary }}>{item?.likes}</TextSmall>
+          <TextSmall>Likes</TextSmall>
+
+          <SubTitle>||</SubTitle>
+
+          <TextSmall style={{ color: colors.primary }}>
+            {item?.commentsLength}
+          </TextSmall>
+          <TextSmall>Comments</TextSmall>
         </SubRow>
+        <HorizantalBar />
       </View>
     );
 
@@ -66,10 +70,10 @@ const ProfilePage = () => {
       <View
         style={{
           flex: 1,
-          backgroundColor: colors.lightGray,
-          paddingHorizontal: 10,
+          backgroundColor: colors.bg,
+          // paddingHorizontal: 10,
           width: "100%",
-          height:144
+          height: "auto",
         }}
       >
         {profile?.posts?.map((item, index) => renderPostItem({ item, index }))}
@@ -77,70 +81,14 @@ const ProfilePage = () => {
     );
   };
 
-  // const PostRoutes = () => (
-  //   <View
-  //     style={{
-  //       flex: 1,
-  //       backgroundColor: colors.lightGray,
-  //       paddingHorizontal: 10,
-  //       width: "100%",
-  //       // height: "100%",
-  //     }}
-  //   >
-  //     <FlatList
-  //       data={profile?.posts}
-  //       // data={Post}
-  //       // numColumns={2}
-  //       renderItem={({ item, index }) => (
-  //         <View
-  //           style={{
-  //             flex: 1,
-  //             marginTop: 10,
-  //             borderWidth: 1,
-  //             borderColor: colors.bg,
-  //             padding: 10,
-  //           }}
-  //         >
-  //           <SubRow>
-  //             {profile?.imageURL && (
-  //               <Image
-  //                 source={{ uri: profile?.imageURL }}
-  //                 resizeMode="cover"
-  //                 style={styles.userImg}
-  //               />
-  //             )}
-  //             <View>
-  //               <Title>{profile?.fullName}</Title>
-  //               <View
-  //                 style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
-  //               >
-  //                 <SubTitle>
-  //                   {profile?.designation || "Sub title of user"}
-  //                 </SubTitle>
-  //               </View>
-  //             </View>
-  //           </SubRow>
-
-  //           <SubTitle>{item?.description}</SubTitle>
-  //           <SubRow>
-  //             <SubTitle>Likes: {item?.likes}</SubTitle>
-  //             <SubTitle>Comments: {item?.commentsLength}</SubTitle>
-  //           </SubRow>
-  //         </View>
-  //       )}
-  //     />
-  //   </View>
-  // );
-
   const BayanRoutes = () => {
-    
     const bayanData = [
       { key: 1, image: "image_url_1" },
       { key: 2, image: "image_url_2" },
       { key: 3, image: "image_url_3" },
       // Add more data items as needed
     ];
-  
+
     const renderBayanItem = ({ item, index }) => (
       <View
         key={index}
@@ -157,40 +105,13 @@ const ProfilePage = () => {
         />
       </View>
     );
-  
+
     return (
       <View style={{ flex: 1, backgroundColor: colors.primary }}>
         {bayanData.map((item, index) => renderBayanItem({ item, index }))}
       </View>
     );
   };
-  
-
-  // const BayanRoutes = () => (
-  //   <View style={{ flex: 1, backgroundColor: colors.primary }}>
-  //     <FlatList
-  //       data={"Bayan"}
-  //       // data={Bayan}
-  //       numColumns={3}
-  //       renderItem={({ item, index }) => (
-  //         <View
-  //           style={{
-  //             flex: 1,
-  //             // aspectRatio: 1,
-  //             margin: 3,
-  //             padding: 22,
-  //           }}
-  //         >
-  //           <View
-  //             key={index}
-  //             source={item}
-  //             style={{ width: "100%", height: "100%", borderRadius: 12 }}
-  //           />
-  //         </View>
-  //       )}
-  //     />
-  //   </View>
-  // );
 
   const renderScene = SceneMap({
     first: PostRoutes,
@@ -257,13 +178,7 @@ const ProfilePage = () => {
   }, [userData?.data?._id, paramsId]);
 
   return (
-    <Container
-      style={{
-        flex: 1,
-        backgroundColor: colors.bg,
-      }}
-    >
-      <StatusBar backgroundColor={colors.lightGray} />
+    <SubContainer>
       <>
         <View style={{ width: "100%" }}>
           {userData?.data ? (
@@ -389,10 +304,11 @@ const ProfilePage = () => {
             onIndexChange={setIndex}
             initialLayout={{ width: layout.width }}
             renderTabBar={renderTabBar}
+            scrollEnabled={true}
           />
         </View>
       </>
-    </Container>
+    </SubContainer>
   );
 };
 
