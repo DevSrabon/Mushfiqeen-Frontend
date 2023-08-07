@@ -3,7 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { Text, TouchableOpacity, View } from "react-native";
 import NavStr from "../Nav/NavStr";
-import Container from "../components/container";
+import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
@@ -65,7 +65,14 @@ const Login = () => {
 
   return (
     <SubContainer>
-      <Header style={{ marginTop: 50 }}>Login</Header>
+      <AntDesign
+        name="arrowleft"
+        size={30}
+        color={colors.white}
+        onPress={() => navigation.navigate(NavStr.HOME)}
+        style={{ paddingHorizontal: 10, paddingTop: 10 }}
+      />
+      <Header>Login</Header>
 
       <InputField
         style={{ marginTop: 50 }}
