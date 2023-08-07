@@ -32,7 +32,7 @@ const InputField = ({
   }, [focusAnim, isFocused]);
 
   return (
-    <View style={[style, { marginVertical: 15, width }]}>
+    <View style={[style, { marginVertical: 10, alignItems: "center", width }]}>
       <TextInput
         // style={[styles.input, inputStyles]}
         style={[
@@ -44,7 +44,7 @@ const InputField = ({
         secureTextEntry={secureTextEntry}
         value={value}
         multiline={multiline}
-        cursorColor={"yellow"}
+        cursorColor={"white"}
         editable={editable}
         numberOfLines={numberOfLines}
         keyboardType={keyboardType}
@@ -71,9 +71,9 @@ const InputField = ({
               top: value
                 ? -9
                 : focusAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [13, -9],
-                }),
+                    inputRange: [0, 1],
+                    outputRange: [13, -9],
+                  }),
             },
           ]}
         >
@@ -86,9 +86,9 @@ const InputField = ({
                 fontSize: value
                   ? -14
                   : focusAnim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [15, 14],
-                  }),
+                      inputRange: [0, 1],
+                      outputRange: [15, 14],
+                    }),
               },
             ]}
           >
@@ -106,16 +106,15 @@ export default InputField;
 const styles = StyleSheet.create({
   error: { color: "red" },
   input: {
-    width: "100%",
+    width: "90%",
+    alignItems: "center",
     backgroundColor: colors.bg,
     borderBottomWidth: 2,
     borderColor: "red",
-    // borderRadius: 5,
     paddingHorizontal: 10,
     fontFamily: "Medium",
     height: 50,
     fontSize: 17,
-
   },
 
   errorBorder: {
@@ -125,23 +124,20 @@ const styles = StyleSheet.create({
   successBorder: {
     borderColor: colors.lightGray,
     color: colors.lightGray,
-
   },
   labelContainer: {
     position: "absolute",
-    left: 6,
+    left: 20,
     // paddingHorizontal: 5,
-
   },
   labelFocusContainer: {
     position: "absolute",
-    left: 6,
+    left: 20,
     // paddingHorizontal: 7,
     // paddingVertical: 1,
     // backgroundColor: colors.bg,
     // borderWidth: 1,
     // borderRadius: 5,
-
   },
 
   textInput: {

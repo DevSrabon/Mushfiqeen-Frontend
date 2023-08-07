@@ -71,7 +71,7 @@ const CustomButton = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: "90%",
     maxHeight: 50,
     padding: 15,
     paddingVertical: 5,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   text_tertiary: {
-    color: "#B4AAF2",
+    color: colors.white,
     // color: "white",
   },
 });
