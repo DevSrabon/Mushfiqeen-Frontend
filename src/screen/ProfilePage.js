@@ -2,6 +2,7 @@ import { FontAwesome, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import {
   Image,
   Pressable,
@@ -192,6 +193,28 @@ const ProfilePage = () => {
 
   return (
     <SubContainer>
+      <Row>
+        <AntDesign
+          name="arrowleft"
+          size={30}
+          color={colors.white}
+          onPress={() => navigation.navigate(NavStr.HOME)}
+          // style={{ paddingHorizontal: 10 }}
+        />
+        {userData?.data?._id === profile?._id && (
+          <TouchableOpacity
+            style={{
+              alignSelf: "center",
+            }}
+            onPress={() => onUpdateNavigate()}
+          >
+            <Title style={{ color: colors.primary, alignSelf: "center" }}>
+              Update Profile
+            </Title>
+          </TouchableOpacity>
+        )}
+      </Row>
+
       <>
         <View style={{ width: "100%" }}>
           {userData?.data ? (
@@ -228,25 +251,6 @@ const ProfilePage = () => {
               resizeMode="contain"
               style={styles.profileImg}
             />
-          )}
-          {userData?.data?._id === profile?._id && (
-            <TouchableOpacity
-              style={{
-                width: 120,
-                height: 35,
-                alignSelf: "flex-end",
-                justifyContent: "center",
-                backgroundColor: colors.lightBg,
-                borderRadius: 20,
-                // marginHorizontal: 20 * 2,
-                marginTop: 5,
-              }}
-              onPress={() => onUpdateNavigate()}
-            >
-              <Text style={{ color: colors.white, alignSelf: "center" }}>
-                Update Profile
-              </Text>
-            </TouchableOpacity>
           )}
 
           <Title>{profile?.fullName}</Title>
