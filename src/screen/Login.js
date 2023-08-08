@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import NavStr from "../Nav/NavStr";
-import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
+import SubContainer from "../components/subContainer";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import SubContainer from "../components/subContainer";
 
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
@@ -102,7 +102,9 @@ const Login = () => {
 
       {/* <View style={{ flex: 1, gap: 10, marginTop: 20 }}></View> */}
       <View style={{ width: "100%", alignItems: "flex-end" }}>
-        <TouchableOpacity onPress={() => navigation.navigate(NavStr.FORGET)}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NavStr.FORGET, { email })}
+        >
           <Text
             style={{
               fontFamily: "SemiBold",

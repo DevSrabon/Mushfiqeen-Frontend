@@ -17,8 +17,7 @@ import colors from "../theme/Colors";
 import NormalText from "./normalText";
 import Row from "./row";
 import SubTitle from "./subTitle";
-import TextSmall from "./textSmall";
-import { timeAgo } from "./timeConvert";
+import TimeAgo from "./timeAgo";
 
 const Comments = ({ comment, postId, config, setRefetch }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -62,7 +61,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
     }
   }, [postId, value, config, comment?._id]);
 
-  const date = timeAgo(comment?.createdAt);
+  // const date = timeAgo(comment?.createdAt);
 
   return (
     <View>
@@ -81,7 +80,8 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
               <SubTitle>{comment?.userId?.fullName}</SubTitle>
-              <TextSmall>{date}</TextSmall>
+              {/* <TextSmall>{date}</TextSmall> */}
+              <TimeAgo createdAt={comment?.createdAt} />
               <NormalText style={{ marginVertical: 5 }}>
                 {comment?.comment}
               </NormalText>
@@ -166,7 +166,8 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
                   <View style={{ padding: 10 }}>
                     <SubTitle>{reply?.userId?.fullName}</SubTitle>
                     {/* <TextSmall>Subtitle</TextSmall> */}
-                    <TextSmall>{timeAgo(reply?.createdAt)}</TextSmall>
+                    {/* <TextSmall>{timeAgo(reply?.createdAt)}</TextSmall> */}
+                    <TimeAgo createdAt={reply?.createdAt} />
                     <NormalText style={{ marginVertical: 5 }}>
                       {reply?.reply}
                     </NormalText>
