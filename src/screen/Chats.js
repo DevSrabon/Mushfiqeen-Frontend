@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import React, { useCallback, useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import NavStr from "../Nav/NavStr";
@@ -27,11 +27,11 @@ const Chats = () => {
   }, [uid]);
 
   const onChat = useCallback(async () => {
-    const chatRef = doc(db, "chats", combinedId);
-    const chatRes = await getDoc(chatRef);
-    if (!chatRes.exists()) {
-      await setDoc(chatRef, { messages: [] });
-    }
+    // const chatRef = doc(db, "chats", combinedId);
+    // const chatRes = await getDoc(chatRef);
+    // if (!chatRes.exists()) {
+    //   await setDoc(chatRef, { messages: [] });
+    // }
     navigation.navigate(NavStr.CHAT);
   }, []);
 
