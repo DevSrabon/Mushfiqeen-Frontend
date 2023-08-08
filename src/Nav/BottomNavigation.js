@@ -48,10 +48,11 @@ const BottomNavigation = () => {
         tabBarStyle: {
           position: "absolute",
           backgroundColor: colors.bg,
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
-          bottom: 5,
-          fontFamily: "Regular",
+          fontSize: 12,
+          fontFamily: "SemiBold",
         },
         headerShown: false,
         tabBarIcon: ({ focused }) => {
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   },
   focused: {
     borderTopWidth: 3,
-     // borderLeftWidth: 3,
+    // borderLeftWidth: 3,
     // borderRightWidth: 3,
     // borderRadius: 7,
     paddingHorizontal: 9,
