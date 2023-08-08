@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
-import { TouchableOpacity, Animated, View, StyleSheet } from "react-native";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
+import React, { useRef, useState } from "react";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Bayan, Chat, Home, Post } from "../screen";
 import colors from "../theme/Colors";
-import { Home, Post, Bayan, Chat } from "../screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -129,7 +129,7 @@ const BottomNavigation = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="home"
         component={Home}
         options={{
           title: "Home",
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   },
   focused: {
     borderTopWidth: 3,
-     // borderLeftWidth: 3,
+    // borderLeftWidth: 3,
     // borderRightWidth: 3,
     // borderRadius: 7,
     paddingHorizontal: 9,
