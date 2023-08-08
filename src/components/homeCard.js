@@ -19,7 +19,6 @@ import colors from "../theme/Colors";
 import { timeAgo } from "./timeConvert";
 
 const HomeCard = ({ post }) => {
-  console.log("home card");
   const { userData, setRefetch } = useAuth();
 
   const navigation = useNavigation();
