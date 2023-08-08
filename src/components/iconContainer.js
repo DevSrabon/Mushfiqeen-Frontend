@@ -10,7 +10,6 @@ import {
 import React, { useCallback, useMemo } from "react";
 import { Pressable, View } from "react-native";
 import NavStr from "../Nav/NavStr";
-import { useAuth } from "../contexts/useAuth";
 import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
@@ -38,7 +37,10 @@ const IconContainer = ({ onLikes, userData, post }) => {
   const onSendMessage = useCallback(async () => {
     try {
       const userRef = doc(db, "users", uid);
+      const userRef2 = doc(db, "users", oid);
       const res = await getDoc(userRef);
+      const res2 = await getDoc(userRef2);
+
       const data = {
         [combinedId + ".userInfo"]: {
           uid: oid,
@@ -47,24 +49,38 @@ const IconContainer = ({ onLikes, userData, post }) => {
         },
         [combinedId + ".date"]: serverTimestamp(),
       };
+
+      const data2 = {
+        [combinedId + ".userInfo"]: {
+          uid,
+          name: userData?.data?.fullName,
+          photoURL: userData?.data?.imageURL,
+        },
+        [combinedId + ".date"]: serverTimestamp(),
+      };
+
       if (!res.exists()) {
         await setDoc(userRef, {});
-        await updateDoc(userRef, data);
-        navigation.navigate(NavStr.CHAT);
-      } else {
-        await updateDoc(userRef, data);
-        navigation.navigate(NavStr.CHAT);
       }
+
+      if (!res2.exists()) {
+        await setDoc(userRef2, {});
+      }
+
+      await updateDoc(userRef, data);
+      await updateDoc(userRef2, data2);
+
       const chatRef = doc(db, "chats", combinedId);
       const chatRes = await getDoc(chatRef);
       if (!chatRes.exists()) {
         await setDoc(chatRef, { messages: [] });
       }
+      navigation.navigate(NavStr.CHAT);
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
     }
-  }, [combinedId, navigation, oid, post, uid]);
+  }, [combinedId, navigation, oid, post, uid, userData?.data]);
 
   return (
     <View
