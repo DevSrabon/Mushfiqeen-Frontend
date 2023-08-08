@@ -12,20 +12,6 @@ import ReactionDetails from "../components/reactionDetails";
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
-  const config = {
-    animation: "spring",
-    config: {
-      stiffness: 1000,
-      damping: 500,
-      mass: 3,
-      overshootClamping: true,
-      restDisplacementThreshold: 0.01,
-      restSpeedThreshold: 0.01,
-    },
-  };
-
-  // const { loading } = useAuth();
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

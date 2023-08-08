@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Reactions;
+export default React.memo(Reactions);

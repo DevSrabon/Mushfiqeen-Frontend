@@ -13,6 +13,7 @@ import Title from "./title";
 
 const ReactionDetails = (props) => {
   const { likersArr } = props.route.params;
+
   const { navigation } = props;
   return (
     <SubContainer>

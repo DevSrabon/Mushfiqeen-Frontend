@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SubRow;
+export default React.memo(SubRow);
