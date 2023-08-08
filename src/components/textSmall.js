@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
 import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import colors from "../theme/Colors";
 
 const TextSmall = (props) => {
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TextSmall;
+export default React.memo(TextSmall);

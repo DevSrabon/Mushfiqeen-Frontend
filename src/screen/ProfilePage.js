@@ -34,12 +34,11 @@ const ProfilePage = () => {
   const params = router.params;
 
   const PostRoutes = () => {
-    const { setPostId } = useAuth();
     const navigation = useNavigation();
     const onNavigate = (item) => {
-      setPostId(item);
-      navigation.navigate(NavStr.POSTDETAILS);
+      navigation.navigate(NavStr.POSTDETAILS, { post: item });
     };
+
     const renderPostItem = ({ item, index }) => (
       <Pressable onPress={() => onNavigate(item)} key={index}>
         <View

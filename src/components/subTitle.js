@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SubTitle;
+export default React.memo(SubTitle);

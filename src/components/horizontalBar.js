@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
 import React from "react";
+import { StyleSheet, View } from "react-native";
 import colors from "../theme/Colors";
 
 const HorizantalBar = (props) => {
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HorizantalBar;
+export default React.memo(HorizantalBar);

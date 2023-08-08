@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Image,
   Pressable,
@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { Protect } from "../Nav/ProtectedRoute";
 import { Comments, Reactions, Row, SubContainer } from "../components";
-import SkeletonMain from "../components/Skeleton/SkeletonMain";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
@@ -24,11 +23,12 @@ const PostDetails = (props) => {
   const {
     loading,
     setLoading,
-    postId,
+
     userData,
     refetch: isRefetch,
   } = useAuth();
-  console.log(postId);
+  const router = useRoute();
+  const { post: postId } = router.params;
   const [refetch, setRefetch] = useState(false);
   const isFocused = useIsFocused();
 
@@ -38,18 +38,18 @@ const PostDetails = (props) => {
     },
   };
 
-  const onComment = async () => {
+  const onComment = useCallback(async () => {
     if (!texts) {
       return alert("Comment can't be empty");
     }
     try {
+      setRefetch(true);
       setLoading(true);
       await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/comment/${post?._id}`,
         { comment: texts },
         config
       );
-      setRefetch(true);
       console.log("Like updated successfully");
     } catch (error) {
       console.error("Error updating like:", error);
@@ -58,7 +58,7 @@ const PostDetails = (props) => {
       setRefetch(false);
       setTexts("");
     }
-  };
+  }, [post?._id, texts]);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -77,12 +77,9 @@ const PostDetails = (props) => {
       }
     };
     fetchComments();
-    return () => {
-      setPost(null);
-    };
-  }, [refetch, isFocused, isRefetch]);
+  }, [postId?._id, refetch, isRefetch]);
 
-  if (loading) return <SkeletonMain />;
+  // if (loading) return <SkeletonMain />;
 
   return (
     <SubContainer>
@@ -97,7 +94,7 @@ const PostDetails = (props) => {
           <Reactions post={post} />
         </Row>
 
-        <HomeCard post={postId} />
+        <HomeCard post={post} />
 
         <Row style={{ gap: 5 }}>
           <Image

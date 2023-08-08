@@ -1,6 +1,5 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, View } from "react-native";
 import {
   doc,
   getDoc,
@@ -8,7 +7,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useLayoutEffect } from "react";
+import React, { useCallback, useMemo } from "react";
+import { Pressable, View } from "react-native";
 import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import { db } from "../firebase/firebaseConfig";
@@ -17,23 +17,25 @@ import TextSmall from "./textSmall";
 
 const IconContainer = ({ onLikes, userData, post }) => {
   const navigation = useNavigation();
-  const { setPostId } = useAuth();
 
-  const isLiked = post?.likers?.includes(userData?.data?._id);
+  const isLiked = useMemo(() => {
+    return (
+      post?.likers?.includes(userData?.data?._id) ||
+      post?.likers?.some((item) => item?._id === userData?.data?._id)
+    );
+  }, [post?.likers, userData?.data?._id]);
 
-  useLayoutEffect(() => {
-    setPostId(post);
-  }, [post]);
+  const onNavigate = useCallback(() => {
+    navigation.navigate(NavStr.POSTDETAILS, { post });
+  }, [navigation, post]);
 
-  const onNavigate = () => {
-    setPostId(post);
-    navigation.navigate(NavStr.POSTDETAILS);
-  };
   const uid = userData?.data?._id;
   const oid = post?.user?._id;
-  const combinedId = uid > oid ? uid + oid : oid + uid;
+  const combinedId = useMemo(() => {
+    return uid > oid ? uid + oid : oid + uid;
+  }, [uid, oid]);
 
-  const onSendMessage = async () => {
+  const onSendMessage = useCallback(async () => {
     try {
       const userRef = doc(db, "users", uid);
       const res = await getDoc(userRef);
@@ -58,8 +60,12 @@ const IconContainer = ({ onLikes, userData, post }) => {
       if (!chatRes.exists()) {
         await setDoc(chatRef, { messages: [] });
       }
-    } catch (error) {}
-  };
+      console.log("Document successfully written!");
+    } catch (error) {
+      console.error("Error writing document: ", error);
+    }
+  }, [combinedId, navigation, oid, post, uid]);
+
   return (
     <View
       style={{
@@ -79,7 +85,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
         <TextSmall>{isLiked ? "Liked" : "Like"}</TextSmall>
       </Pressable>
 
-      <Pressable style={{ alignItems: "center" }} onPress={() => onNavigate()}>
+      <Pressable style={{ alignItems: "center" }} onPress={onNavigate}>
         <FontAwesome5 name="comment-dots" size={18} color={colors.white} />
         <TextSmall>Comment</TextSmall>
       </Pressable>
@@ -97,4 +103,4 @@ const IconContainer = ({ onLikes, userData, post }) => {
   );
 };
 
-export default IconContainer;
+export default React.memo(IconContainer);

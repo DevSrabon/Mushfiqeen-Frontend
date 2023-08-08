@@ -20,7 +20,7 @@ const VerifyCode = () => {
           email || router?.params?.email
         }/code/${code}`
       );
-      console.log(res.data);
+
       setToken(res.data.accessToken);
     } catch (error) {
       console.log(error);
