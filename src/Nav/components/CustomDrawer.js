@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import icons from "../../../assets/icons";
-import { SubRow, Title } from "../../components";
+import { HorizantalBar, Row, SubRow, Title } from "../../components";
 import { useAuth } from "../../contexts/useAuth";
 import colors from "../../theme/Colors";
 import NavStr from "../NavStr";
@@ -44,44 +44,60 @@ function CustomDrawer(props) {
   return (
     <DrawerContentScrollView style={{ backgroundColor: colors.bg }} {...props}>
       <>
-        <View style={styles.content}>
+        <Row>
+          <View>
+            {userData?.data ? (
+              <Image
+                source={{ uri: userData?.data?.imageURL }}
+                style={styles.img}
+              />
+            ) : (
+              <Image source={icons.user} style={styles.img} />
+            )}
+            <Title>{userData?.data?.fullName || "Test user"}</Title>
+          </View>
           <AntDesign
             name="close"
             size={20}
             color={colors.white}
             onPress={() => navigation.closeDrawer()}
-            style={{ alignSelf: "flex-end" }}
+            style={{ alignSelf: "flex-start" }}
           />
-          {userData?.data ? (
-            <Image
-              source={{ uri: userData?.data?.imageURL }}
-              style={styles.img}
-            />
-          ) : (
-            <Image source={icons.user} style={styles.img} />
-          )}
-          <Title>{userData?.data?.fullName || "Test user"}</Title>
+        </Row>
+        <View style={{ paddingLeft: 20, gap: 10, marginTop: 30 }}>
+          <TouchableOpacity
+            style={{ alignItems: "flex-start" }}
+            onPress={() => moveToScreen(NavStr.PROFILE)}
+          >
+            <SubRow>
+              <SimpleLineIcons name="user" size={20} color={colors.white} />
+              <Title>Profile</Title>
+            </SubRow>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => moveToScreen(NavStr.SETTINGS)}
+            style={{ alignItems: "flex-start" }}
+          >
+            <SubRow>
+              <MaterialIcons name="settings" size={20} color={colors.white} />
+              <Title>Settings</Title>
+            </SubRow>
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity onPress={() => moveToScreen(NavStr.PROFILE)}>
-          <SubRow>
-            <SimpleLineIcons name="user" size={20} color={colors.white} />
-            <Title>Profile</Title>
-          </SubRow>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => moveToScreen(NavStr.SETTINGS)}>
-          <SubRow>
-            <MaterialIcons name="settings" size={20} color={colors.white} />
-            <Title>Settings</Title>
-          </SubRow>
-        </TouchableOpacity>
+        <HorizantalBar style={{ marginTop: 50 }} />
 
         {userData?.data ? (
-          <Pressable onPress={onLogOut}>
+          <Pressable
+            onPress={onLogOut}
+            style={{ alignItems: "flex-end", padding: 10 }}
+          >
             <Title>Log Out</Title>
           </Pressable>
         ) : (
-          <Pressable onPress={onSignIn}>
+          <Pressable
+            onPress={onSignIn}
+            style={{ alignItems: "flex-end", paddingHorizontal: 20 }}
+          >
             <Title>Sign In</Title>
           </Pressable>
         )}

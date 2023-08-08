@@ -1,4 +1,5 @@
-import { AntDesign } from "@expo/vector-icons";
+import React from "react";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import React, { useCallback } from "react";
@@ -102,6 +103,10 @@ const HomeCard = ({ post }) => {
             </SubTitle>
           </View>
         </SubRow>
+        {/* <View style={styles.threeDots}>
+          <Entypo name="dots-three-horizontal" size={24} color={colors.white} onPress={} />
+        </View> */}
+
         {isFollowing ? (
           <SubRow style={{ gap: 0 }}>
             <AntDesign name="Safety" size={16} color={colors.primary} />
@@ -153,6 +158,15 @@ const HomeCard = ({ post }) => {
 };
 
 const styles = StyleSheet.create({
+  threeDots: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 35,
+    width: 35,
+    borderRadius: 50,
+    borderColor: colors.white,
+    borderWidth: 1,
+  },
   container: {
     backgroundColor: colors.bg,
     width: "100%",
