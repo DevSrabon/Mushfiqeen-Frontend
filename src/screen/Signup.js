@@ -11,6 +11,7 @@ import colors from "../theme/Colors";
 import NavStr from "../Nav/NavStr";
 import { MaterialIcons } from "@expo/vector-icons";
 import SubContainer from "../components/subContainer";
+import { AntDesign } from "@expo/vector-icons";
 
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
@@ -65,6 +66,13 @@ const Signup = () => {
   };
   return (
     <SubContainer>
+      <AntDesign
+        name="arrowleft"
+        size={30}
+        color={colors.white}
+        onPress={() => navigation.navigate(NavStr.HOME)}
+        style={{ paddingHorizontal: 10, paddingTop: 10 }}
+      />
       <ScrollView>
         <Header>Signup</Header>
 
@@ -77,7 +85,7 @@ const Signup = () => {
               >
                 {loading ? (
                   <>
-                    <View style={{}}>
+                    <View>
                       <ActivityIndicator style={{ color: "yellow" }} />
                     </View>
                   </>
@@ -189,6 +197,7 @@ const Signup = () => {
             alignItems: "center",
             justifyContent: "center",
             gap: 3,
+            marginTop: 10,
           }}
         >
           <Text

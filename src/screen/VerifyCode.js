@@ -27,7 +27,7 @@ const VerifyCode = () => {
     }
   };
   return (
-    <Container style={styles.container}>
+    <Container>
       <Header>Verify Your Email</Header>
       <InputField
         value={email || router?.params?.email}
