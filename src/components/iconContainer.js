@@ -8,9 +8,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import React, { useCallback, useMemo } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, View, StyleSheet } from "react-native";
 import NavStr from "../Nav/NavStr";
-import { useAuth } from "../contexts/useAuth";
 import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
@@ -38,7 +37,10 @@ const IconContainer = ({ onLikes, userData, post }) => {
   const onSendMessage = useCallback(async () => {
     try {
       const userRef = doc(db, "users", uid);
+      const userRef2 = doc(db, "users", oid);
       const res = await getDoc(userRef);
+      const res2 = await getDoc(userRef2);
+
       const data = {
         [combinedId + ".userInfo"]: {
           uid: oid,
@@ -47,60 +49,79 @@ const IconContainer = ({ onLikes, userData, post }) => {
         },
         [combinedId + ".date"]: serverTimestamp(),
       };
+
+      const data2 = {
+        [combinedId + ".userInfo"]: {
+          uid,
+          name: userData?.data?.fullName,
+          photoURL: userData?.data?.imageURL,
+        },
+        [combinedId + ".date"]: serverTimestamp(),
+      };
+
       if (!res.exists()) {
         await setDoc(userRef, {});
-        await updateDoc(userRef, data);
-        navigation.navigate(NavStr.CHAT);
-      } else {
-        await updateDoc(userRef, data);
-        navigation.navigate(NavStr.CHAT);
       }
-      const chatRef = doc(db, "chats", combinedId);
-      const chatRes = await getDoc(chatRef);
-      if (!chatRes.exists()) {
-        await setDoc(chatRef, { messages: [] });
+
+      if (!res2.exists()) {
+        await setDoc(userRef2, {});
       }
+
+      await updateDoc(userRef, data);
+      await updateDoc(userRef2, data2);
+
+      navigation.navigate(NavStr.CHATS);
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
     }
-  }, [combinedId, navigation, oid, post, uid]);
+  }, [combinedId, navigation, oid, post, uid, userData?.data]);
 
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginVertical: 10,
-        paddingHorizontal: 30,
-      }}
-    >
+    <View style={styles.container}>
       <Pressable style={{ alignItems: "center" }} onPress={() => onLikes()}>
         {isLiked ? (
           <AntDesign name={"like1"} size={18} color={colors.primary} />
         ) : (
-          <AntDesign name={"like2"} size={18} color={colors.white} />
+          <AntDesign name={"like2"} size={18} color={colors.primaryLight} />
         )}
         <TextSmall>{isLiked ? "Liked" : "Like"}</TextSmall>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }} onPress={onNavigate}>
-        <FontAwesome5 name="comment-dots" size={18} color={colors.white} />
-        <TextSmall>Comment</TextSmall>
+        <FontAwesome5
+          name="comment-dots"
+          size={18}
+          color={colors.primaryLight}
+        />
+        <TextSmall style={{ color: colors.primaryLight }}>Comment</TextSmall>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }}>
-        <FontAwesome5 name="share-square" size={18} color={colors.white} />
-        <TextSmall>Share</TextSmall>
+        <FontAwesome5
+          name="share-square"
+          size={18}
+          color={colors.primaryLight}
+        />
+        <TextSmall style={{ color: colors.primaryLight }}>Share</TextSmall>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }} onPress={onSendMessage}>
-        <FontAwesome name="send" size={18} color={colors.white} />
-        <TextSmall>Send</TextSmall>
+        <FontAwesome name="send" size={18} color={colors.primaryLight} />
+        <TextSmall style={{ color: colors.primaryLight }}>Send</TextSmall>
       </Pressable>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 10,
+    paddingHorizontal: 30,
+  },
+});
 
 export default React.memo(IconContainer);

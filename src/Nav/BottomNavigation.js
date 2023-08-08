@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
-import { TouchableOpacity, Animated, View, StyleSheet } from "react-native";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
+import React, { useRef, useState } from "react";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Bayan, Chats, Home, Post } from "../screen";
 import colors from "../theme/Colors";
-import { Home, Post, Bayan, Chat } from "../screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -48,10 +48,11 @@ const BottomNavigation = () => {
         tabBarStyle: {
           position: "absolute",
           backgroundColor: colors.bg,
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
-          bottom: 5,
-          fontFamily: "Regular",
+          fontSize: 12,
+          fontFamily: "SemiBold",
         },
         headerShown: false,
         tabBarIcon: ({ focused }) => {
@@ -129,7 +130,7 @@ const BottomNavigation = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="home"
         component={Home}
         options={{
           title: "Home",
@@ -174,8 +175,8 @@ const BottomNavigation = () => {
       />
 
       <Tab.Screen
-        name="Chat"
-        component={Chat}
+        name="Chats"
+        component={Chats}
         options={{
           title: "Chat",
           tabBarIcon: ({ focused, color }) => (
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   },
   focused: {
     borderTopWidth: 3,
-     // borderLeftWidth: 3,
+    // borderLeftWidth: 3,
     // borderRightWidth: 3,
     // borderRadius: 7,
     paddingHorizontal: 9,

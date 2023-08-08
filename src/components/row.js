@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 const Row = (props) => {
-  console.log("row");
   return (
     <View style={{ ...styles.row, ...props.style }}>{props.children}</View>
   );
