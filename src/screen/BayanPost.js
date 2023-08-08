@@ -87,7 +87,6 @@ const BayanPost = () => {
         navigation.navigate("Bayan");
       }
 
-      console.log(res.data);
     } catch (error) {
       if (error.response.data.message) {
         alert(error.response.data.message);

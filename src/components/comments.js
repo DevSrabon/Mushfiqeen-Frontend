@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Image,
   Pressable,
@@ -27,7 +27,8 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
   const { userData } = useAuth();
   const isLiked = comment?.likes?.includes(userData?.data?._id);
   const navigation = useNavigation();
-  const onCommentsLikes = async () => {
+  const onCommentsLikes = useCallback(async () => {
+    setRefetch((prev) => !prev);
     setLoading((prev) => !prev);
     try {
       await axios.put(
@@ -35,16 +36,16 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
         {},
         config
       );
-      setRefetch(true);
     } catch (error) {
       console.log(error);
     } finally {
-      setRefetch(false);
+      setRefetch((prev) => !prev);
       setLoading((prev) => !prev);
     }
-  };
+  }, [postId, comment?._id, config]);
 
-  const onReply = async () => {
+  const onReply = useCallback(async () => {
+    setRefetch((prev) => !prev);
     try {
       const rest = await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/reply/${postId}`,
@@ -52,15 +53,14 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
         config
       );
 
-      setRefetch(true);
       setModalVisible((prev) => !prev);
       setValue("");
     } catch (error) {
       console.log(error);
     } finally {
-      setRefetch(false);
+      setRefetch((prev) => !prev);
     }
-  };
+  }, [postId, value, config, comment?._id]);
 
   const date = timeAgo(comment?.createdAt);
 
@@ -243,4 +243,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Comments;
+export default React.memo(Comments);

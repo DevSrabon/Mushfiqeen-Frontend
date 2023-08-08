@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
-import React, { useCallback } from "react";
+import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
 import NavStr from "../Nav/NavStr";
@@ -18,15 +18,11 @@ import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import { timeAgo } from "./timeConvert";
 
-const HomeCard = ({ post }) => {
-  console.log("home card");
+const PostDetailsCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
-
   const navigation = useNavigation();
-
-  const onLikes = useCallback(async () => {
+  const onLikes = async () => {
     try {
-      setRefetch((prev) => !prev);
       const res = await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/likes/${post?._id}`,
         {},
@@ -36,6 +32,7 @@ const HomeCard = ({ post }) => {
           },
         }
       );
+      setRefetch((prev) => !prev);
     } catch (error) {
       if (error.response.data.message) {
         alert(error.response.data.message);
@@ -44,11 +41,10 @@ const HomeCard = ({ post }) => {
       }
     } finally {
     }
-  }, [post?._id, setRefetch, userData?.accessToken]);
+  };
 
-  const onFollow = useCallback(async () => {
+  const onFollow = async () => {
     try {
-      setRefetch((prev) => !prev);
       await axios.post(
         `https://musfiqeen-backend.vercel.app/api/v1/users/add-follow/${post?.user?._id}`,
         {},
@@ -58,6 +54,7 @@ const HomeCard = ({ post }) => {
           },
         }
       );
+      setRefetch((prev) => !prev);
     } catch (error) {
       if (error.response.data.message) {
         alert(error.response.data.message);
@@ -67,11 +64,11 @@ const HomeCard = ({ post }) => {
     } finally {
       setRefetch(false);
     }
-  }, [post?._id, setRefetch, userData?.accessToken]);
+  };
   const isFollowing = post?.user?.followers?.includes(userData?.data?._id);
 
   const date = timeAgo(post?.createdAt);
-
+  const onNavigate = () => {};
   return (
     <View style={styles.container}>
       <Row>
@@ -174,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(HomeCard);
+export default PostDetailsCard;

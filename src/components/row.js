@@ -1,7 +1,8 @@
-import { StyleSheet, View } from "react-native";
 import React from "react";
+import { StyleSheet, View } from "react-native";
 
 const Row = (props) => {
+  console.log("row");
   return (
     <View style={{ ...styles.row, ...props.style }}>{props.children}</View>
   );
@@ -16,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Row;
+export default React.memo(Row);

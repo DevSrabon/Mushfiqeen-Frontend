@@ -1,10 +1,8 @@
-import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { FlatList, Text } from "react-native";
 import SearchHeader from "../Nav/components/searchHeader";
-import { Container, Loading } from "../components";
-import SkeletonMain from "../components/Skeleton/SkeletonMain";
+import { Container } from "../components";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 
@@ -51,14 +49,14 @@ const Home = ({ navigation }) => {
     }
   };
 
-  if (loading && skip === 0) return <Loading />;
+  // if (loading && skip === 0) return <Loading />;
 
   const estimatedItemSize = parseInt(total) || 100;
 
   return (
-    <Container>
+    <Container style={{ marginBottom: 40 }}>
       <SearchHeader navigation={navigation} />
-      <FlashList
+      <FlatList
         data={posts}
         renderItem={({ item }) => <HomeCard post={item} />}
         keyExtractor={(item) => item?._id}
