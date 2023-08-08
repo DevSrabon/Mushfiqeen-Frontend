@@ -70,12 +70,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
       await updateDoc(userRef, data);
       await updateDoc(userRef2, data2);
 
-      const chatRef = doc(db, "chats", combinedId);
-      const chatRes = await getDoc(chatRef);
-      if (!chatRes.exists()) {
-        await setDoc(chatRef, { messages: [] });
-      }
-      navigation.navigate(NavStr.CHAT);
+      navigation.navigate(NavStr.CHATS);
       console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);

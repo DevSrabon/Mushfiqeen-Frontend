@@ -1,13 +1,13 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { BayanPost, Login, PostDetails, Signup } from "../screen";
-import ForgetPass from "../screen/ForgetPass";
-import VerifyCode from "../screen/VerifyCode";
-import ProfileInfo from "../screen/ProfileInfo";
-import NavStr from "./NavStr";
 import { NavigationContainer } from "@react-navigation/native";
-import Parent from "./Parent";
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
 import ReactionDetails from "../components/reactionDetails";
+import { BayanPost, Chat, Login, PostDetails, Signup } from "../screen";
+import ForgetPass from "../screen/ForgetPass";
+import ProfileInfo from "../screen/ProfileInfo";
+import VerifyCode from "../screen/VerifyCode";
+import NavStr from "./NavStr";
+import Parent from "./Parent";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +24,7 @@ const StackNavigation = () => {
         <Stack.Screen name={NavStr.VERIFYCODE} component={VerifyCode} />
         <Stack.Screen name={NavStr.BAYAN_POST} component={BayanPost} />
         <Stack.Screen name={NavStr.REACTION} component={ReactionDetails} />
+        <Stack.Screen name={NavStr.CHAT} component={Chat} />
       </Stack.Navigator>
     </NavigationContainer>
   );

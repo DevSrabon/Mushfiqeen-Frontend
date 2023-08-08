@@ -1,10 +1,11 @@
-export { default as Home } from "./Home";
-export { default as Login } from "./Login";
-export { default as Signup } from "./Signup";
 export { default as Bayan } from "./Bayan";
 export { default as BayanDetails } from "./BayanDetails";
 export { default as BayanPost } from "./BayanPost";
+export { default as Chat } from "./Chat";
+export { default as Chats } from "./Chats";
+export { default as Home } from "./Home";
+export { default as Login } from "./Login";
 export { default as Post } from "./Post";
 export { default as PostDetails } from "./PostDetails";
 export { default as Settings } from "./Settings";
-export { default as Chat } from "./Chat";
+export { default as Signup } from "./Signup";

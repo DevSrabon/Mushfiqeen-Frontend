@@ -7,6 +7,7 @@ export default {
   POSTDETAILS: "postDetails",
   BAYAN: "Bayan",
   BAYAN_POST: "bayanPost",
+  CHATS: "Chats",
   CHAT: "Chat",
   LOGIN: "Login",
   SIGNUP: "Signup",
