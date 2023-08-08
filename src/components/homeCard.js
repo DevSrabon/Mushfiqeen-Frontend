@@ -1,5 +1,4 @@
-import React from "react";
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import React, { useCallback } from "react";
