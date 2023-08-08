@@ -100,7 +100,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
           </>
         )}
         {item?.description.length > 500 && seeMore && !showLess && (
-          <Title style={{ textAlign: "justify" }}>
+          <Title style={{ textAlign: "justify", fontSize: 14 }}>
             {item?.description}
             <Pressable
               onPress={(prev) => {
@@ -114,7 +114,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
           </Title>
         )}
         {item?.description.length < 500 && (
-          <SubTitle style={{ textAlign: "justify" }}>
+          <SubTitle style={{ textAlign: "justify", fontSize: 14 }}>
             {item?.description}
           </SubTitle>
         )}

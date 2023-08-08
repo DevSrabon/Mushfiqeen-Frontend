@@ -125,7 +125,9 @@ const HomeCard = ({ post }) => {
           marginHorizontal: 10,
         }}
       >
-        <SubTitle>{post?.description}</SubTitle>
+        <SubTitle style={{ fontFamily: "Regular", fontSize: 14 }}>
+          {post?.description}
+        </SubTitle>
       </View>
       <Row>
         <SubRow>
@@ -138,7 +140,7 @@ const HomeCard = ({ post }) => {
           <TextSmall>{post?.likes}</TextSmall>
         </SubRow>
         <SubRow style={{ gap: 3 }}>
-          <TextSmall>{date}</TextSmall>
+          <TextSmall style={{ color: colors.primary }}>{date}</TextSmall>
           <SubTitle>||</SubTitle>
 
           <TextSmall style={{ color: colors.primary }}>
