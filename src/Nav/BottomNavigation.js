@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Bayan, Chat, Home, Post } from "../screen";
+import { Bayan, Chats, Home, Post } from "../screen";
 import colors from "../theme/Colors";
 
 const Tab = createBottomTabNavigator();
@@ -175,8 +175,8 @@ const BottomNavigation = () => {
       />
 
       <Tab.Screen
-        name="Chat"
-        component={Chat}
+        name="Chats"
+        component={Chats}
         options={{
           title: "Chat",
           tabBarIcon: ({ focused, color }) => (
