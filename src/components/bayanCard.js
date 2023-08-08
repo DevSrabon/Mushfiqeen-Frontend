@@ -17,7 +17,7 @@ import Row from "./row";
 import SubRow from "./subRow";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
-import { timeAgo } from "./timeConvert";
+import TimeAgo from "./timeAgo";
 import Title from "./title";
 
 const BayanCard = ({ item, setRefetch, config }) => {
@@ -48,7 +48,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
     navigation.navigate(NavStr.BAYAN_POST, (state = { post }));
   };
 
-  const date = timeAgo(item?.createdAt);
+  // const date = timeAgo(item?.createdAt);
 
   return (
     <View style={styles.container} key={item?._id}>
@@ -67,7 +67,8 @@ const BayanCard = ({ item, setRefetch, config }) => {
           </TouchableOpacity>
           <View>
             <Title>{item?.user?.fullName}</Title>
-            <SubTitle>{date}</SubTitle>
+            {/* <SubTitle>{date}</SubTitle> */}
+            <TimeAgo createdAt={item?.createdAt} />
           </View>
         </SubRow>
         <View>
