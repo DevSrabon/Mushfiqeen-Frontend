@@ -17,7 +17,7 @@ import {
 } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import { timeAgo } from "./timeConvert";
+import TimeAgo from "./timeAgo";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
@@ -70,7 +70,7 @@ const HomeCard = ({ post }) => {
   }, [post?._id, setRefetch, userData?.accessToken]);
   const isFollowing = post?.user?.followers?.includes(userData?.data?._id);
 
-  const date = timeAgo(post?.createdAt);
+  // const date = timeAgo(post?.createdAt);
 
   return (
     <View style={styles.container}>
@@ -146,7 +146,7 @@ const HomeCard = ({ post }) => {
           {/* <TextSmall>{post?.likes}</TextSmall> */}
         </SubRow>
         <SubRow style={{ gap: 3 }}>
-          <TextSmall style={{ color: colors.primary }}>{date}</TextSmall>
+          <TimeAgo createdAt={post?.createdAt} />
           <SubTitle>||</SubTitle>
 
           <TextSmall style={{ color: colors.primary }}>

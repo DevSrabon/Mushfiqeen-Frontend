@@ -1,17 +1,18 @@
+import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SubContainer } from "../components";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
-import { AntDesign } from "@expo/vector-icons";
 import colors from "../theme/Colors";
 
 const ForgetPass = (props) => {
+  const { email: emails } = props?.route?.params;
   const { navigation } = props;
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("" || emails);
   const [code, setCode] = useState(null);
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
@@ -41,9 +42,12 @@ const ForgetPass = (props) => {
       }
     } finally {
       setLoading(false);
+      setCode("");
+      setPassword("");
     }
   };
   const onReset = async () => {
+    if (password.length < 5) return alert("Password must be 6 Characters");
     try {
       setLoading(true);
       const response = await axios.post(
@@ -66,6 +70,8 @@ const ForgetPass = (props) => {
       }
     } finally {
       setLoading(false);
+      setCode("");
+      setPassword("");
     }
   };
 
@@ -125,6 +131,21 @@ const ForgetPass = (props) => {
             disabled={loading}
             style={{ alignSelf: "center", marginTop: 20 }}
           />
+          <View style={{ width: "100%", alignItems: "flex-end" }}>
+            <TouchableOpacity onPress={onForget}>
+              <Text
+                style={{
+                  fontFamily: "SemiBold",
+                  color: colors.white,
+                  textAlign: "right",
+                  marginRight: 20,
+                  marginTop: 10,
+                }}
+              >
+                Resend Code
+              </Text>
+            </TouchableOpacity>
+          </View>
         </>
       )}
     </SubContainer>

@@ -17,7 +17,7 @@ import Row from "./row";
 import SubRow from "./subRow";
 import SubTitle from "./subTitle";
 import TextSmall from "./textSmall";
-import { timeAgo } from "./timeConvert";
+import TimeAgo from "./timeAgo";
 import Title from "./title";
 
 const BayanCard = ({ item, setRefetch, config }) => {
@@ -48,7 +48,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
     navigation.navigate(NavStr.BAYAN_POST, (state = { post }));
   };
 
-  const date = timeAgo(item?.createdAt);
+  // const date = timeAgo(item?.createdAt);
 
   return (
     <View style={styles.container} key={item?._id}>
@@ -67,17 +67,18 @@ const BayanCard = ({ item, setRefetch, config }) => {
           </TouchableOpacity>
           <View>
             <Title>{item?.user?.fullName}</Title>
-            <SubTitle>{date}</SubTitle>
+            {/* <SubTitle>{date}</SubTitle> */}
+            <TimeAgo createdAt={item?.createdAt} />
           </View>
         </SubRow>
         <View>
           <SubRow>
             <AntDesign name="clockcircleo" size={16} color={colors.primary} />
-            <Title style={{ color: colors.primary }}>{item?.date}</Title>
+            <Title style={{ color: colors.primaryLight }}>{item?.date}</Title>
           </SubRow>
           <SubRow>
             <AntDesign name="arrowright" size={16} color={colors.primary} />
-            <Title style={{ color: colors.primary }}>{item?.place}</Title>
+            <Title style={{ color: colors.primaryLight }}>{item?.place}</Title>
           </SubRow>
         </View>
       </Row>
@@ -93,7 +94,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
             <Title style={{ textAlign: "justify" }}>{description}</Title>
 
             <Pressable onPress={(prev) => setSeeMore(!seeMore)}>
-              <Title style={{ textAlign: "right", color: colors.primary }}>
+              <Title style={{ textAlign: "right", color: colors.primaryLight }}>
                 ...See More
               </Title>
             </Pressable>
@@ -107,7 +108,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
                 setShowLess(!prev), setSeeMore(!prev);
               }}
             >
-              <Title style={{ textAlign: "right", color: colors.primary }}>
+              <Title style={{ textAlign: "right", color: colors.primaryLight }}>
                 ...Show Less
               </Title>
             </Pressable>
@@ -119,12 +120,6 @@ const BayanCard = ({ item, setRefetch, config }) => {
           </SubTitle>
         )}
       </View>
-      {/* {userData?.data._id === item?.user?._id && (
-        <>
-        
-          <Button title="Delete" onPress={() => onDelete(item?._id)} />
-        </>
-      )} */}
 
       <Row>
         <SubRow>
@@ -148,7 +143,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
             <>
               <Title
                 style={{
-                  color: colors.primary,
+                  color: colors.primaryLight,
                   paddingHorizontal: 10,
                   paddingVertical: 1,
                 }}

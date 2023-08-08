@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   focus: {
-    backgroundColor: "rgba(14, 152, 255, .1)",
+    backgroundColor: "rgba(220, 250, 0, .1)",
   },
   postButton: {
     fontFamily: "SemiBold",

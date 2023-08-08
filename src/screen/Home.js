@@ -5,6 +5,7 @@ import SearchHeader from "../Nav/components/searchHeader";
 import { Container } from "../components";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
+import SubContainer from "../components/subContainer";
 
 const Home = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -54,7 +55,7 @@ const Home = ({ navigation }) => {
   const estimatedItemSize = parseInt(total) || 100;
 
   return (
-    <Container style={{ marginBottom: 40 }}>
+    <SubContainer>
       <SearchHeader navigation={navigation} />
       <FlatList
         data={posts}
@@ -69,7 +70,7 @@ const Home = ({ navigation }) => {
           )
         }
       />
-    </Container>
+    </SubContainer>
   );
 };
 

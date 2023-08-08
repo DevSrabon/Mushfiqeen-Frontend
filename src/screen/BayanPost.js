@@ -86,7 +86,6 @@ const BayanPost = () => {
         setPlace("");
         navigation.navigate("Bayan");
       }
-
     } catch (error) {
       if (error.response.data.message) {
         alert(error.response.data.message);
@@ -111,7 +110,7 @@ const BayanPost = () => {
           <FontAwesome
             name="trash-o"
             size={24}
-            color={colors.primary}
+            color={colors.red}
             onPress={() => onDelete(post?._id)}
           />
 
