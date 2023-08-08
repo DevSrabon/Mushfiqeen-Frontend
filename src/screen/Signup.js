@@ -85,7 +85,7 @@ const Signup = () => {
               >
                 {loading ? (
                   <>
-                    <View style={{}}>
+                    <View>
                       <ActivityIndicator style={{ color: "yellow" }} />
                     </View>
                   </>
