@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import React, { useCallback, useMemo } from "react";
-import { Pressable, View, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import NavStr from "../Nav/NavStr";
 import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
@@ -79,22 +79,44 @@ const IconContainer = ({ onLikes, userData, post }) => {
 
   return (
     <View style={styles.container}>
-      <Pressable style={{ alignItems: "center" }} onPress={() => onLikes()}>
-        {isLiked ? (
-          <AntDesign name={"like1"} size={18} color={colors.primary} />
-        ) : (
-          <AntDesign name={"like2"} size={18} color={colors.primaryLight} />
-        )}
-        <TextSmall>{isLiked ? "Liked" : "Like"}</TextSmall>
+      <Pressable
+        style={{
+          flexDirection: "row",
+          alignItems: "flex-end",
+          gap: 5,
+        }}
+        onPress={() => onLikes()}
+      >
+        <TextSmall style={{ color: colors.primary }}>{post?.likes}</TextSmall>
+        <View style={{ alignItems: "center" }}>
+          {isLiked ? (
+            <AntDesign name={"like1"} size={18} color={colors.primary} />
+          ) : (
+            <AntDesign name={"like2"} size={18} color={colors.primaryLight} />
+          )}
+          <TextSmall>{isLiked ? "Liked" : "Like"}</TextSmall>
+        </View>
       </Pressable>
 
-      <Pressable style={{ alignItems: "center" }} onPress={onNavigate}>
-        <FontAwesome5
-          name="comment-dots"
-          size={18}
-          color={colors.primaryLight}
-        />
-        <TextSmall style={{ color: colors.primaryLight }}>Comment</TextSmall>
+      <Pressable
+        style={{
+          flexDirection: "row",
+          alignItems: "flex-end",
+          gap: 5,
+        }}
+        onPress={onNavigate}
+      >
+        <TextSmall style={{ color: colors.primary }}>
+          {post?.commentsLength}
+        </TextSmall>
+        <View style={{ alignItems: "center" }}>
+          <FontAwesome5
+            name="comment-dots"
+            size={18}
+            color={colors.primaryLight}
+          />
+          <TextSmall style={{ color: colors.primaryLight }}>Comment</TextSmall>
+        </View>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }}>

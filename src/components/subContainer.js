@@ -1,9 +1,8 @@
 import React from "react";
-import { Dimensions, SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import { Dimensions, SafeAreaView, StyleSheet } from "react-native";
 import colors from "../theme/Colors";
 
 const SubContainer = (props) => {
-  console.log("container");
   return (
     <SafeAreaView style={{ ...styles.container, ...props.style }}>
       {props.children}
@@ -21,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(SubContainer);
+export default SubContainer;

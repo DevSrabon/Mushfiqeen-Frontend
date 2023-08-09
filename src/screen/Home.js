@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList } from "react-native";
 import SearchHeader from "../Nav/components/searchHeader";
-import { Container } from "../components";
+import SkeletonMain from "../components/Skeleton/SkeletonMain";
 import HomeCard from "../components/homeCard";
-import { useAuth } from "../contexts/useAuth";
 import SubContainer from "../components/subContainer";
+import { useAuth } from "../contexts/useAuth";
 
 const Home = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -55,20 +55,16 @@ const Home = ({ navigation }) => {
   const estimatedItemSize = parseInt(total) || 100;
 
   return (
-    <SubContainer>
+    <SubContainer style={{ paddingBottom: 40 }}>
       <SearchHeader navigation={navigation} />
       <FlatList
         data={posts}
-        renderItem={({ item }) => <HomeCard post={item} />}
+        renderItem={({ item }) => <HomeCard post={item} key={item?._id} />}
         keyExtractor={(item) => item?._id}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.1}
         estimatedItemSize={estimatedItemSize}
-        ListFooterComponent={
-          loading && (
-            <Text style={{ alignItems: "center" }}>Loading more...</Text>
-          )
-        }
+        ListFooterComponent={loading && <SkeletonMain />}
       />
     </SubContainer>
   );
