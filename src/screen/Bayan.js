@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, StatusBar } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { BayanCard, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
@@ -38,7 +38,7 @@ const Bayan = (props) => {
   }, [lang, bayanRefetch]);
   return (
     <SubContainer>
-      <Row style={{ paddingVertical: 0 }}>
+      <Row style={{ paddingVertical: 0, marginTop: StatusBar.currentHeight }}>
         <AntDesign
           name="arrowleft"
           size={30}
