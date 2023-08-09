@@ -6,6 +6,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [refetch, setRefetch] = useState(false);
   const [bayanRefetch, setBayanRefetch] = useState(false);
+  const [updateRefetch, setUpdateRefetch] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
@@ -96,6 +97,8 @@ const AuthProvider = ({ children }) => {
     bayanRefetch,
     setBayanRefetch,
     fetchUserData,
+    updateRefetch,
+    setUpdateRefetch,
   };
 
   return (

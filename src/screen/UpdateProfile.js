@@ -21,10 +21,7 @@ import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
 const UpdateProfile = ({ navigation }) => {
-  const router = useRoute();
-  const { setRefetch } = router?.params;
-
-  const { userData, fetchUserData } = useAuth();
+  const { userData, fetchUserData, setUpdateRefetch } = useAuth();
   const [selectedImage, setSelectedImage] = useState(
     `https://i.ibb.co/PzWs7jW/user.jpg`
   );
@@ -80,7 +77,7 @@ const UpdateProfile = ({ navigation }) => {
   const handleSaveChanges = async () => {
     setLoading(true);
     try {
-      setRefetch((prev) => !prev);
+      setUpdateRefetch((prev) => !prev);
       const body = {
         name,
         email,
@@ -107,7 +104,7 @@ const UpdateProfile = ({ navigation }) => {
       }
     } finally {
       setLoading(false);
-      setRefetch((prev) => !prev);
+      setUpdateRefetch((prev) => !prev);
     }
   };
   if (loading) return <Loading />;
