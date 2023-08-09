@@ -130,7 +130,7 @@ const BottomNavigation = () => {
       })}
     >
       <Tab.Screen
-        name="home"
+        name="Home"
         component={Home}
         options={{
           title: "Home",
