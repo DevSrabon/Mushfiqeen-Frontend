@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.primary,
     alignSelf: "flex-end",
-    paddingVertical: 10,
   },
   btnContainer: {
     minWidth: 100,

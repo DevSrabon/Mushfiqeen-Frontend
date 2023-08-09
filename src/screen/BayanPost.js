@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   View,
+  StatusBar,
 } from "react-native";
 import { DropDown, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
@@ -100,7 +101,7 @@ const BayanPost = () => {
   return (
     <SubContainer>
       {post?._id ? (
-        <Row>
+        <Row style={{ marginTop: StatusBar.currentHeight }}>
           <AntDesign
             name="arrowleft"
             size={30}
@@ -131,7 +132,7 @@ const BayanPost = () => {
           </Pressable>
         </Row>
       ) : (
-        <Row>
+        <Row style={{ marginTop: StatusBar.currentHeight }}>
           <AntDesign
             name="arrowleft"
             size={30}

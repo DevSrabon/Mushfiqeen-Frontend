@@ -1,7 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  StatusBar,
+} from "react-native";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
@@ -12,6 +19,8 @@ import NavStr from "../Nav/NavStr";
 import { MaterialIcons } from "@expo/vector-icons";
 import SubContainer from "../components/subContainer";
 import { AntDesign } from "@expo/vector-icons";
+import Row from "../components/row";
+import Title from "../components/title";
 
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
@@ -66,16 +75,17 @@ const Signup = () => {
   };
   return (
     <SubContainer>
-      <AntDesign
-        name="arrowleft"
-        size={30}
-        color={colors.white}
-        onPress={() => navigation.navigate(NavStr.HOME)}
-        style={{ paddingHorizontal: 10, paddingTop: 10 }}
-      />
-      <ScrollView>
+      <Row style={{ paddingTop: StatusBar.currentHeight }}>
+        <AntDesign
+          name="arrowleft"
+          size={30}
+          color={colors.secondary}
+          onPress={() => navigation.navigate(NavStr.HOME)}
+        />
         <Header>Signup</Header>
+      </Row>
 
+      <ScrollView>
         <View style={{ alignItems: "center" }}>
           {!imageURL.length ? (
             <>
@@ -96,7 +106,7 @@ const Signup = () => {
                       justifyContent: "center",
                       alignItems: "center",
                       borderWidth: 2,
-                      borderColor: colors.lightBg,
+                      borderColor: colors.primary,
                       padding: 20,
                       borderRadius: 50,
                     }}
@@ -161,25 +171,22 @@ const Signup = () => {
             marginVertical: 15,
           }}
         >
-          <Text
+          <Title
             style={{
-              fontFamily: "Medium",
-              fontSize: 14,
               lineHeight: 20,
               marginBottom: 10,
               marginHorizontal: 20,
-              color: colors.white,
             }}
           >
             By signing up you agree to our{" "}
-            <Text style={{ fontSize: 16, color: colors.white }}>
+            <Text style={{ fontSize: 16, color: colors.secondary }}>
               Terms & Conditions
             </Text>{" "}
             and{" "}
             <Text style={{ fontSize: 16, color: colors.white }}>
               Privacy Policy.*
             </Text>
-          </Text>
+          </Title>
         </View>
 
         <CustomButton
@@ -190,35 +197,25 @@ const Signup = () => {
           type="primary"
           style={{ alignSelf: "center" }}
         />
-        <View
+        <Row
           style={{
-            flex: 1,
-            flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
             gap: 3,
             marginTop: 10,
           }}
         >
-          <Text
-            style={{
-              fontFamily: "SemiBold",
-              color: colors.white,
-            }}
-          >
-            Already signed up ?
-          </Text>
+          <Title>Already signed up ?</Title>
           <TouchableOpacity onPress={() => navigation.navigate(NavStr.LOGIN)}>
-            <Text
+            <Title
               style={{
-                fontFamily: "SemiBold",
                 color: colors.primary,
               }}
             >
               Login
-            </Text>
+            </Title>
           </TouchableOpacity>
-        </View>
+        </Row>
       </ScrollView>
     </SubContainer>
   );

@@ -6,6 +6,7 @@ import {
   Image,
   Platform,
   ScrollView,
+  StatusBar,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -107,30 +108,22 @@ const UpdateProfile = ({ navigation }) => {
   if (loading) return <Loading />;
   return (
     <SubContainer>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <Row style={{ marginTop: StatusBar.currentHeight }}>
         <AntDesign
           name="arrowleft"
           size={30}
           color={colors.white}
           onPress={() => navigation.navigate(NavStr.PROFILE)}
-          style={{ paddingHorizontal: 20, paddingTop: 10 }}
         />
 
-        <Header style={{ paddingHorizontal: 50 }}>Update Profile</Header>
-      </View>
-      <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: colors.bg,
-          paddingHorizontal: 22,
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
+        <Header>Update</Header>
+      </Row>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View>
           <View
             style={{
               alignItems: "center",
-              marginVertical: 22,
+              marginVertical: 5,
             }}
           >
             <TouchableOpacity>
