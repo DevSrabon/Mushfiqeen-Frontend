@@ -37,8 +37,8 @@ const ProfilePage = () => {
   const router = useRoute();
 
   const params = router.params;
+  const { userData, updateRefetch } = useAuth();
 
-  const [refetch, setRefetch] = useState(false);
   const PostRoutes = () => {
     const navigation = useNavigation();
     const onNavigate = (item) => {
@@ -136,9 +136,8 @@ const ProfilePage = () => {
 
   const navigation = useNavigation();
   const onUpdateNavigate = () => {
-    navigation.navigate(NavStr.PROFILE_UPDATE, { setRefetch });
+    navigation.navigate(NavStr.PROFILE_UPDATE);
   };
-  const { userData } = useAuth();
 
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -194,7 +193,7 @@ const ProfilePage = () => {
     return () => {
       setProfile(null);
     };
-  }, [userData?.data?._id, paramsId, refetch]);
+  }, [userData?.data?._id, paramsId, updateRefetch]);
 
   return (
     <SubContainer>
