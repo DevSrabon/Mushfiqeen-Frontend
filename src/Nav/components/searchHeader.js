@@ -1,5 +1,11 @@
 import React from "react";
-import { TouchableOpacity, TextInput, Image, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  TextInput,
+  Image,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../theme/Colors";
 import { Row } from "../../components";
@@ -10,7 +16,9 @@ const SearchHeader = (props) => {
   const { navigation } = props;
   const { userData } = useAuth();
   return (
-    <Row style={{ backgroundColor: colors.bg }}>
+    <Row
+      style={{ backgroundColor: colors.bg, marginTop: StatusBar.currentHeight }}
+    >
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         {!userData?.data?.imageURL ? (
           <Image size={32} source={icons.user} style={styles.headerImg} />

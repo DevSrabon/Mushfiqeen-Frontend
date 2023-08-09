@@ -74,11 +74,11 @@ const BayanCard = ({ item, setRefetch, config }) => {
         <View>
           <SubRow>
             <AntDesign name="clockcircleo" size={16} color={colors.primary} />
-            <Title style={{ color: colors.primary }}>{item?.date}</Title>
+            <Title style={{ color: colors.primaryLight }}>{item?.date}</Title>
           </SubRow>
           <SubRow>
             <AntDesign name="arrowright" size={16} color={colors.primary} />
-            <Title style={{ color: colors.primary }}>{item?.place}</Title>
+            <Title style={{ color: colors.primaryLight }}>{item?.place}</Title>
           </SubRow>
         </View>
       </Row>
@@ -94,38 +94,32 @@ const BayanCard = ({ item, setRefetch, config }) => {
             <Title style={{ textAlign: "justify" }}>{description}</Title>
 
             <Pressable onPress={(prev) => setSeeMore(!seeMore)}>
-              <Title style={{ textAlign: "right", color: colors.primary }}>
+              <Title style={{ textAlign: "right", color: colors.primaryLight }}>
                 ...See More
               </Title>
             </Pressable>
           </>
         )}
         {item?.description.length > 500 && seeMore && !showLess && (
-          <Title style={{ textAlign: "justify" }}>
+          <Title style={{ textAlign: "justify", fontSize: 14 }}>
             {item?.description}
             <Pressable
               onPress={(prev) => {
                 setShowLess(!prev), setSeeMore(!prev);
               }}
             >
-              <Title style={{ textAlign: "right", color: colors.primary }}>
+              <Title style={{ textAlign: "right", color: colors.primaryLight }}>
                 ...Show Less
               </Title>
             </Pressable>
           </Title>
         )}
         {item?.description.length < 500 && (
-          <SubTitle style={{ textAlign: "justify" }}>
+          <SubTitle style={{ textAlign: "justify", fontSize: 14 }}>
             {item?.description}
           </SubTitle>
         )}
       </View>
-      {/* {userData?.data._id === item?.user?._id && (
-        <>
-        
-          <Button title="Delete" onPress={() => onDelete(item?._id)} />
-        </>
-      )} */}
 
       <Row>
         <SubRow>
@@ -149,7 +143,7 @@ const BayanCard = ({ item, setRefetch, config }) => {
             <>
               <Title
                 style={{
-                  color: colors.primary,
+                  color: colors.primaryLight,
                   paddingHorizontal: 10,
                   paddingVertical: 1,
                 }}

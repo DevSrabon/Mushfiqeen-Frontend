@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   typography: {
     fontFamily: "Medium",
     fontSize: 14,
-    color: colors.white,
+    color: colors.secondary,
   },
 });
 

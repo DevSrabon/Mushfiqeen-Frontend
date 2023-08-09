@@ -11,7 +11,7 @@ const HorizantalBar = (props) => {
 const styles = StyleSheet.create({
   row: {
     alignSelf: "center",
-    borderBottomColor: colors.white,
+    borderBottomColor: colors.secondary,
     borderBottomWidth: StyleSheet.hairlineWidth,
     width: "95%",
   },

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  StatusBar,
 } from "react-native";
 import NavStr from "../Nav/NavStr";
 import { AntDesign } from "@expo/vector-icons";
@@ -48,7 +49,7 @@ const Post = (props) => {
 
   return (
     <SubContainer>
-      <Row style={{ paddingVertical: 0 }}>
+      <Row style={{ paddingVertical: 0, marginTop: StatusBar.currentHeight }}>
         <AntDesign
           name="arrowleft"
           size={30}

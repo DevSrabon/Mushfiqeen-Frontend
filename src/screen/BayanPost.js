@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   View,
+  StatusBar,
 } from "react-native";
 import { DropDown, Row, SubContainer } from "../components";
 import { useAuth } from "../contexts/useAuth";
@@ -86,7 +87,6 @@ const BayanPost = () => {
         setPlace("");
         navigation.navigate("Bayan");
       }
-
     } catch (error) {
       if (error.response.data.message) {
         alert(error.response.data.message);
@@ -101,7 +101,7 @@ const BayanPost = () => {
   return (
     <SubContainer>
       {post?._id ? (
-        <Row>
+        <Row style={{ marginTop: StatusBar.currentHeight }}>
           <AntDesign
             name="arrowleft"
             size={30}
@@ -111,7 +111,7 @@ const BayanPost = () => {
           <FontAwesome
             name="trash-o"
             size={24}
-            color={colors.primary}
+            color={colors.red}
             onPress={() => onDelete(post?._id)}
           />
 
@@ -132,7 +132,7 @@ const BayanPost = () => {
           </Pressable>
         </Row>
       ) : (
-        <Row>
+        <Row style={{ marginTop: StatusBar.currentHeight }}>
           <AntDesign
             name="arrowleft"
             size={30}

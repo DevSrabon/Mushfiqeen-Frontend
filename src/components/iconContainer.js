@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import React, { useCallback, useMemo } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, View, StyleSheet } from "react-native";
 import NavStr from "../Nav/NavStr";
 import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
@@ -78,40 +78,50 @@ const IconContainer = ({ onLikes, userData, post }) => {
   }, [combinedId, navigation, oid, post, uid, userData?.data]);
 
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginVertical: 10,
-        paddingHorizontal: 30,
-      }}
-    >
+    <View style={styles.container}>
       <Pressable style={{ alignItems: "center" }} onPress={() => onLikes()}>
         {isLiked ? (
           <AntDesign name={"like1"} size={18} color={colors.primary} />
         ) : (
-          <AntDesign name={"like2"} size={18} color={colors.white} />
+          <AntDesign name={"like2"} size={18} color={colors.primaryLight} />
         )}
         <TextSmall>{isLiked ? "Liked" : "Like"}</TextSmall>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }} onPress={onNavigate}>
-        <FontAwesome5 name="comment-dots" size={18} color={colors.white} />
-        <TextSmall>Comment</TextSmall>
+        <FontAwesome5
+          name="comment-dots"
+          size={18}
+          color={colors.primaryLight}
+        />
+        <TextSmall style={{ color: colors.primaryLight }}>Comment</TextSmall>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }}>
-        <FontAwesome5 name="share-square" size={18} color={colors.white} />
-        <TextSmall>Share</TextSmall>
+        <FontAwesome5
+          name="share-square"
+          size={18}
+          color={colors.primaryLight}
+        />
+        <TextSmall style={{ color: colors.primaryLight }}>Share</TextSmall>
       </Pressable>
 
       <Pressable style={{ alignItems: "center" }} onPress={onSendMessage}>
-        <FontAwesome name="send" size={18} color={colors.white} />
-        <TextSmall>Send</TextSmall>
+        <FontAwesome name="send" size={18} color={colors.primaryLight} />
+        <TextSmall style={{ color: colors.primaryLight }}>Send</TextSmall>
       </Pressable>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 10,
+    paddingHorizontal: 30,
+  },
+});
 
 export default React.memo(IconContainer);

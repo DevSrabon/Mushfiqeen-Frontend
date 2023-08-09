@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
+import colors from "../theme/Colors";
 
 const Header = (props) => {
   const springValues = useRef([]);
@@ -38,27 +39,19 @@ const Header = (props) => {
     });
   }, [children]);
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>{renderAnimatedText()}</View>
-    </View>
-  );
+  return <View style={styles.textContainer}>{renderAnimatedText()}</View>;
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignSelf: "flex-start",
-    marginTop: 10,
-    marginLeft: 5,
-    marginBottom: 10,
-  },
   textStyle: {
     fontFamily: "SemiBold",
     fontSize: 24,
-    color: "#fff",
+    color: colors.primary,
   },
   textContainer: {
     flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 5,
   },
 });
 

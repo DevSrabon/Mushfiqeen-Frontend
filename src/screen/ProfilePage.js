@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
   useWindowDimensions,
+  StatusBar,
 } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
@@ -192,7 +193,7 @@ const ProfilePage = () => {
 
   return (
     <SubContainer>
-      <Row>
+      <Row style={{ marginTop: StatusBar.currentHeight }}>
         <AntDesign
           name="arrowleft"
           size={30}
@@ -201,15 +202,8 @@ const ProfilePage = () => {
           // style={{ paddingHorizontal: 10 }}
         />
         {userData?.data?._id === profile?._id && (
-          <TouchableOpacity
-            style={{
-              alignSelf: "center",
-            }}
-            onPress={() => onUpdateNavigate()}
-          >
-            <Title style={{ color: colors.primary, alignSelf: "center" }}>
-              Update Profile
-            </Title>
+          <TouchableOpacity onPress={() => onUpdateNavigate()}>
+            <Title style={{ color: colors.primary }}>Update Profile</Title>
           </TouchableOpacity>
         )}
       </Row>
@@ -222,7 +216,6 @@ const ProfilePage = () => {
               resizeMode="cover"
               style={{
                 height: 150,
-                width: "100%",
               }}
             />
           ) : (
@@ -231,7 +224,6 @@ const ProfilePage = () => {
               resizeMode="cover"
               style={{
                 height: 150,
-                width: "100%",
               }}
             />
           )}

@@ -1,6 +1,7 @@
 import { useFonts } from "expo-font";
 import StackNavigation from "./src/Nav/StackNavigation";
 import AuthProvider from "./src/contexts/useAuth";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [loaded] = useFonts({
@@ -18,6 +19,7 @@ export default function App() {
     <>
       <AuthProvider>
         <StackNavigation />
+        <StatusBar style="light" />
       </AuthProvider>
     </>
   );

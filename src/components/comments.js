@@ -15,6 +15,7 @@ import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import NormalText from "./normalText";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Row from "./row";
 import SubTitle from "./subTitle";
 import TimeAgo from "./timeAgo";
@@ -121,7 +122,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
             />
             <ScrollView>
               <TextInput
-                placeholder="Leave Your Reply ?"
+                placeholder="Leave Your Reply !"
                 placeholderTextColor={colors.lightGray}
                 multiline={true}
                 value={value}
@@ -131,7 +132,7 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
               />
             </ScrollView>
             <Pressable onPress={onReply} disabled={loading || !value}>
-              <Text
+              {/* <Text
                 style={[
                   styles.button,
                   loading || value === ""
@@ -140,7 +141,12 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
                 ]}
               >
                 Reply
-              </Text>
+              </Text> */}
+              <MaterialCommunityIcons
+                name="send"
+                size={30}
+                color={colors.primary}
+              />
             </Pressable>
           </Row>
         )}

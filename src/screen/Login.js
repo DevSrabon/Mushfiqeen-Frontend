@@ -2,7 +2,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  StatusBar,
+  StyleSheet,
+} from "react-native";
 import NavStr from "../Nav/NavStr";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
@@ -10,6 +16,8 @@ import InputField from "../components/inpuField";
 import SubContainer from "../components/subContainer";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import Row from "../components/row";
+import Title from "../components/title";
 
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
@@ -65,14 +73,15 @@ const Login = () => {
 
   return (
     <SubContainer>
-      <AntDesign
-        name="arrowleft"
-        size={30}
-        color={colors.white}
-        onPress={() => navigation.navigate(NavStr.HOME)}
-        style={{ paddingHorizontal: 10, paddingTop: 10 }}
-      />
-      <Header>Login</Header>
+      <Row style={{ paddingTop: StatusBar.currentHeight }}>
+        <AntDesign
+          name="arrowleft"
+          size={30}
+          color={colors.secondary}
+          onPress={() => navigation.navigate(NavStr.HOME)}
+        />
+        <Header>Login</Header>
+      </Row>
 
       <InputField
         style={{ marginTop: 50 }}
@@ -99,40 +108,25 @@ const Login = () => {
         disabled={loading}
         style={{ alignSelf: "center", marginTop: 30 }}
       />
-
-      {/* <View style={{ flex: 1, gap: 10, marginTop: 20 }}></View> */}
-      <View style={{ width: "100%", alignItems: "flex-end" }}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NavStr.FORGET, { email })}
-        >
-          <Text
-            style={{
-              fontFamily: "SemiBold",
-              color: colors.white,
-              textAlign: "right",
-              marginRight: 20,
-              marginTop: 10,
-            }}
-          >
-            Forget Password?
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          alignItems: "flex-end",
-          alignSelf: "center",
-
-          gap: 3,
-        }}
+      <TouchableOpacity
+        onPress={() => navigation.navigate(NavStr.FORGET, { email })}
+        style={{ alignItems: "flex-end" }}
       >
+        <Title
+          style={{
+            marginRight: 20,
+            marginTop: 5,
+          }}
+        >
+          Forget Password?
+        </Title>
+      </TouchableOpacity>
+
+      <View style={styles.signup}>
         <Text
           style={{
             fontFamily: "SemiBold",
-            color: colors.white,
+            color: colors.secondary,
           }}
         >
           Don't have an account?
@@ -151,5 +145,14 @@ const Login = () => {
     </SubContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  signup: {
+    flexDirection: "row",
+    alignSelf: "center",
+    gap: 3,
+    marginTop: 20,
+  },
+});
 
 export default Login;

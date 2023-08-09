@@ -1,7 +1,8 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
+import {} from "@expo/vector-icons";
 import {
   Image,
   Pressable,
@@ -9,6 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  StatusBar,
 } from "react-native";
 import { Protect } from "../Nav/ProtectedRoute";
 import { Comments, Reactions, Row, SubContainer } from "../components";
@@ -82,9 +84,9 @@ const PostDetails = (props) => {
   // if (loading) return <SkeletonMain />;
 
   return (
-    <SubContainer>
+    <SubContainer style>
       <ScrollView>
-        <Row>
+        <Row style={{ marginTop: StatusBar.currentHeight }}>
           <AntDesign
             name="arrowleft"
             size={30}
@@ -103,7 +105,7 @@ const PostDetails = (props) => {
           />
           <ScrollView>
             <TextInput
-              placeholder="Leave Your Thoughts ?"
+              placeholder="Leave Your Comment !"
               placeholderTextColor={colors.lightGray}
               multiline={true}
               value={texts}
@@ -113,7 +115,7 @@ const PostDetails = (props) => {
             />
           </ScrollView>
           <Pressable onPress={onComment} disabled={loading || !texts}>
-            <Text
+            {/* <Text
               style={[
                 styles.button,
                 loading || texts === ""
@@ -121,8 +123,13 @@ const PostDetails = (props) => {
                   : { color: colors.primary },
               ]}
             >
-              Comment
-            </Text>
+              Post */}
+            <MaterialCommunityIcons
+              name="send"
+              size={30}
+              color={colors.primary}
+            />
+            {/* </Text> */}
           </Pressable>
         </Row>
 
@@ -157,9 +164,9 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   button: {
-    fontFamily: "SemiBold",
-    fontSize: 16,
-    color: colors.primary,
+    // fontFamily: "SemiBold",
+    // fontSize: 16,
+    // color: colors.primary,
     alignSelf: "flex-end",
     paddingVertical: 10,
   },

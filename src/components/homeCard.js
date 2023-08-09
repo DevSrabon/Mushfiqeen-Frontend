@@ -1,7 +1,8 @@
-import { AntDesign } from "@expo/vector-icons";
+import React, { useCallback } from "react";
+import { AntDesign, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
-import React, { useCallback } from "react";
+
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
 import NavStr from "../Nav/NavStr";
@@ -101,23 +102,15 @@ const HomeCard = ({ post }) => {
             </SubTitle>
           </View>
         </SubRow>
-        {/* <View style={styles.threeDots}>
-          <Entypo name="dots-three-horizontal" size={24} color={colors.white} onPress={} />
-        </View> */}
-
-        {isFollowing ? (
-          <SubRow style={{ gap: 0 }}>
-            <AntDesign name="Safety" size={16} color={colors.primary} />
-            <Title style={{ color: colors.primary }}>Followed</Title>
-          </SubRow>
-        ) : (
-          <Pressable onPress={onFollow}>
-            <SubRow style={{ gap: 0 }}>
-              <AntDesign name="plussquareo" size={16} color={colors.primary} />
-              <Title style={{ color: colors.primary }}>Follow</Title>
-            </SubRow>
-          </Pressable>
-        )}
+        <View style={styles.threeDots}>
+          {/* <Entypo name="dots-three-horizontal" size={18} color={colors.white} /> */}
+          {/* <Entypo name="dots-three-vertical" size={20} color={colors.primary} /> */}
+          <MaterialCommunityIcons
+            name="dots-vertical"
+            size={20}
+            color={colors.primary}
+          />
+        </View>
       </Row>
       <View
         style={{
@@ -126,17 +119,31 @@ const HomeCard = ({ post }) => {
           marginHorizontal: 10,
         }}
       >
-        <SubTitle>{post?.description}</SubTitle>
+        <SubTitle style={{ fontFamily: "Regular", fontSize: 14 }}>
+          {post?.description}
+        </SubTitle>
       </View>
       <Row>
         <SubRow>
-          <AntDesign
-            name="like1"
-            size={12}
-            color={colors.primary}
-            style={styles.icon}
-          />
-          <TextSmall>{post?.likes}</TextSmall>
+          {isFollowing ? (
+            <SubRow style={{ gap: 0 }}>
+              <AntDesign name="Safety" size={16} color={colors.primary} />
+              <Title style={{ color: colors.primary }}>Followed</Title>
+            </SubRow>
+          ) : (
+            <Pressable onPress={onFollow}>
+              <SubRow style={{ gap: 0 }}>
+                <AntDesign
+                  name="plussquareo"
+                  size={16}
+                  color={colors.primary}
+                />
+                <Title style={{ color: colors.primary }}>Follow</Title>
+              </SubRow>
+            </Pressable>
+          )}
+
+          {/* <TextSmall>{post?.likes}</TextSmall> */}
         </SubRow>
         <SubRow style={{ gap: 3 }}>
           <TimeAgo createdAt={post?.createdAt} />
@@ -157,13 +164,13 @@ const HomeCard = ({ post }) => {
 
 const styles = StyleSheet.create({
   threeDots: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 35,
-    width: 35,
-    borderRadius: 50,
-    borderColor: colors.white,
-    borderWidth: 1,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // height: 30,
+    // width: 30,
+    // borderRadius: 50,
+    // borderColor: colors.primary,
+    // borderWidth: 0.5,
   },
   container: {
     backgroundColor: colors.bg,

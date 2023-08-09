@@ -1,6 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
-import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+  StatusBar,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import NavStr from "../Nav/NavStr";
 import colors from "../theme/Colors";
@@ -18,7 +25,7 @@ const ReactionDetails = (props) => {
   return (
     <SubContainer>
       <ScrollView>
-        <SubRow>
+        <SubRow style={{ marginTop: StatusBar.currentHeight }}>
           <AntDesign
             name="arrowleft"
             size={30}
