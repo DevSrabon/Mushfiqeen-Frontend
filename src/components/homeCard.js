@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
-import { AntDesign, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
+import React, { useCallback, useState } from "react";
 
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
@@ -12,29 +12,30 @@ import {
   Row,
   SubRow,
   SubTitle,
-  TextSmall,
   Title,
 } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import TextSmall from "./textSmall";
 import TimeAgo from "./timeAgo";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
 
   const navigation = useNavigation();
-
+  const [isHidden, setIsHidden] = useState(false);
+  const headers = {
+    headers: {
+      Authorization: `Bearer ${userData?.accessToken}`,
+    },
+  };
   const onLikes = useCallback(async () => {
     try {
       setRefetch((prev) => !prev);
       const res = await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/likes/${post?._id}`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${userData?.accessToken}`,
-          },
-        }
+        headers
       );
     } catch (error) {
       if (error.response.data.message) {
@@ -52,11 +53,7 @@ const HomeCard = ({ post }) => {
       await axios.post(
         `https://musfiqeen-backend.vercel.app/api/v1/users/add-follow/${post?.user?._id}`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${userData?.accessToken}`,
-          },
-        }
+        headers
       );
     } catch (error) {
       if (error.response.data.message) {
@@ -70,12 +67,41 @@ const HomeCard = ({ post }) => {
   }, [post?._id, setRefetch, userData?.accessToken]);
   const isFollowing = post?.user?.followers?.includes(userData?.data?._id);
 
-  // const date = timeAgo(post?.createdAt);
+  const onEdit = useCallback(
+    async (post) => {
+      navigation.navigate(NavStr.POST, (state = { post }));
+    },
+    [post]
+  );
+
+  const handelToggle = () => {
+    setIsHidden((prev) => !prev);
+  };
+
+  const onDelete = useCallback(
+    async (id) => {
+      try {
+        const res = await axios.delete(
+          `https://musfiqeen-backend.vercel.app/api/v1/posts/delete/${id}`,
+          headers
+        );
+        console.log(res.status);
+        setRefetch((prev) => !prev);
+      } catch (error) {
+        if (error.response.data.message) {
+          alert(error.response.data.message);
+        } else if (error.response.data.error) {
+          alert(error.response.data.error);
+        }
+      }
+    },
+    [setRefetch]
+  );
 
   return (
     <View style={styles.container}>
-      <Row>
-        <SubRow>
+      <Row key={`row-${post._id}`}>
+        <SubRow key={`subrow-${post._id}`}>
           <Pressable
             onPress={() => {
               navigation.navigate(NavStr.PROFILE, { id: post?.user?._id });
@@ -102,15 +128,61 @@ const HomeCard = ({ post }) => {
             </SubTitle>
           </View>
         </SubRow>
-        <View style={styles.threeDots}>
-          {/* <Entypo name="dots-three-horizontal" size={18} color={colors.white} /> */}
-          {/* <Entypo name="dots-three-vertical" size={20} color={colors.primary} /> */}
-          <MaterialCommunityIcons
-            name="dots-vertical"
-            size={20}
-            color={colors.primary}
-          />
-        </View>
+        {post?.user?._id === userData?.data?._id ? (
+          <View style={styles.threeDots}>
+            {/* <Entypo name="dots-three-horizontal" size={18} color={colors.white} /> */}
+            {/* <Entypo name="dots-three-vertical" size={20} color={colors.primary} /> */}
+            {isHidden && (
+              <View
+                style={{
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  borderRadius: 5,
+                  backgroundColor: colors.lightBg,
+                  gap: 2,
+                }}
+              >
+                <Pressable onPress={() => onEdit(post)}>
+                  <TextSmall>Edit</TextSmall>
+                </Pressable>
+                <HorizantalBar />
+                <Pressable onPress={() => onDelete(post?._id)}>
+                  <TextSmall>Delete</TextSmall>
+                </Pressable>
+              </View>
+            )}
+            <MaterialCommunityIcons
+              name="dots-vertical"
+              size={20}
+              color={colors.primary}
+              onPress={handelToggle}
+            />
+          </View>
+        ) : (
+          <Row>
+            <SubRow>
+              {isFollowing ? (
+                <SubRow style={{ gap: 0 }}>
+                  <AntDesign name="Safety" size={16} color={colors.primary} />
+                  <Title style={{ color: colors.primary }}>Followed</Title>
+                </SubRow>
+              ) : (
+                <Pressable onPress={onFollow}>
+                  <SubRow style={{ gap: 0 }}>
+                    <AntDesign
+                      name="plussquareo"
+                      size={16}
+                      color={colors.primary}
+                    />
+                    <Title style={{ color: colors.primary }}>Follow</Title>
+                  </SubRow>
+                </Pressable>
+              )}
+
+              {/* <TextSmall>{post?.likes}</TextSmall> */}
+            </SubRow>
+          </Row>
+        )}
       </Row>
       <View
         style={{
@@ -125,37 +197,9 @@ const HomeCard = ({ post }) => {
       </View>
       <Row>
         <SubRow>
-          {isFollowing ? (
-            <SubRow style={{ gap: 0 }}>
-              <AntDesign name="Safety" size={16} color={colors.primary} />
-              <Title style={{ color: colors.primary }}>Followed</Title>
-            </SubRow>
-          ) : (
-            <Pressable onPress={onFollow}>
-              <SubRow style={{ gap: 0 }}>
-                <AntDesign
-                  name="plussquareo"
-                  size={16}
-                  color={colors.primary}
-                />
-                <Title style={{ color: colors.primary }}>Follow</Title>
-              </SubRow>
-            </Pressable>
-          )}
-
-          {/* <TextSmall>{post?.likes}</TextSmall> */}
-        </SubRow>
-        <SubRow style={{ gap: 3 }}>
           <TimeAgo createdAt={post?.createdAt} />
-          <SubTitle>||</SubTitle>
-
-          <TextSmall style={{ color: colors.primary }}>
-            {post?.commentsLength}
-          </TextSmall>
-          <TextSmall>Comments</TextSmall>
         </SubRow>
       </Row>
-
       <HorizantalBar />
       <IconContainer onLikes={onLikes} userData={userData} post={post} />
     </View>
@@ -164,6 +208,7 @@ const HomeCard = ({ post }) => {
 
 const styles = StyleSheet.create({
   threeDots: {
+    flexDirection: "row",
     // alignItems: "center",
     // justifyContent: "center",
     // height: 30,

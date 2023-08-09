@@ -1,5 +1,5 @@
 export default {
-  HOME: "Home",
+  HOME: "home",
   PROFILE: "Profile",
   PROFILE_UPDATE: "profileUpdate",
   SETTINGS: "Settings",

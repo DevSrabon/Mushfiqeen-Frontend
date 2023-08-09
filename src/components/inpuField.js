@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, StyleSheet, Text, TextInput, View } from "react-native";
 import colors from "../theme/Colors";
 
@@ -21,7 +21,7 @@ const InputField = ({
 }) => {
   const inputref = useRef();
   const [isFocused, setIsFocused] = useState(false);
-  const focusAnim = useRef(new Animated.Value(0)).current;
+  const focusAnim = useMemo(() => new Animated.Value(0), []);
 
   useEffect(() => {
     Animated.timing(focusAnim, {
@@ -29,7 +29,7 @@ const InputField = ({
       duration: 150,
       useNativeDriver: false,
     }).start();
-  }, [focusAnim, isFocused]);
+  }, [isFocused]);
 
   return (
     <View style={[style, { marginVertical: 10, alignItems: "center", width }]}>
@@ -101,8 +101,6 @@ const InputField = ({
   );
 };
 
-export default InputField;
-
 const styles = StyleSheet.create({
   error: { color: "red" },
   input: {
@@ -147,3 +145,4 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGray,
   },
 });
+export default React.memo(InputField);
