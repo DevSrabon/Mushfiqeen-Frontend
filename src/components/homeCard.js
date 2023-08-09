@@ -35,7 +35,7 @@ const HomeCard = ({ post }) => {
       const res = await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/likes/${post?._id}`,
         {},
-        headers
+        { ...headers }
       );
     } catch (error) {
       if (error.response.data.message) {
@@ -53,7 +53,7 @@ const HomeCard = ({ post }) => {
       await axios.post(
         `https://musfiqeen-backend.vercel.app/api/v1/users/add-follow/${post?.user?._id}`,
         {},
-        headers
+        { ...headers }
       );
     } catch (error) {
       if (error.response.data.message) {
@@ -83,7 +83,7 @@ const HomeCard = ({ post }) => {
       try {
         const res = await axios.delete(
           `https://musfiqeen-backend.vercel.app/api/v1/posts/delete/${id}`,
-          headers
+          { ...headers }
         );
         console.log(res.status);
         setRefetch((prev) => !prev);

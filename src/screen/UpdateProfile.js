@@ -1,5 +1,6 @@
+import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
@@ -11,16 +12,18 @@ import {
   View,
 } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { AntDesign } from "@expo/vector-icons";
 import NavStr from "../Nav/NavStr";
-import { Loading, Row, SubContainer, Title } from "../components";
+import { Loading, Row, SubContainer } from "../components";
 import CustomButton from "../components/customButton";
+import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import Header from "../components/header";
 
 const UpdateProfile = ({ navigation }) => {
+  const router = useRoute();
+  const { setRefetch } = router?.params;
+
   const { userData, fetchUserData } = useAuth();
   const [selectedImage, setSelectedImage] = useState(
     `https://i.ibb.co/PzWs7jW/user.jpg`
@@ -52,7 +55,7 @@ const UpdateProfile = ({ navigation }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [selectDate, setSelectDate] = useState("");
-  const dateOfBirth = date;
+  const dateOfBirth = selectDate;
 
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -77,6 +80,7 @@ const UpdateProfile = ({ navigation }) => {
   const handleSaveChanges = async () => {
     setLoading(true);
     try {
+      setRefetch((prev) => !prev);
       const body = {
         name,
         email,
@@ -103,6 +107,7 @@ const UpdateProfile = ({ navigation }) => {
       }
     } finally {
       setLoading(false);
+      setRefetch((prev) => !prev);
     }
   };
   if (loading) return <Loading />;

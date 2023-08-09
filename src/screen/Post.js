@@ -1,6 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
+import { CommonActions } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -15,23 +16,21 @@ import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
 const Post = (props) => {
-  console.log(
-    "🚀 ~ file: Post.js:18 ~ Post ~ props:",
-    props?.route?.params?.post
-  );
   const post = props?.route?.params?.post;
   const { navigation } = props;
-  const [description, setDescription] = useState("" || post?.description);
+  const [description, setDescription] = useState("");
   const { userData, setRefetch } = useAuth();
   const [loading, setLoading] = useState(false);
-
+  useEffect(() => {
+    if (post) setDescription(post?.description);
+  }, [post]);
   const onPost = async () => {
     const headers = {
       Authorization: `Bearer ${userData?.accessToken}`,
       "Content-Type": "application/json",
     };
     try {
-      setLoading(true);
+      setLoading((prev) => !prev);
       const response = await axios.post(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/create`,
         { description },
@@ -39,9 +38,13 @@ const Post = (props) => {
       );
       setRefetch(true);
       if (response.status === 201) {
-        console.log(response.status);
-        navigation.navigate(NavStr.HOME);
         setDescription("");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: NavStr.HOME }],
+          })
+        );
       }
     } catch (error) {
       console.error("Error from post:", error);
@@ -50,6 +53,7 @@ const Post = (props) => {
       setDescription("");
       setLoading(false);
       setRefetch(false);
+      setLoading(false);
     }
   };
   const onUpdate = async () => {
@@ -66,9 +70,13 @@ const Post = (props) => {
       );
       setRefetch(true);
       if (response.status === 201) {
-        console.log(response.status);
-        navigation.navigate(NavStr.HOME);
         setDescription("");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: NavStr.HOME }],
+          })
+        );
       }
     } catch (error) {
       console.error("Error from post:", error);
@@ -77,6 +85,7 @@ const Post = (props) => {
       setDescription("");
       setLoading(false);
       setRefetch(false);
+      setLoading(false);
     }
   };
 

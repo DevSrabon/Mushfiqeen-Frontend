@@ -1,17 +1,21 @@
-import { FontAwesome, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome,
+  Fontisto,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
 import {
   Image,
   Pressable,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   useWindowDimensions,
-  StatusBar,
 } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
@@ -34,6 +38,7 @@ const ProfilePage = () => {
 
   const params = router.params;
 
+  const [refetch, setRefetch] = useState(false);
   const PostRoutes = () => {
     const navigation = useNavigation();
     const onNavigate = (item) => {
@@ -131,7 +136,7 @@ const ProfilePage = () => {
 
   const navigation = useNavigation();
   const onUpdateNavigate = () => {
-    navigation.navigate(NavStr.PROFILE_UPDATE);
+    navigation.navigate(NavStr.PROFILE_UPDATE, { setRefetch });
   };
   const { userData } = useAuth();
 
@@ -189,7 +194,7 @@ const ProfilePage = () => {
     return () => {
       setProfile(null);
     };
-  }, [userData?.data?._id, paramsId]);
+  }, [userData?.data?._id, paramsId, refetch]);
 
   return (
     <SubContainer>
