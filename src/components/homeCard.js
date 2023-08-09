@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
-import { AntDesign, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
+import React, { useCallback } from "react";
 
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import icons from "../../assets/icons";
@@ -12,7 +12,6 @@ import {
   Row,
   SubRow,
   SubTitle,
-  TextSmall,
   Title,
 } from "../components";
 import { useAuth } from "../contexts/useAuth";
@@ -147,12 +146,12 @@ const HomeCard = ({ post }) => {
         </SubRow>
         <SubRow style={{ gap: 3 }}>
           <TimeAgo createdAt={post?.createdAt} />
-          <SubTitle>||</SubTitle>
+          {/* <SubTitle>||</SubTitle> */}
 
-          <TextSmall style={{ color: colors.primary }}>
+          {/* <TextSmall style={{ color: colors.primary }}>
             {post?.commentsLength}
-          </TextSmall>
-          <TextSmall>Comments</TextSmall>
+          </TextSmall> */}
+          {/* <TextSmall>Comments</TextSmall> */}
         </SubRow>
       </Row>
 
