@@ -45,7 +45,7 @@ const Bayan = (props) => {
           color={colors.white}
           onPress={() => navigation.goBack()}
         />
-        {userData?.data?.status === "author" && (
+        {userData?.data?.role === "author" && (
           <Pressable
             style={{ marginBottom: 10 }}
             onPress={() => navigation.navigate(NavStr.BAYAN_POST)}
