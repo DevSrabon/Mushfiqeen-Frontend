@@ -37,14 +37,14 @@ const Chat = ({ navigation, route }) => {
     );
     setSound(sound);
 
-    console.log("Playing Sound");
+    // console.log("Playing Sound");
     await sound.playAsync();
   };
 
   useEffect(() => {
     return () => {
       if (sound) {
-        console.log("Unloading Sound");
+        // console.log("Unloading Sound");
         sound.unloadAsync();
       }
     };
@@ -79,7 +79,7 @@ const Chat = ({ navigation, route }) => {
 
       setTexts("");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading((prev) => !prev);
     }

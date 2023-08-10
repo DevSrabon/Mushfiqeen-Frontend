@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
     borderColor: colors.secondary,
     borderWidth: 1,
     borderRadius: 50,
-    // alignSelf: "flex-start",
+    alignSelf: "flex-start",
   },
 });

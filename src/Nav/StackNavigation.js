@@ -8,6 +8,9 @@ import ProfileInfo from "../screen/ProfileInfo";
 import VerifyCode from "../screen/VerifyCode";
 import NavStr from "./NavStr";
 import Parent from "./Parent";
+import ProPost from "../screen/ProPost";
+import ProBayan from "../screen/ProBayan";
+import ProChat from "../screen/ProChat";
 
 const Stack = createStackNavigator();
 
@@ -21,15 +24,22 @@ const StackNavigation = () => {
         }}
       >
         <Stack.Screen name={NavStr.PARENT} component={Parent} />
+        <Stack.Group
+          screenOptions={{
+            presentation: "modal",
+          }}
+        >
+          <Stack.Screen name={NavStr.PROFILE_POST} component={ProPost} />
+          <Stack.Screen name={NavStr.PROFILE_BAYAN} component={ProBayan} />
+          <Stack.Screen name={NavStr.PROFILE_CHAT} component={ProChat} />
+        </Stack.Group>
 
         <Stack.Screen
           name={NavStr.POSTDETAILS}
           component={PostDetails}
           options={topToBottomAnimation}
         />
-
         <Stack.Screen name={NavStr.PROFILE} component={ProfileInfo} />
-
         <Stack.Screen
           name={NavStr.LOGIN}
           component={Login}
@@ -50,7 +60,6 @@ const StackNavigation = () => {
           component={VerifyCode}
           options={rightToLefttAnimation}
         />
-
         <Stack.Screen
           name={NavStr.BAYAN_POST}
           component={BayanPost}
@@ -61,7 +70,6 @@ const StackNavigation = () => {
           component={Chat}
           options={leftToRightAnimation}
         />
-
         <Stack.Screen
           name={NavStr.REACTION}
           component={ReactionDetails}

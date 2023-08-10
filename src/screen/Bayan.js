@@ -42,7 +42,7 @@ const Bayan = (props) => {
         <AntDesign
           name="arrowleft"
           size={30}
-          color={colors.white}
+          color={colors.secondary}
           onPress={() => navigation.goBack()}
         />
         {userData?.data?.role === "author" && (
