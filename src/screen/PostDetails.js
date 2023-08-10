@@ -1,19 +1,11 @@
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import {} from "@expo/vector-icons";
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  StatusBar,
-} from "react-native";
+import { ScrollView, StatusBar, StyleSheet } from "react-native";
 import { Protect } from "../Nav/ProtectedRoute";
 import { Comments, Reactions, Row, SubContainer } from "../components";
+import Input from "../components/TextInput";
 import HomeCard from "../components/homeCard";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
@@ -98,40 +90,16 @@ const PostDetails = (props) => {
 
         <HomeCard post={post} />
 
-        <Row style={{ gap: 5 }}>
-          <Image
-            source={{ uri: userData?.data?.imageURL }}
-            style={styles.userImg}
-          />
-          <ScrollView>
-            <TextInput
-              placeholder="Leave Your Comment !"
-              placeholderTextColor={colors.lightGray}
-              multiline={true}
-              value={texts}
-              selectionColor={colors.white}
-              onChangeText={setTexts}
-              style={styles.input}
-            />
-          </ScrollView>
-          <Pressable onPress={onComment} disabled={loading || !texts}>
-            {/* <Text
-              style={[
-                styles.button,
-                loading || texts === ""
-                  ? { color: colors.lightGray }
-                  : { color: colors.primary },
-              ]}
-            >
-              Post */}
-            <MaterialCommunityIcons
-              name="send"
-              size={30}
-              color={colors.primary}
-            />
-            {/* </Text> */}
-          </Pressable>
-        </Row>
+        <Input
+          placeholder="Leave Your Comment !"
+          multiline={true}
+          value={texts}
+          selectionColor={colors.white}
+          onChangeText={setTexts}
+          image={userData?.data?.imageURL}
+          onPress={onComment}
+          loading={loading}
+        />
 
         {post?.comments?.map((comment) => (
           <Comments
@@ -147,22 +115,6 @@ const PostDetails = (props) => {
   );
 };
 const styles = StyleSheet.create({
-  userImg: {
-    height: 35,
-    width: 35,
-    borderRadius: 50,
-    alignSelf: "flex-start",
-  },
-  input: {
-    backgroundColor: colors.bg,
-    color: colors.white,
-    fontSize: 18,
-    borderColor: colors.lightBg,
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
   button: {
     // fontFamily: "SemiBold",
     // fontSize: 16,

@@ -1,4 +1,4 @@
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import * as Crypto from "expo-crypto";
 import {
   Timestamp,
@@ -8,10 +8,12 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
+
 import React, { useEffect, useRef, useState } from "react";
-import { Image, Pressable, StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Row, SubContainer } from "../components";
+import Input from "../components/TextInput";
 import Header from "../components/header";
 import Messages from "../components/messages";
 import { useAuth } from "../contexts/useAuth";
@@ -19,8 +21,7 @@ import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
 const Chat = ({ navigation, route }) => {
   const { combinedId, chatId } = route.params;
-  console.log("🚀 ~ file: Chat.js:22 ~ Chat ~ chatId:", chatId?.userInfo.uid);
-
+  const [loading, setLoading] = useState(false);
   const { userData } = useAuth();
   const [texts, setTexts] = useState("");
   const [messages, setMessages] = useState([]);
@@ -28,6 +29,7 @@ const Chat = ({ navigation, route }) => {
   const chatRef = doc(db, "chats", combinedId);
 
   const onSend = async () => {
+    setLoading((prev) => !prev);
     const uuid = Crypto.randomUUID();
     try {
       await updateDoc(chatRef, {
@@ -40,12 +42,12 @@ const Chat = ({ navigation, route }) => {
         }),
       });
       await updateDoc(doc(db, "users", userData?.data?._id), {
-        [combinedId + ".lastMessage"]: {texts},
+        [combinedId + ".lastMessage"]: { texts },
 
         [combinedId + ".date"]: serverTimestamp(),
       });
       await updateDoc(doc(db, "users", chatId?.userInfo.uid), {
-        [combinedId + ".lastMessage"]: {texts},
+        [combinedId + ".lastMessage"]: { texts },
 
         [combinedId + ".date"]: serverTimestamp(),
       });
@@ -53,6 +55,8 @@ const Chat = ({ navigation, route }) => {
       setTexts("");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading((prev) => !prev);
     }
   };
 
@@ -94,30 +98,14 @@ const Chat = ({ navigation, route }) => {
         ))}
       </ScrollView>
       <View style={styles.inputContainer}>
-        <Row style={{ gap: 5 }}>
-          <Image
-            source={{ uri: userData?.data?.imageURL }}
-            style={styles.userImg}
-          />
-          <ScrollView>
-            <TextInput
-              placeholder="Leave Your Message !"
-              placeholderTextColor={colors.lightGray}
-              multiline={true}
-              value={texts}
-              selectionColor={colors.white}
-              onChangeText={setTexts}
-              style={styles.input}
-            />
-          </ScrollView>
-          <Pressable onPress={onSend} disabled={!texts}>
-            <MaterialCommunityIcons
-              name="send"
-              size={30}
-              color={!texts ? colors.primaryLight : colors.primary}
-            />
-          </Pressable>
-        </Row>
+        <Input
+          placeholder="Leave Your Message !"
+          value={texts}
+          image={userData?.data?.imageURL}
+          onChangeText={setTexts}
+          onPress={onSend}
+          loading={loading}
+        />
       </View>
     </SubContainer>
   );
@@ -138,15 +126,5 @@ const styles = StyleSheet.create({
     width: 35,
     borderRadius: 50,
     alignSelf: "flex-start",
-  },
-  input: {
-    backgroundColor: colors.bg,
-    color: colors.white,
-    fontSize: 18,
-    borderColor: colors.lightBg,
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
   },
 });
