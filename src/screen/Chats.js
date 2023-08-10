@@ -1,21 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, Pressable, StatusBar, StyleSheet, View } from "react-native";
 import NavStr from "../Nav/NavStr";
 import { Protect } from "../Nav/ProtectedRoute";
-import { SubContainer } from "../components";
+import { SubContainer, TextSmall, Title } from "../components";
 import Header from "../components/header";
+import Row from "../components/row";
 import { useAuth } from "../contexts/useAuth";
 import { db } from "../firebase/firebaseConfig";
-import Row from "../components/row";
 const Chats = () => {
   const navigation = useNavigation();
   const { userData } = useAuth();
@@ -62,8 +55,8 @@ const Chats = () => {
               style={styles.img}
             />
             <View>
-              <Text style={styles.text}>{chat?.[1]?.userInfo?.name}</Text>
-              <Text style={styles.text}>{chat?.[1]?.lastMessage?.texts}</Text>
+              <Title>{chat?.[1]?.userInfo?.name}</Title>
+              <TextSmall>{chat?.[1]?.lastMessage?.texts}</TextSmall>
             </View>
           </Pressable>
         ))}

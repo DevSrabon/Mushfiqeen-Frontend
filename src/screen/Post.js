@@ -24,11 +24,12 @@ const Post = (props) => {
   useEffect(() => {
     if (post) setDescription(post?.description);
   }, [post]);
+
+  const headers = {
+    Authorization: `Bearer ${userData?.accessToken}`,
+    "Content-Type": "application/json",
+  };
   const onPost = async () => {
-    const headers = {
-      Authorization: `Bearer ${userData?.accessToken}`,
-      "Content-Type": "application/json",
-    };
     try {
       setLoading((prev) => !prev);
       const response = await axios.post(
@@ -57,10 +58,6 @@ const Post = (props) => {
     }
   };
   const onUpdate = async () => {
-    const headers = {
-      Authorization: `Bearer ${userData?.accessToken}`,
-      "Content-Type": "application/json",
-    };
     try {
       setLoading(true);
       const response = await axios.put(

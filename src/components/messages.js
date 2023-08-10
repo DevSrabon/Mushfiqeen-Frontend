@@ -67,8 +67,7 @@ const Messages = ({ m, userData }) => {
             }}
           >
             <Title>{m?.name}</Title>
-            <TextSmall>|</TextSmall>
-            <TimeAgo createdAt={date} />
+            <TimeAgo createdAt={date} ago={false} />
           </View>
           <TextSmall>{m?.texts}</TextSmall>
         </View>
