@@ -33,6 +33,14 @@
       "eas": {
         "projectId": "8e1e7b7e-d5ce-41e2-8d7f-866f36baf328"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow mushfiqeen to access your microphone."
+        }
+      ]
+    ]
   }
 }

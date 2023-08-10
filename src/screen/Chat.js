@@ -1,4 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
+import { Audio } from "expo-av";
 import * as Crypto from "expo-crypto";
 import {
   Timestamp,
@@ -8,7 +9,6 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -26,6 +26,26 @@ const Chat = ({ navigation, route }) => {
   const [texts, setTexts] = useState("");
   const [messages, setMessages] = useState([]);
 
+  const [sound, setSound] = useState();
+
+  const playSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../assets/audio/clickPlay.mp3")
+    );
+    setSound(sound);
+
+    console.log("Playing Sound");
+    await sound.playAsync();
+  };
+
+  useEffect(() => {
+    return () => {
+      if (sound) {
+        console.log("Unloading Sound");
+        sound.unloadAsync();
+      }
+    };
+  }, [sound]);
   const chatRef = doc(db, "chats", combinedId);
 
   const onSend = async () => {
@@ -53,6 +73,7 @@ const Chat = ({ navigation, route }) => {
       });
 
       setTexts("");
+      playSound();
     } catch (error) {
       console.log(error);
     } finally {
