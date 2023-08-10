@@ -4,7 +4,7 @@ import { Text } from "react-native";
 import colors from "../theme/Colors";
 import TextSmall from "./textSmall";
 
-const TimeAgo = ({ createdAt }) => {
+const TimeAgo = ({ createdAt, ago = true }) => {
   const duration = useMemo(
     () => moment.duration(moment().diff(moment(createdAt))),
     [createdAt]
@@ -24,25 +24,25 @@ const TimeAgo = ({ createdAt }) => {
   } else if (days > 0) {
     return (
       <TextSmall style={styles.timeAgo}>
-        {days}d <Text style={styles.timeAgoText}>ago</Text>
+        {days}d {ago && <Text style={styles.timeAgoText}>ago</Text>}
       </TextSmall>
     );
   } else if (hours > 0) {
     return (
       <TextSmall style={styles.timeAgo}>
-        {hours}h <Text style={styles.timeAgoText}>ago</Text>
+        {hours}h {ago && <Text style={styles.timeAgoText}>ago</Text>}
       </TextSmall>
     );
   } else if (minutes > 0) {
     return (
       <TextSmall style={styles.timeAgo}>
-        {minutes}m <Text style={styles.timeAgoText}>ago</Text>
+        {minutes}m {ago && <Text style={styles.timeAgoText}>ago</Text>}
       </TextSmall>
     );
   } else {
     return (
       <TextSmall style={styles.timeAgo}>
-        {seconds}s <Text style={styles.timeAgoText}>ago</Text>
+        Just<Text style={styles.timeAgoText}> Now</Text>
       </TextSmall>
     );
   }

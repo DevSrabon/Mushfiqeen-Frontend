@@ -11,14 +11,7 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 
-import {
-  Image,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-  TextInput,
-  View,
-} from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { Row, SubContainer } from "../components";
@@ -66,11 +59,13 @@ const Chat = ({ navigation, route }) => {
         messages: arrayUnion({
           id: uuid,
           texts,
+          name: userData?.data?.fullName,
           senderId: userData?.data?._id,
           photoURL: userData?.data?.imageURL,
           date: Timestamp.now(),
         }),
       });
+      playSound();
       await updateDoc(doc(db, "users", userData?.data?._id), {
         [combinedId + ".lastMessage"]: { texts },
 
@@ -83,7 +78,6 @@ const Chat = ({ navigation, route }) => {
       });
 
       setTexts("");
-      playSound();
     } catch (error) {
       // console.log(error);
     } finally {
@@ -148,7 +142,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     position: "absolute",
     bottom: 2,
-    left: 8,
+    left: 2,
     right: 0,
     width: "100%",
   },
