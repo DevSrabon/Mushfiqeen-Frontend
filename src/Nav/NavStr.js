@@ -1,6 +1,9 @@
 export default {
   HOME: "home",
   PROFILE: "Profile",
+  PROFILE_POST: "ProfilePost",
+  PROFILE_BAYAN: "ProfileBayan",
+  PROFILE_CHAT: "ProfileChat",
   PROFILE_UPDATE: "profileUpdate",
   SETTINGS: "Settings",
   POST: "Post",

@@ -31,6 +31,7 @@ import {
 } from "../components";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import CustomBottom from "../components/customBottom";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState({});
@@ -308,18 +309,8 @@ const ProfilePage = () => {
             </View>
           </Row>
         </View>
-
-        <View style={{ flex: 1 }}>
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: layout.width }}
-            renderTabBar={renderTabBar}
-            scrollEnabled={true}
-          />
-        </View>
       </>
+      <CustomBottom />
     </SubContainer>
   );
 };
