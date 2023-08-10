@@ -3,24 +3,13 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import colors from "../theme/Colors";
 import Title from "./title";
 import SubRow from "./subRow";
+import HorizontalBar from "./horizontalBar";
+import SubTitle from "./subTitle";
 
 const Messages = ({ m, userData }) => {
   return (
-    <View
-
-    // style={[
-    //   {
-    //     gap: 5,
-    //     flexDirection: "row",
-    //     marginBottom: 10,
-    //     // alignItems: "flex-start",
-    //   },
-    //   // userData?.data?._id === m.senderId
-    //   //   ? [{ flexDirection: "row" }]
-    //   //   : [{ flexDirection: "row-reverse" }],
-    // ]}
-    >
-      <SubRow>
+    <View>
+      <SubRow style={{ paddingHorizontal: 10, paddingVertical: 10 }}>
         <Image
           source={{ uri: m?.photoURL }}
           style={styles.userImg}
@@ -30,26 +19,20 @@ const Messages = ({ m, userData }) => {
           //     : [{ alignSelf: "flex-end" }, styles.userImg],
           // ]}
         />
-        <Title>Name Of User</Title>
+        <View>
+          <SubRow>
+            <Title>Name Of User</Title>
+            <SubTitle style={{ color: colors.primary, paddingHorizontal: 10 }}>
+              |
+            </SubTitle>
+            <SubTitle>2h ago</SubTitle>
+          </SubRow>
+
+          <SubTitle> {m?.texts}</SubTitle>
+        </View>
       </SubRow>
 
-      <View
-      // style={[
-      //   userData?.data?._id === m.senderId
-      //     ? [styles.container1]
-      //     : [styles.container2],
-      // ]}
-      >
-        <Text
-          style={{
-            color: colors.bg,
-            paddingHorizontal: 10,
-            paddingVertical: 15,
-          }}
-        >
-          {m?.texts}
-        </Text>
-      </View>
+      <HorizontalBar style={{ width: "80%" }} />
     </View>
   );
 };
@@ -77,6 +60,6 @@ const styles = StyleSheet.create({
     borderColor: colors.secondary,
     borderWidth: 1,
     borderRadius: 50,
-    // alignSelf: "flex-start",
+    alignSelf: "flex-start",
   },
 });
