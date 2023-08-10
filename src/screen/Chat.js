@@ -8,7 +8,14 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import { Image, Pressable, StyleSheet, TextInput, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Row, SubContainer } from "../components";
 import Header from "../components/header";
@@ -16,6 +23,7 @@ import Messages from "../components/messages";
 import { useAuth } from "../contexts/useAuth";
 import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
+
 const Chat = ({ navigation, route }) => {
   const { combinedId, chatId } = route.params;
   const { userData } = useAuth();
@@ -59,8 +67,8 @@ const Chat = ({ navigation, route }) => {
     }
   }, [messages]);
   return (
-    <SubContainer style={{ paddingTop: 20, paddingHorizontal: 10 }}>
-      <Row>
+    <SubContainer>
+      <Row style={{ paddingTop: StatusBar.currentHeight }}>
         <AntDesign
           name="arrowleft"
           size={30}
