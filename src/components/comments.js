@@ -4,19 +4,16 @@ import React, { useCallback, useState } from "react";
 import {
   Image,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
+import Input from "./TextInput";
 import NormalText from "./normalText";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Row from "./row";
 import SubTitle from "./subTitle";
 import TimeAgo from "./timeAgo";
 
@@ -115,40 +112,50 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           </Pressable>
         </View>
         {modalVisible && (
-          <Row style={{ gap: 5 }}>
-            <Image
-              source={{ uri: userData?.data?.imageURL }}
-              style={styles.userImg}
-            />
-            <ScrollView>
-              <TextInput
-                placeholder="Leave Your Reply !"
-                placeholderTextColor={colors.lightGray}
-                multiline={true}
-                value={value}
-                selectionColor={colors.white}
-                onChangeText={setValue}
-                style={styles.input}
-              />
-            </ScrollView>
-            <Pressable onPress={onReply} disabled={loading || !value}>
-              {/* <Text
-                style={[
-                  styles.button,
-                  loading || value === ""
-                    ? { color: colors.lightGray }
-                    : { color: colors.primary },
-                ]}
-              >
-                Reply
-              </Text> */}
-              <MaterialCommunityIcons
-                name="send"
-                size={30}
-                color={colors.primary}
-              />
-            </Pressable>
-          </Row>
+          <Input
+            placeholder="Leave Your Comment !"
+            multiline={true}
+            texts={value}
+            selectionColor={colors.white}
+            onChangeText={setValue}
+            loading={loading}
+            image={userData?.data?.imageURL}
+            onPress={onReply}
+          />
+          // <Row style={{ gap: 5 }}>
+          //   <Image
+          //     source={{ uri: userData?.data?.imageURL }}
+          //     style={styles.userImg}
+          //   />
+          //   <ScrollView>
+          //     <TextInput
+          //       placeholder="Leave Your Reply !"
+          //       placeholderTextColor={colors.lightGray}
+          //       multiline={true}
+          //       value={value}
+          //       selectionColor={colors.white}
+          //       onChangeText={setValue}
+          //       style={styles.input}
+          //     />
+          //   </ScrollView>
+          //   <Pressable onPress={onReply} disabled={loading || !value}>
+          //     {/* <Text
+          //       style={[
+          //         styles.button,
+          //         loading || value === ""
+          //           ? { color: colors.lightGray }
+          //           : { color: colors.primary },
+          //       ]}
+          //     >
+          //       Reply
+          //     </Text> */}
+          //     <MaterialCommunityIcons
+          //       name="send"
+          //       size={30}
+          //       color={colors.primary}
+          //     />
+          //   </Pressable>
+          // </Row>
         )}
         {comment?.replies
           ?.slice(0)
@@ -171,8 +178,6 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
                 <View style={styles.subCommentBox}>
                   <View style={{ padding: 10 }}>
                     <SubTitle>{reply?.userId?.fullName}</SubTitle>
-                    {/* <TextSmall>Subtitle</TextSmall> */}
-                    {/* <TextSmall>{timeAgo(reply?.createdAt)}</TextSmall> */}
                     <TimeAgo createdAt={reply?.createdAt} />
                     <NormalText style={{ marginVertical: 5 }}>
                       {reply?.reply}
@@ -182,24 +187,6 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
               </View>
             </View>
           ))}
-        {/* modal */}
-        {/* <CustomModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-        >
-          <InputField
-            placeholder={"Add reply"}
-            setValue={setValue}
-            value={value}
-          />
-          <Text
-            onPress={onReply}
-            disabled={loading || !value}
-            style={styles.btn}
-          >
-            Submit
-          </Text>
-        </CustomModal> */}
       </View>
     </View>
   );
