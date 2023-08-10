@@ -40,11 +40,7 @@ const TimeAgo = ({ createdAt }) => {
       </TextSmall>
     );
   } else {
-    return (
-      <TextSmall style={styles.timeAgo}>
-        {seconds}s <Text style={styles.timeAgoText}>ago</Text>
-      </TextSmall>
-    );
+    return <TextSmall style={styles.timeAgoText}>Just Now</TextSmall>;
   }
 };
 

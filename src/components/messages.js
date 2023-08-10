@@ -1,54 +1,77 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import NavStr from "../Nav/NavStr";
 import colors from "../theme/Colors";
+import TextSmall from "./textSmall";
+import TimeAgo from "./timeAgo";
 import Title from "./title";
-import SubRow from "./subRow";
 
 const Messages = ({ m, userData }) => {
+  const timestamp = m?.date;
+  const date = new Date(
+    timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+  );
+  const navigation = useNavigation();
   return (
     <View
-
-    // style={[
-    //   {
-    //     gap: 5,
-    //     flexDirection: "row",
-    //     marginBottom: 10,
-    //     // alignItems: "flex-start",
-    //   },
-    //   // userData?.data?._id === m.senderId
-    //   //   ? [{ flexDirection: "row" }]
-    //   //   : [{ flexDirection: "row-reverse" }],
-    // ]}
+      style={[
+        {
+          gap: 5,
+          display: "flex",
+          //   flexDirection: "row",
+          marginBottom: 10,
+          paddingHorizontal: 5,
+        },
+        userData?.data?._id === m.senderId
+          ? { flexDirection: "row-reverse" }
+          : { flexDirection: "row" },
+      ]}
     >
-      <SubRow>
+      <Pressable
+        key={m?.uid}
+        onPress={() => {
+          navigation.navigate(NavStr.PROFILE, { id: m?.senderId });
+        }}
+      >
         <Image
           source={{ uri: m?.photoURL }}
-          style={styles.userImg}
-          // style={[
-          //   userData?.data?._id === m.senderId
-          //     ? [{ alignSelf: "flex-start" }, styles.userImg]
-          //     : [{ alignSelf: "flex-end" }, styles.userImg],
-          // ]}
+          style={[
+            userData?.data?._id !== m.senderId
+              ? [{ alignSelf: "flex-start" }, styles.userImg]
+              : { display: "none" },
+          ]}
         />
-        <Title>Name Of User</Title>
-      </SubRow>
+      </Pressable>
+      <View style={{ width: "auto", maxWidth: "80%" }}>
+        <View
+          style={[
+            {
+              paddingHorizontal: 10,
+              paddingVertical: 5,
 
-      <View
-      // style={[
-      //   userData?.data?._id === m.senderId
-      //     ? [styles.container1]
-      //     : [styles.container2],
-      // ]}
-      >
-        <Text
-          style={{
-            color: colors.bg,
-            paddingHorizontal: 10,
-            paddingVertical: 15,
-          }}
+              borderRadius: 10,
+            },
+            userData?.data?._id === m.senderId
+              ? { backgroundColor: "#084B83" }
+              : { backgroundColor: colors.lightBg },
+          ]}
         >
-          {m?.texts}
-        </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+
+              gap: 10,
+            }}
+          >
+            <Title>{m?.name}</Title>
+            <TextSmall>|</TextSmall>
+            <TimeAgo createdAt={date} />
+          </View>
+          <TextSmall>{m?.texts}</TextSmall>
+        </View>
       </View>
     </View>
   );
@@ -57,20 +80,6 @@ const Messages = ({ m, userData }) => {
 export default Messages;
 
 const styles = StyleSheet.create({
-  container1: {
-    // alignSelf: "flex-start",
-    width: "auto",
-    maxWidth: "65%",
-    backgroundColor: colors.primaryLight,
-    borderRadius: 10,
-  },
-  container2: {
-    // alignSelf: "flex-end",
-    width: "auto",
-    maxWidth: "65%",
-    backgroundColor: colors.secondary,
-    borderRadius: 10,
-  },
   userImg: {
     height: 40,
     width: 40,
