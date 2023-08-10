@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import ReactionDetails from "../components/reactionDetails";
-import { Bayan, BayanPost, Chat, Login, PostDetails, Signup } from "../screen";
+import { BayanPost, Chat, Login, PostDetails, Signup } from "../screen";
 import ForgetPass from "../screen/ForgetPass";
 import ProfileInfo from "../screen/ProfileInfo";
 import VerifyCode from "../screen/VerifyCode";
@@ -54,6 +54,11 @@ const StackNavigation = () => {
         <Stack.Screen
           name={NavStr.BAYAN_POST}
           component={BayanPost}
+          options={leftToRightAnimation}
+        />
+        <Stack.Screen
+          name={NavStr.CHAT}
+          component={Chat}
           options={leftToRightAnimation}
         />
 
