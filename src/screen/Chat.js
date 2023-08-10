@@ -19,7 +19,7 @@ import {
   TextInput,
   View,
 } from "react-native";
->>>>>>>>> Temporary merge branch 2
+
 import { ScrollView } from "react-native-gesture-handler";
 import { Row, SubContainer } from "../components";
 import Input from "../components/TextInput";
