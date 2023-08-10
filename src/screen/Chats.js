@@ -20,19 +20,19 @@ const Chats = () => {
       const unsub = onSnapshot(doc(db, "users", uid), (doc) => {
         // console.log("Current data: ", doc.data());
         const data = doc.data();
-        setChats(Object.entries(data));
+        doc.exists() && setChats(Object.entries(data));
       });
       return () => unsub();
     }
   }, [uid]);
 
-  const onChat = async (combinedId,chatId) => {
+  const onChat = async (combinedId, chatId) => {
     const chatRef = doc(db, "chats", combinedId);
     const chatRes = await getDoc(chatRef);
     if (!chatRes.exists()) {
       await setDoc(chatRef, { messages: [] });
     }
-    navigation.navigate(NavStr.CHAT, { combinedId, chatId});
+    navigation.navigate(NavStr.CHAT, { combinedId, chatId });
   };
 
   return (
@@ -40,11 +40,11 @@ const Chats = () => {
       <Header>Chat</Header>
       {chats
         ?.sort((a, b) => b[1].date - a[1].date)
-        ?.map((chat) => (
+        ?.map((chat, i) => (
           <Pressable
-            key={chat?.[0]}
+            key={i}
             style={styles.chats}
-            onPress={() => onChat(chat?.[0],chat?.[1])}
+            onPress={() => onChat(chat?.[0], chat?.[1])}
           >
             <Image
               source={{ uri: chat?.[1]?.userInfo?.photoURL }}
@@ -52,7 +52,7 @@ const Chats = () => {
             />
             <View>
               <Text style={styles.text}>{chat?.[1]?.userInfo?.name}</Text>
-              <Text style={styles.text}>Last Message</Text>
+              <Text style={styles.text}>{chat?.[1]?.lastMessage?.texts}</Text>
             </View>
           </Pressable>
         ))}

@@ -5,6 +5,7 @@ import {
   arrayUnion,
   doc,
   onSnapshot,
+  serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
@@ -18,6 +19,8 @@ import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
 const Chat = ({ navigation, route }) => {
   const { combinedId, chatId } = route.params;
+  console.log("🚀 ~ file: Chat.js:22 ~ Chat ~ chatId:", chatId?.userInfo.uid);
+
   const { userData } = useAuth();
   const [texts, setTexts] = useState("");
   const [messages, setMessages] = useState([]);
@@ -36,6 +39,17 @@ const Chat = ({ navigation, route }) => {
           date: Timestamp.now(),
         }),
       });
+      await updateDoc(doc(db, "users", userData?.data?._id), {
+        [combinedId + ".lastMessage"]: {texts},
+
+        [combinedId + ".date"]: serverTimestamp(),
+      });
+      await updateDoc(doc(db, "users", chatId?.userInfo.uid), {
+        [combinedId + ".lastMessage"]: {texts},
+
+        [combinedId + ".date"]: serverTimestamp(),
+      });
+
       setTexts("");
     } catch (error) {
       console.log(error);
@@ -45,9 +59,9 @@ const Chat = ({ navigation, route }) => {
   useEffect(() => {
     if (combinedId) {
       const unsub = onSnapshot(chatRef, (doc) => {
-        console.log("Current data: ", doc.data());
+        // console.log("Current data: ", doc.data());
         const data = doc.data();
-        setMessages(data?.messages);
+        doc.exists() && setMessages(data?.messages);
       });
       return () => unsub();
     }
