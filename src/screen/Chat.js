@@ -10,6 +10,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
+
 import {
   Image,
   Pressable,
@@ -18,6 +19,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+>>>>>>>>> Temporary merge branch 2
 import { ScrollView } from "react-native-gesture-handler";
 import { Row, SubContainer } from "../components";
 import Input from "../components/TextInput";
