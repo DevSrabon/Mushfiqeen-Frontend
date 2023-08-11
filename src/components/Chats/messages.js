@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import NavStr from "../Nav/NavStr";
-import colors from "../theme/Colors";
-import TextSmall from "./textSmall";
-import TimeAgo from "./timeAgo";
-import Title from "./title";
+import NavStr from "../../Nav/NavStr";
+import colors from "../../theme/Colors";
+import TextSmall from "../textSmall";
+import TimeAgo from "../timeAgo";
+import Title from "../title";
 
 const Messages = ({ m, userData }) => {
   const timestamp = m?.date;

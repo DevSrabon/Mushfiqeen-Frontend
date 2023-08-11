@@ -1,15 +1,19 @@
-import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
-import Row from "./row";
-import SubContainer from "./subContainer";
-import colors from "../theme/Colors";
-import Title from "./title";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import NavStr from "../Nav/NavStr";
+import { useAuth } from "../contexts/useAuth";
+import colors from "../theme/Colors";
+import useCreateChat from "./Chats/useCreateChat";
+import Row from "./row";
+import Title from "./title";
 
 const CustomBottom = () => {
   const navigation = useNavigation();
+  const { profile } = useAuth();
+
+  const onSendMessage = useCreateChat(profile);
   return (
     <View
       style={{
@@ -33,10 +37,7 @@ const CustomBottom = () => {
           <Entypo name={"sound"} size={24} color={colors.secondary} />
           <Title>Bayan</Title>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.switch}
-          onPress={() => navigation.navigate(NavStr.PROFILE_CHAT)}
-        >
+        <TouchableOpacity style={styles.switch} onPress={onSendMessage}>
           <MaterialIcons name={"chat"} size={24} color={colors.secondary} />
           <Title>Chat</Title>
         </TouchableOpacity>

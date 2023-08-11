@@ -4,13 +4,12 @@ import React from "react";
 import ReactionDetails from "../components/reactionDetails";
 import { BayanPost, Chat, Login, PostDetails, Signup } from "../screen";
 import ForgetPass from "../screen/ForgetPass";
+import ProBayan from "../screen/ProBayan";
+import ProPost from "../screen/ProPost";
 import ProfileInfo from "../screen/ProfileInfo";
 import VerifyCode from "../screen/VerifyCode";
 import NavStr from "./NavStr";
 import Parent from "./Parent";
-import ProPost from "../screen/ProPost";
-import ProBayan from "../screen/ProBayan";
-import ProChat from "../screen/ProChat";
 
 const Stack = createStackNavigator();
 
@@ -31,7 +30,6 @@ const StackNavigation = () => {
         >
           <Stack.Screen name={NavStr.PROFILE_POST} component={ProPost} />
           <Stack.Screen name={NavStr.PROFILE_BAYAN} component={ProBayan} />
-          <Stack.Screen name={NavStr.PROFILE_CHAT} component={ProChat} />
         </Stack.Group>
 
         <Stack.Screen
