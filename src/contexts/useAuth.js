@@ -11,6 +11,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const [postId, setPostId] = useState(null);
+  const [bayan, setBayan] = useState({});
+  const [profile, setProfile] = useState({});
 
   const fetchUserData = async () => {
     try {
@@ -85,6 +87,8 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     refetch,
+    bayan,
+    setBayan,
     setRefetch,
     userData,
     setUserData,
@@ -99,6 +103,8 @@ const AuthProvider = ({ children }) => {
     fetchUserData,
     updateRefetch,
     setUpdateRefetch,
+    profile,
+    setProfile,
   };
 
   return (
