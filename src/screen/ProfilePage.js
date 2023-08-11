@@ -6,165 +6,33 @@ import {
 } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Image,
-  Pressable,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  useWindowDimensions,
 } from "react-native";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import icons from "../../assets/icons";
 import NavStr from "../Nav/NavStr";
-import {
-  HorizantalBar,
-  Row,
-  SubContainer,
-  SubRow,
-  SubTitle,
-  TextSmall,
-  Title,
-} from "../components";
+import { Row, SubContainer, SubTitle, Title } from "../components";
+import CustomBottom from "../components/customBottom";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import CustomBottom from "../components/customBottom";
 
 const ProfilePage = () => {
-  const [profile, setProfile] = useState({});
   const router = useRoute();
 
   const params = router.params;
-  const { userData, updateRefetch } = useAuth();
-
-  const PostRoutes = () => {
-    const navigation = useNavigation();
-    const onNavigate = (item) => {
-      navigation.navigate(NavStr.POSTDETAILS, { post: item });
-    };
-
-    const renderPostItem = ({ item, index }) => (
-      <Pressable onPress={() => onNavigate(item)} key={index}>
-        <View
-          style={{
-            paddingHorizontal: 10,
-            // paddingVertical: 10,
-          }}
-        >
-          <SubTitle style={{ paddingVertical: 5, paddingLeft: 10 }}>
-            {item?.description}
-          </SubTitle>
-
-          <SubRow
-            style={{
-              gap: 3,
-              alignSelf: "flex-end",
-              paddingVertical: 5,
-              paddingRight: 10,
-            }}
-          >
-            <TextSmall style={{ color: colors.primary }}>
-              {item?.likes}
-            </TextSmall>
-            <TextSmall>Likes</TextSmall>
-
-            <SubTitle>||</SubTitle>
-
-            <TextSmall style={{ color: colors.primary }}>
-              {item?.commentsLength}
-            </TextSmall>
-            <TextSmall>Comments</TextSmall>
-          </SubRow>
-          <HorizantalBar />
-        </View>
-      </Pressable>
-    );
-
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.bg,
-          // paddingHorizontal: 10,
-          width: "100%",
-          height: "auto",
-        }}
-      >
-        {profile?.posts?.map((item, index) => renderPostItem({ item, index }))}
-      </View>
-    );
-  };
-
-  const BayanRoutes = () => {
-    const bayanData = [
-      { key: 1, image: "image_url_1" },
-      { key: 2, image: "image_url_2" },
-      { key: 3, image: "image_url_3" },
-      // Add more data items as needed
-    ];
-
-    const renderBayanItem = ({ item, index }) => (
-      <View
-        key={index}
-        style={{
-          flex: 1,
-          // aspectRatio: 1,
-          margin: 3,
-          padding: 22,
-        }}
-      >
-        <View
-          source={item.image}
-          style={{ width: "100%", height: "100%", borderRadius: 12 }}
-        />
-      </View>
-    );
-
-    return (
-      <View style={{ flex: 1, backgroundColor: colors.primary }}>
-        {bayanData.map((item, index) => renderBayanItem({ item, index }))}
-      </View>
-    );
-  };
-
-  const renderScene = SceneMap({
-    first: PostRoutes,
-    second: BayanRoutes,
-  });
+  const { userData, updateRefetch, profile, setProfile, setBayan } = useAuth();
 
   const navigation = useNavigation();
   const onUpdateNavigate = () => {
     navigation.navigate(NavStr.PROFILE_UPDATE);
   };
 
-  const layout = useWindowDimensions();
-  const [index, setIndex] = useState(0);
-
-  const [routes] = useState([
-    { key: "first", title: "Posts" },
-    { key: "second", title: "Bayan" },
-  ]);
-
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      indicatorStyle={{
-        backgroundColor: colors.white,
-      }}
-      style={{
-        backgroundColor: colors.lightBg,
-        height: 44,
-      }}
-      renderLabel={({ focused, route }) => (
-        <Text style={[{ color: focused ? colors.white : colors.lightGray }]}>
-          {route.title}
-        </Text>
-      )}
-    />
-  );
   const paramsId = params?.id ?? null;
   useEffect(() => {
     let id = userData?.data?._id;
@@ -195,6 +63,35 @@ const ProfilePage = () => {
       setProfile(null);
     };
   }, [userData?.data?._id, paramsId, updateRefetch]);
+  useEffect(() => {
+    let id = userData?.data?._id;
+
+    if (paramsId) {
+      id = paramsId;
+    } else {
+      id = userData?.data?._id;
+    }
+
+    if (id !== null) {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get(
+            `https://musfiqeen-backend.vercel.app/api/v1/bayans/getById/${id}`
+          );
+
+          if (res.data.data) {
+            setBayan(res.data.data);
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+      fetchData();
+    }
+    return () => {
+      setBayan(null);
+    };
+  }, [userData?.data?._id, paramsId]);
 
   return (
     <SubContainer>
