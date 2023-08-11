@@ -18,9 +18,11 @@ import SubTitle from "./subTitle";
 import TimeAgo from "./timeAgo";
 
 const Comments = ({ comment, postId, config, setRefetch }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [commentVisible, setCommentVisible] = useState(false);
+  const [replyVisible, setReplyVisible] = useState(false);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { userData } = useAuth();
   const isLiked = comment?.likes?.includes(userData?.data?._id);
   const navigation = useNavigation();
@@ -43,6 +45,8 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
 
   const onReply = useCallback(async () => {
     setRefetch((prev) => !prev);
+    setLoading((prev) => !prev);
+
     try {
       const rest = await axios.put(
         `https://musfiqeen-backend.vercel.app/api/v1/posts/reply/${postId}`,
@@ -50,12 +54,13 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
         config
       );
 
-      setModalVisible((prev) => !prev);
+      setCommentVisible((prev) => !prev);
       setValue("");
     } catch (error) {
       console.log(error);
     } finally {
       setRefetch((prev) => !prev);
+      setLoading((prev) => !prev);
     }
   }, [postId, value, config, comment?._id]);
 
@@ -107,55 +112,21 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
 
           <SubTitle>|</SubTitle>
 
-          <Pressable onPress={() => setModalVisible((prev) => !prev)}>
+          <Pressable onPress={() => setCommentVisible((prev) => !prev)}>
             <SubTitle>Reply</SubTitle>
           </Pressable>
         </View>
-        {modalVisible && (
+        {commentVisible && (
           <Input
-            placeholder="Leave Your Comment !"
+            placeholder="Leave Your Reply !"
             multiline={true}
-            texts={value}
+            value={value}
             selectionColor={colors.white}
             onChangeText={setValue}
             loading={loading}
             image={userData?.data?.imageURL}
             onPress={onReply}
           />
-          // <Row style={{ gap: 5 }}>
-          //   <Image
-          //     source={{ uri: userData?.data?.imageURL }}
-          //     style={styles.userImg}
-          //   />
-          //   <ScrollView>
-          //     <TextInput
-          //       placeholder="Leave Your Reply !"
-          //       placeholderTextColor={colors.lightGray}
-          //       multiline={true}
-          //       value={value}
-          //       selectionColor={colors.white}
-          //       onChangeText={setValue}
-          //       style={styles.input}
-          //     />
-          //   </ScrollView>
-          //   <Pressable onPress={onReply} disabled={loading || !value}>
-          //     {/* <Text
-          //       style={[
-          //         styles.button,
-          //         loading || value === ""
-          //           ? { color: colors.lightGray }
-          //           : { color: colors.primary },
-          //       ]}
-          //     >
-          //       Reply
-          //     </Text> */}
-          //     <MaterialCommunityIcons
-          //       name="send"
-          //       size={30}
-          //       color={colors.primary}
-          //     />
-          //   </Pressable>
-          // </Row>
         )}
         {comment?.replies
           ?.slice(0)
