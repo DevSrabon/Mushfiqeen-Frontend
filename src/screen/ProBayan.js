@@ -9,7 +9,7 @@ import colors from "../theme/Colors";
 
 const ProBayan = ({ navigation }) => {
   const { bayan } = useAuth();
-  console.log("🚀 ~ file: ProBayan.js:12 ~ ProBayan ~ bayan:", bayan);
+  // console.log("🚀 ~ file: ProBayan.js:12 ~ ProBayan ~ bayan:", bayan);
   return (
     <SubContainer>
       <Row style={{ marginTop: StatusBar.currentHeight }}>

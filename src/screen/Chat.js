@@ -15,9 +15,9 @@ import { StatusBar, StyleSheet, View } from "react-native";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { Row, SubContainer } from "../components";
+import Messages from "../components/Chats/messages";
 import Input from "../components/TextInput";
 import Header from "../components/header";
-import Messages from "../components/messages";
 import { useAuth } from "../contexts/useAuth";
 import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";

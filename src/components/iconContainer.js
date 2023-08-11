@@ -1,17 +1,10 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
 import React, { useCallback, useMemo } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import NavStr from "../Nav/NavStr";
-import { db } from "../firebase/firebaseConfig";
 import colors from "../theme/Colors";
+import useCreateChat from "./Chats/useCreateChat";
 import TextSmall from "./textSmall";
 
 const IconContainer = ({ onLikes, userData, post }) => {
@@ -28,54 +21,7 @@ const IconContainer = ({ onLikes, userData, post }) => {
     navigation.navigate(NavStr.POSTDETAILS, { post });
   }, [navigation, post]);
 
-  const uid = userData?.data?._id;
-  const oid = post?.user?._id;
-  const combinedId = useMemo(() => {
-    return uid > oid ? uid + oid : oid + uid;
-  }, [uid, oid]);
-
-  const onSendMessage = useCallback(async () => {
-    try {
-      const userRef = doc(db, "users", uid);
-      const userRef2 = doc(db, "users", oid);
-      const res = await getDoc(userRef);
-      const res2 = await getDoc(userRef2);
-
-      const data = {
-        [combinedId + ".userInfo"]: {
-          uid: oid,
-          name: post?.user?.fullName,
-          photoURL: post?.user?.imageURL,
-        },
-        [combinedId + ".date"]: serverTimestamp(),
-      };
-
-      const data2 = {
-        [combinedId + ".userInfo"]: {
-          uid,
-          name: userData?.data?.fullName,
-          photoURL: userData?.data?.imageURL,
-        },
-        [combinedId + ".date"]: serverTimestamp(),
-      };
-
-      if (!res.exists()) {
-        await setDoc(userRef, {});
-      }
-
-      if (!res2.exists()) {
-        await setDoc(userRef2, {});
-      }
-
-      await updateDoc(userRef, data);
-      await updateDoc(userRef2, data2);
-
-      navigation.navigate(NavStr.CHATS);
-      console.log("Document successfully written!");
-    } catch (error) {
-      console.error("Error writing document: ", error);
-    }
-  }, [combinedId, navigation, oid, post, uid, userData?.data]);
+  const onSendMessage = useCreateChat(post?.user);
 
   return (
     <View style={styles.container}>
