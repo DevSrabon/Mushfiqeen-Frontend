@@ -137,7 +137,7 @@ const BottomNavigation = () => {
           tabBarIcon: ({ focused, color }) => (
             <Entypo
               name={"home"}
-              size={24}
+              size={focused ? 30 : 25}
               color={focused ? colors.white : colors.lightGray}
             />
           ),
@@ -152,7 +152,7 @@ const BottomNavigation = () => {
             tabBarIcon: ({ focused, color }) => (
               <MaterialIcons
                 name={"post-add"}
-                size={24}
+                size={focused ? 30 : 25}
                 color={focused ? colors.white : colors.lightGray}
               />
             ),
@@ -169,7 +169,8 @@ const BottomNavigation = () => {
           tabBarIcon: ({ focused, color }) => (
             <Entypo
               name={"sound"}
-              size={24}
+              size={focused ? 30 : 25}
+              // size={24}
               color={focused ? colors.white : colors.lightGray}
             />
           ),
@@ -185,7 +186,7 @@ const BottomNavigation = () => {
           tabBarIcon: ({ focused, color }) => (
             <MaterialIcons
               name={"chat"}
-              size={24}
+              size={focused ? 30 : 25}
               color={focused ? colors.white : colors.lightGray}
             />
           ),

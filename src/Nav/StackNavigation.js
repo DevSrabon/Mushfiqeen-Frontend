@@ -10,6 +10,7 @@ import ProfileInfo from "../screen/ProfileInfo";
 import VerifyCode from "../screen/VerifyCode";
 import NavStr from "./NavStr";
 import Parent from "./Parent";
+// import AnimationTest from "../components/AnimationText";
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,9 @@ const StackNavigation = () => {
           animationEnabled: true,
         }}
       >
+
         <Stack.Screen name={NavStr.PARENT} component={Parent} />
+        {/* <Stack.Screen name="AnimationTest" component={AnimationTest} /> */}
         <Stack.Group
           screenOptions={{
             presentation: "modal",
