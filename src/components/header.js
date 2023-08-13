@@ -3,33 +3,32 @@ import { Animated, StyleSheet, View } from "react-native";
 import colors from "../theme/Colors";
 
 const Header = (props) => {
-  const springValues = useRef([]);
+  const bounceValues = useRef([]);
 
   const { children, style } = props;
 
   useEffect(() => {
-    springValues.current.forEach((springValue, index) => {
-      Animated.spring(springValue, {
-        toValue: 0,
+    bounceValues.current.forEach((bounceValue, index) => {
+      Animated.spring(bounceValue, {
+        toValue: 1, // Bounce scale value
         friction: 2,
         tension: 100,
         useNativeDriver: true,
-        delay: (children.length - index - 1) * 100,
+        delay: (children.length - index - 1) * 500,
       }).start();
     });
   }, [children]);
 
   const renderAnimatedText = useCallback(() => {
     return children.split("").map((char, index) => {
-      const springValue =
-        springValues.current[index] || new Animated.Value(100);
-      springValues.current[index] = springValue;
+      const bounceValue = bounceValues.current[index] || new Animated.Value(0);
+      bounceValues.current[index] = bounceValue;
 
       return (
         <Animated.Text
           key={index}
           style={[
-            { transform: [{ translateX: springValue }] },
+            { transform: [{ scale: bounceValue }] },
             styles.textStyle,
           ]}
         >
@@ -56,3 +55,4 @@ const styles = StyleSheet.create({
 });
 
 export default React.memo(Header);
+
