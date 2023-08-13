@@ -9,13 +9,16 @@ const Header = (props) => {
 
   useEffect(() => {
     bounceValues.current.forEach((bounceValue, index) => {
-      Animated.spring(bounceValue, {
-        toValue: 1, // Bounce scale value
+      const bounceAnimation = Animated.spring(bounceValue, {
+        toValue: 1,
         friction: 2,
         tension: 100,
         useNativeDriver: true,
-        delay: (children.length - index - 1) * 500,
-      }).start();
+        delay: (children.length - index - 1) * 300,
+      });
+
+      // Create an infinite loop animation
+      Animated.loop(bounceAnimation).start();
     });
   }, [children]);
 
@@ -55,4 +58,3 @@ const styles = StyleSheet.create({
 });
 
 export default React.memo(Header);
-
