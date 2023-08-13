@@ -9,17 +9,17 @@ const Header = (props) => {
 
   useEffect(() => {
     bounceValues.current.forEach((bounceValue, index) => {
+
       const bounceAnimation = Animated.spring(bounceValue, {
-        toValue: 1,
+        toValue: 1, // Bounce scale value
         friction: 2,
         tension: 100,
         useNativeDriver: true,
         delay: (children.length - index - 1) * 300,
       });
-
-      // Create an infinite loop animation
       Animated.loop(bounceAnimation).start();
     });
+
   }, [children]);
 
   const renderAnimatedText = useCallback(() => {
