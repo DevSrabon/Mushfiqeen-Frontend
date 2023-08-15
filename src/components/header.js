@@ -11,11 +11,11 @@ const Header = (props) => {
     bounceValues.current.forEach((bounceValue, index) => {
 
       const bounceAnimation = Animated.spring(bounceValue, {
-        toValue: 1, // Bounce scale value
+        toValue: 0.8, // Bounce scale value
         friction: 2,
         tension: 100,
         useNativeDriver: true,
-        delay: (children.length - index - 1) * 300,
+        delay: (children.length - index - 1) * 111,
       });
       Animated.loop(bounceAnimation).start();
     });
@@ -24,7 +24,7 @@ const Header = (props) => {
 
   const renderAnimatedText = useCallback(() => {
     return children.split("").map((char, index) => {
-      const bounceValue = bounceValues.current[index] || new Animated.Value(0);
+      const bounceValue = bounceValues.current[index] || new Animated.Value(1);
       bounceValues.current[index] = bounceValue;
 
       return (
