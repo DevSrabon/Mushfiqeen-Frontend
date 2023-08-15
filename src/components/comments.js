@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useCallback, useState } from "react";
@@ -9,23 +10,29 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { HorizantalBar } from "./horizontalBar";
 import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import Input from "./TextInput";
 import NormalText from "./normalText";
+import Replies from "./reply";
+import Row from "./row";
 import SubTitle from "./subTitle";
+import TextSmall from "./textSmall";
 import TimeAgo from "./timeAgo";
 
 const Comments = ({ comment, postId, config, setRefetch }) => {
   const [commentVisible, setCommentVisible] = useState(false);
-  const [replyVisible, setReplyVisible] = useState(false);
+  const [Visible, setVisible] = useState(false);
+  const [commentEdit, setCommentEdit] = useState(false);
   const [value, setValue] = useState("");
+  const [editValue, setEditValue] = useState("");
   const [loading, setLoading] = useState(false);
-
   const { userData } = useAuth();
   const isLiked = comment?.likes?.includes(userData?.data?._id);
   const navigation = useNavigation();
+
   const onCommentsLikes = useCallback(async () => {
     setRefetch((prev) => !prev);
     setLoading((prev) => !prev);
@@ -36,8 +43,35 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
         config
       );
     } catch (error) {
-      console.log(error);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
     } finally {
+      setRefetch((prev) => !prev);
+      setLoading((prev) => !prev);
+    }
+  }, [postId, comment?._id, config]);
+
+  const onCommentsEdit = useCallback(async () => {
+    try {
+      setRefetch((prev) => !prev);
+      setLoading((prev) => !prev);
+      await axios.put(
+        `https://musfiqeen-backend.vercel.app/api/v1/posts/update-comment/${postId}/${comment?._id}`,
+        { comment: editValue },
+        config
+      );
+    } catch (error) {
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
+    } finally {
+      setValue("");
+      setCommentEdit((prev) => !prev);
       setRefetch((prev) => !prev);
       setLoading((prev) => !prev);
     }
@@ -64,10 +98,29 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
     }
   }, [postId, value, config, comment?._id]);
 
-  // const date = timeAgo(comment?.createdAt);
+  const onCommentDelete = async () => {
+    setRefetch((prev) => !prev);
+    setLoading((prev) => !prev);
+    try {
+      await axios.delete(
+        `https://musfiqeen-backend.vercel.app/api/v1/posts/delete-comment/${postId}/${comment?._id}`,
+        {},
+        config
+      );
+    } catch (error) {
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      }
+    } finally {
+      setRefetch((prev) => !prev);
+      setLoading((prev) => !prev);
+    }
+  };
 
   return (
-    <View>
+    <>
       <View style={styles.container}>
         <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
           <TouchableOpacity
@@ -82,7 +135,41 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
           </TouchableOpacity>
           <View style={styles.commentBox}>
             <View style={{ padding: 10 }}>
-              <SubTitle>{comment?.userId?.fullName}</SubTitle>
+              <Row style={{ padding: 0 }}>
+                <SubTitle>{comment?.userId?.fullName}</SubTitle>
+                <Row style={{ padding: 0 }}>
+                  {Visible && (
+                    <View
+                      style={{
+                        paddingHorizontal: 10,
+                        paddingVertical: 5,
+                        borderRadius: 5,
+                        backgroundColor: colors.lightBg,
+                        gap: 2,
+                      }}
+                    >
+                      <Pressable
+                        onPress={() => (
+                          setCommentEdit((prev) => !prev),
+                          setEditValue(comment?.comment)
+                        )}
+                      >
+                        <TextSmall>Edit</TextSmall>
+                      </Pressable>
+                      <HorizantalBar />
+                      <Pressable onPress={() => onCommentDelete()}>
+                        <TextSmall>Delete</TextSmall>
+                      </Pressable>
+                    </View>
+                  )}
+                  <MaterialCommunityIcons
+                    name="dots-vertical"
+                    size={20}
+                    color={colors.primary}
+                    onPress={() => setVisible((prev) => !prev)}
+                  />
+                </Row>
+              </Row>
               {/* <TextSmall>{date}</TextSmall> */}
               <TimeAgo createdAt={comment?.createdAt} />
               <NormalText style={{ marginVertical: 5 }}>
@@ -116,6 +203,20 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
             <SubTitle>Reply</SubTitle>
           </Pressable>
         </View>
+        {/* =============comment edit Input Field============= */}
+        {commentEdit && (
+          <Input
+            placeholder="Edit your comment !"
+            multiline={true}
+            value={editValue}
+            selectionColor={colors.white}
+            onChangeText={setEditValue}
+            loading={loading}
+            image={userData?.data?.imageURL}
+            onPress={onCommentsEdit}
+          />
+        )}
+        {/* ========Reply input field============ */}
         {commentVisible && (
           <Input
             placeholder="Leave Your Reply !"
@@ -128,38 +229,15 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
             onPress={onReply}
           />
         )}
+        {/* ==========reply========== */}
         {comment?.replies
           ?.slice(0)
           .reverse()
           .map((reply) => (
-            <View key={reply?._id} style={styles.subContainer}>
-              <View style={{ flexDirection: "row", gap: 5, padding: 10 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate(NavStr.PROFILE, {
-                      id: reply?.userId?._id,
-                    });
-                  }}
-                >
-                  <Image
-                    source={{ uri: reply?.userId?.imageURL }}
-                    style={styles.userImg}
-                  />
-                </TouchableOpacity>
-                <View style={styles.subCommentBox}>
-                  <View style={{ padding: 10 }}>
-                    <SubTitle>{reply?.userId?.fullName}</SubTitle>
-                    <TimeAgo createdAt={reply?.createdAt} />
-                    <NormalText style={{ marginVertical: 5 }}>
-                      {reply?.reply}
-                    </NormalText>
-                  </View>
-                </View>
-              </View>
-            </View>
+            <Replies key={reply?._id} reply={reply} />
           ))}
       </View>
-    </View>
+    </>
   );
 };
 
@@ -208,4 +286,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(Comments);
+export default Comments;

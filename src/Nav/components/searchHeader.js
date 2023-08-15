@@ -1,20 +1,24 @@
-import React from "react";
-import {
-  TouchableOpacity,
-  TextInput,
-  Image,
-  StyleSheet,
-  StatusBar,
-} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import colors from "../../theme/Colors";
+import React, { useEffect, useState } from "react";
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import icons from "../../../assets/icons";
 import { Row } from "../../components";
 import { useAuth } from "../../contexts/useAuth";
-import icons from "../../../assets/icons";
-
-const SearchHeader = (props) => {
-  const { navigation } = props;
+import colors from "../../theme/Colors";
+const SearchHeader = ({ navigation, onSearch }) => {
   const { userData } = useAuth();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    onSearch(searchQuery);
+  }, [searchQuery]);
+
   return (
     <Row
       style={{ backgroundColor: colors.bg, marginTop: StatusBar.currentHeight }}
@@ -35,6 +39,9 @@ const SearchHeader = (props) => {
         placeholder="Search User"
         placeholderTextColor={colors.lightGray}
         selectionColor={colors.lightGray}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        // onSubmitEditing={handleSearch}
       />
       <Ionicons name="notifications" size={30} color={colors.white} />
     </Row>
@@ -60,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchHeader;
+export default React.memo(SearchHeader);

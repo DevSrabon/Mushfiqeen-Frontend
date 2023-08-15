@@ -189,7 +189,9 @@ const HomeCard = ({ post }) => {
           marginHorizontal: 10,
         }}
       >
-        <SubTitle style={{ fontFamily: "Regular", fontSize: 14 }}>
+        <SubTitle
+          style={{ fontFamily: "Regular", fontSize: 14, textAlign: "justify" }}
+        >
           {post?.description}
         </SubTitle>
       </View>

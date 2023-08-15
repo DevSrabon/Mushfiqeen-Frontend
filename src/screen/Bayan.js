@@ -1,12 +1,13 @@
+import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View, StatusBar } from "react-native";
+import { Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import NavStr from "../Nav/NavStr";
 import { BayanCard, Row, SubContainer } from "../components";
+import SkeletonMain from "../components/Skeleton/SkeletonMain";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import NavStr from "../Nav/NavStr";
-import { AntDesign } from "@expo/vector-icons";
 
 const Bayan = (props) => {
   const { navigation } = props;
@@ -24,6 +25,7 @@ const Bayan = (props) => {
 
   const fetchData = async () => {
     try {
+      setLoading((prev) => !prev);
       const res = await axios.get(
         `https://musfiqeen-backend.vercel.app/api/v1/bayans/get/${lang}`,
         config
@@ -31,11 +33,14 @@ const Bayan = (props) => {
       setData(res.data.data);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading((prev) => !prev);
     }
   };
   useEffect(() => {
     fetchData();
   }, [lang, bayanRefetch]);
+
   return (
     <SubContainer>
       <Row style={{ paddingVertical: 0, marginTop: StatusBar.currentHeight }}>
@@ -93,6 +98,7 @@ const Bayan = (props) => {
         data={data}
         renderItem={({ item }) => <BayanCard item={item} config={config} />}
         keyExtractor={(item) => item._id}
+        ListFooterComponent={loading && <SkeletonMain />}
       />
     </SubContainer>
   );

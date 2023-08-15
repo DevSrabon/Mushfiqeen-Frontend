@@ -53,7 +53,11 @@ const Messages = ({ m, userData }) => {
               borderRadius: 10,
             },
             userData?.data?._id === m.senderId
-              ? { backgroundColor: "#084B83" }
+              ? {
+                  backgroundColor: colors.bg,
+                  borderColor: colors.lightGray,
+                  borderWidth: 1,
+                }
               : { backgroundColor: colors.lightBg },
           ]}
         >
