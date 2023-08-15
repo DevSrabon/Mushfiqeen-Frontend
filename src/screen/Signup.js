@@ -36,7 +36,6 @@ const Signup = () => {
 
   const { imageURL, loading: imgLoading, takePhoto } = useImagePicker();
 
-  console.log(imageURL?.[0]);
   const onSignup = async () => {
     try {
       setLoading(true);

@@ -1,7 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { Image, Pressable, StatusBar, StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native";
 import NavStr from "../Nav/NavStr";
 import { Protect } from "../Nav/ProtectedRoute";
 import { SubContainer, TextSmall, Title } from "../components";
@@ -27,39 +34,43 @@ const Chats = () => {
     }
   }, [uid]);
 
-  const onChat = async (combinedId, chatId) => {
-    const chatRef = doc(db, "chats", combinedId);
-    const chatRes = await getDoc(chatRef);
-    if (!chatRes.exists()) {
-      await setDoc(chatRef, { messages: [] });
-    }
-    navigation.navigate(NavStr.CHAT, { combinedId, chatId });
-  };
+  const onChat = useCallback(
+    async (combinedId, chatId) => {
+      const chatRef = doc(db, "chats", combinedId);
+      const chatRes = await getDoc(chatRef);
+      if (!chatRes.exists()) {
+        await setDoc(chatRef, { messages: [] });
+      }
+      navigation.navigate(NavStr.CHAT, { combinedId, chatId });
+    },
+    [navigation]
+  );
 
   return (
     <SubContainer>
       <Row style={{ paddingTop: StatusBar.currentHeight }}>
         <Header>Chat</Header>
       </Row>
-
-      {chats
-        ?.sort((a, b) => b[1].date - a[1].date)
-        ?.map((chat, i) => (
-          <Pressable
-            key={i}
-            style={styles.chats}
-            onPress={() => onChat(chat?.[0], chat?.[1])}
-          >
-            <Image
-              source={{ uri: chat?.[1]?.userInfo?.photoURL }}
-              style={styles.img}
-            />
-            <View>
-              <Title>{chat?.[1]?.userInfo?.name}</Title>
-              <TextSmall>{chat?.[1]?.lastMessage?.texts}</TextSmall>
-            </View>
-          </Pressable>
-        ))}
+      <ScrollView style={{ paddingHorizontal: 10 }}>
+        {chats
+          ?.sort((a, b) => b[1].date - a[1].date)
+          ?.map((chat, i) => (
+            <Pressable
+              key={i}
+              style={styles.chats}
+              onPress={() => onChat(chat?.[0], chat?.[1])}
+            >
+              <Image
+                source={{ uri: chat?.[1]?.userInfo?.photoURL }}
+                style={styles.img}
+              />
+              <View>
+                <Title>{chat?.[1]?.userInfo?.name}</Title>
+                <TextSmall>{chat?.[1]?.lastMessage?.texts}</TextSmall>
+              </View>
+            </Pressable>
+          ))}
+      </ScrollView>
     </SubContainer>
   );
 };

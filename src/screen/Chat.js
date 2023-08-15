@@ -9,7 +9,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { StatusBar, StyleSheet, View } from "react-native";
 
@@ -51,8 +51,8 @@ const Chat = ({ navigation, route }) => {
   }, [sound]);
   const chatRef = doc(db, "chats", combinedId);
 
-  const onSend = async () => {
-    setLoading((prev) => !prev);
+  const onSend = useCallback(async () => {
+    setLoading(true);
     const uuid = Crypto.randomUUID();
     try {
       await updateDoc(chatRef, {
@@ -68,22 +68,20 @@ const Chat = ({ navigation, route }) => {
       playSound();
       await updateDoc(doc(db, "users", userData?.data?._id), {
         [combinedId + ".lastMessage"]: { texts },
-
         [combinedId + ".date"]: serverTimestamp(),
       });
       await updateDoc(doc(db, "users", chatId?.userInfo.uid), {
         [combinedId + ".lastMessage"]: { texts },
-
         [combinedId + ".date"]: serverTimestamp(),
       });
 
       setTexts("");
     } catch (error) {
-      // console.log(error);
+      // Handle error
     } finally {
-      setLoading((prev) => !prev);
+      setLoading(false);
     }
-  };
+  }, [chatRef, combinedId, texts, userData, chatId?.userInfo.uid]);
 
   useEffect(() => {
     if (combinedId) {

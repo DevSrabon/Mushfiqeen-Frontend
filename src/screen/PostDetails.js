@@ -44,7 +44,6 @@ const PostDetails = (props) => {
         { comment: texts },
         config
       );
-      console.log("Like updated successfully");
     } catch (error) {
       console.error("Error updating like:", error);
     } finally {

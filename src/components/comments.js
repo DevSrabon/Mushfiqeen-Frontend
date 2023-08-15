@@ -10,11 +10,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { HorizantalBar } from "./horizontalBar";
 import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import Input from "./TextInput";
+import { HorizantalBar } from "./horizontalBar";
 import NormalText from "./normalText";
 import Replies from "./reply";
 import Row from "./row";
@@ -162,12 +162,15 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
                       </Pressable>
                     </View>
                   )}
-                  <MaterialCommunityIcons
-                    name="dots-vertical"
-                    size={20}
-                    color={colors.primary}
-                    onPress={() => setVisible((prev) => !prev)}
-                  />
+                  {/*========== three dot =========== */}
+                  {userData?.data?._id === comment?.userId?._id && (
+                    <MaterialCommunityIcons
+                      name="dots-vertical"
+                      size={20}
+                      color={colors.primary}
+                      onPress={() => setVisible((prev) => !prev)}
+                    />
+                  )}
                 </Row>
               </Row>
               {/* <TextSmall>{date}</TextSmall> */}

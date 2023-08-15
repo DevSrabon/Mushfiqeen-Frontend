@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FlatList } from "react-native";
 import SearchHeader from "../Nav/components/searchHeader";
 import SkeletonMain from "../components/Skeleton/SkeletonMain";
@@ -8,21 +8,19 @@ import SubContainer from "../components/subContainer";
 import { useAuth } from "../contexts/useAuth";
 
 const Home = ({ navigation }) => {
-  const [allPosts, setAllPosts] = useState([]); // Store all posts
-  const [displayedPosts, setDisplayedPosts] = useState([]); // Posts to display
+  const [allPosts, setAllPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  console.log("🚀 ~ file: Home.js:16 ~ Home ~ searchQuery:", searchQuery);
 
   const { refetch, userData } = useAuth();
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {
       const limit = 10;
-      let url = `https://musfiqeen-backend.vercel.app/api/v1/posts/get?id=${userData?.data?._id}&limit=${limit}&skip=${skip}`;
+      const url = `https://musfiqeen-backend.vercel.app/api/v1/posts/get?id=${userData?.data?._id}&limit=${limit}&skip=${skip}`;
       const response = await axios.get(url);
 
       if (skip === 0) {
@@ -32,30 +30,23 @@ const Home = ({ navigation }) => {
       }
 
       setTotal(response.data.total);
-      filterDisplayedPosts(); // Filter and set displayed posts
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [skip, userData?.data?._id]);
 
-  const filterDisplayedPosts = () => {
-    if (searchQuery) {
-      const filteredPosts = allPosts.filter(
-        (post) =>
-          post?.user &&
-          post?.user?.fullName.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      console.log(
-        "🚀 ~ file: Home.js:50 ~ filterDisplayedPosts ~ filteredPosts:",
-        filteredPosts
-      );
-      setDisplayedPosts(filteredPosts);
-    } else {
-      setDisplayedPosts(allPosts);
+  const handleLoadMore = useCallback(() => {
+    if (!loading) {
+      setSkip((prevSkip) => prevSkip + 10);
     }
-  };
+  }, [loading]);
+
+  const handleSearch = useCallback((query) => {
+    setSkip(0);
+    setSearchQuery(query);
+  }, []);
 
   useEffect(() => {
     if (refetch) {
@@ -64,24 +55,20 @@ const Home = ({ navigation }) => {
     } else {
       fetchPosts();
     }
-  }, [skip, refetch, userData?.data?._id]);
+  }, [skip, refetch, fetchPosts]);
 
-  useEffect(() => {
-    filterDisplayedPosts(); // Update displayed posts when searchQuery changes
-  }, [searchQuery, allPosts]);
+  const estimatedItemSize = useMemo(() => parseInt(total) || 100, [total]);
 
-  const handleLoadMore = () => {
-    if (!loading) {
-      setSkip((prevSkip) => prevSkip + 10);
+  const displayedPosts = useMemo(() => {
+    if (searchQuery) {
+      return allPosts.filter(
+        (post) =>
+          post?.user &&
+          post?.user?.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
-  };
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-  // if (loading && skip === 0) return <Loading />;
-
-  const estimatedItemSize = parseInt(total) || 100;
+    return allPosts;
+  }, [searchQuery, allPosts]);
 
   return (
     <SubContainer style={{ paddingBottom: 40 }}>

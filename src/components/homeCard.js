@@ -83,7 +83,6 @@ const HomeCard = ({ post }) => {
           `https://musfiqeen-backend.vercel.app/api/v1/posts/delete/${id}`,
           { headers }
         );
-        console.log(res.status);
         setRefetch((prev) => !prev);
       } catch (error) {
         if (error.response.data.message) {
@@ -128,8 +127,6 @@ const HomeCard = ({ post }) => {
         </SubRow>
         {post?.user?._id === userData?.data?._id ? (
           <View style={styles.threeDots}>
-            {/* <Entypo name="dots-three-horizontal" size={18} color={colors.white} /> */}
-            {/* <Entypo name="dots-three-vertical" size={20} color={colors.primary} /> */}
             {isHidden && (
               <View
                 style={{
@@ -209,20 +206,12 @@ const HomeCard = ({ post }) => {
 const styles = StyleSheet.create({
   threeDots: {
     flexDirection: "row",
-    // alignItems: "center",
-    // justifyContent: "center",
-    // height: 30,
-    // width: 30,
-    // borderRadius: 50,
-    // borderColor: colors.primary,
-    // borderWidth: 0.5,
   },
   container: {
     backgroundColor: colors.bg,
     width: "100%",
-    // height: 400,
+
     marginBottom: 10,
-    // marginTop: 10,
   },
   userImg: {
     height: 40,

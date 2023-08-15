@@ -58,7 +58,6 @@ const useCreateChat = (profile) => {
       await updateDoc(userRef2, data2);
 
       navigation.navigate(NavStr.CHATS);
-      console.log("Document successfully written!");
     } catch (error) {
       console.error("Error writing document: ", error);
     }
