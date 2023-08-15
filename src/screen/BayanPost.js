@@ -202,8 +202,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.primary,
     alignSelf: "flex-end",
-    // marginRight: 20,
-    // paddingVertical: 10,
   },
   input: {
     paddingVertical: 5,

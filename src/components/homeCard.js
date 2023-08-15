@@ -21,9 +21,16 @@ import TimeAgo from "./timeAgo";
 
 const HomeCard = ({ post }) => {
   const { userData, setRefetch } = useAuth();
-
+  const [seeMore, setSeeMore] = useState(false);
+  const [showLess, setShowLess] = useState(false);
   const navigation = useNavigation();
   const [isHidden, setIsHidden] = useState(false);
+  let description;
+  if (post.description?.length < 500) {
+    description = post.description;
+  } else if (post.description?.length >= 500) {
+    description = post.description.slice(0, 500);
+  }
   const headers = {
     Authorization: `Bearer ${userData?.accessToken}`,
   };
@@ -173,8 +180,6 @@ const HomeCard = ({ post }) => {
                   </SubRow>
                 </Pressable>
               )}
-
-              {/* <TextSmall>{post?.likes}</TextSmall> */}
             </SubRow>
           </Row>
         )}
@@ -186,11 +191,36 @@ const HomeCard = ({ post }) => {
           marginHorizontal: 10,
         }}
       >
-        <SubTitle
-          style={{ fontFamily: "Regular", fontSize: 14, textAlign: "justify" }}
-        >
-          {post?.description}
-        </SubTitle>
+        {post?.description?.length >= 500 && !seeMore && !showLess && (
+          <>
+            <Title style={{ textAlign: "justify" }}>{description}</Title>
+
+            <Pressable onPress={(prev) => setSeeMore(!seeMore)}>
+              <Title style={{ textAlign: "right", color: colors.primaryLight }}>
+                ...See More
+              </Title>
+            </Pressable>
+          </>
+        )}
+        {post?.description?.length > 500 && seeMore && !showLess && (
+          <Title style={{ textAlign: "justify", fontSize: 14 }}>
+            {post?.description}
+            <Pressable
+              onPress={(prev) => {
+                setShowLess(!prev), setSeeMore(!prev);
+              }}
+            >
+              <Title style={{ textAlign: "right", color: colors.primaryLight }}>
+                ...Show Less
+              </Title>
+            </Pressable>
+          </Title>
+        )}
+        {post?.description?.length < 500 && (
+          <SubTitle style={{ textAlign: "justify", fontSize: 14 }}>
+            {post?.description}
+          </SubTitle>
+        )}
       </View>
       <Row>
         <SubRow>

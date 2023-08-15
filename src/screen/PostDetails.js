@@ -72,8 +72,6 @@ const PostDetails = (props) => {
     fetchComments();
   }, [postId?._id, refetch, isRefetch]);
 
-  // if (loading) return <SkeletonMain />;
-
   return (
     <SubContainer style>
       <ScrollView>

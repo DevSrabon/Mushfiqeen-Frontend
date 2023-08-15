@@ -49,7 +49,9 @@ const ProPost = ({ navigation }) => {
                 }}
               >
                 <SubTitle style={{ paddingVertical: 5, paddingLeft: 10 }}>
-                  {item?.description}
+                  {item?.description?.length > 100
+                    ? item?.description?.slice(0, 100) + " ...See More"
+                    : item?.description}
                 </SubTitle>
 
                 <SubRow

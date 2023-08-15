@@ -32,23 +32,9 @@ const BayanCard = ({ item, setRefetch, config }) => {
     description = item.description.slice(0, 500);
   }
 
-  // const onDelete = async (id) => {
-  //   try {
-  //     await axios.delete(
-  //       `https://musfiqeen-backend.vercel.app/api/v1/bayans/delete/${id}`,
-  //       config
-  //     );
-  //     setBayanRefetch((prev) => !prev);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const onEdit = async (post) => {
     navigation.navigate(NavStr.BAYAN_POST, (state = { post }));
   };
-
-  // const date = timeAgo(item?.createdAt);
 
   return (
     <View style={styles.container} key={item?._id}>
@@ -67,7 +53,6 @@ const BayanCard = ({ item, setRefetch, config }) => {
           </TouchableOpacity>
           <View>
             <Title>{item?.user?.fullName}</Title>
-            {/* <SubTitle>{date}</SubTitle> */}
             <TimeAgo createdAt={item?.createdAt} />
           </View>
         </SubRow>

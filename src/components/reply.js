@@ -38,12 +38,9 @@ const Replies = ({ reply }) => {
   );
 };
 
-export default Replies;
+export default React.memo(Replies);
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.bg,
-  },
   subContainer: {
     backgroundColor: colors.bg,
     marginLeft: 40,
@@ -65,22 +62,5 @@ const styles = StyleSheet.create({
     width: 35,
     borderRadius: 50,
     alignSelf: "flex-start",
-  },
-  input: {
-    backgroundColor: colors.bg,
-    color: colors.white,
-    fontSize: 18,
-    borderColor: colors.lightBg,
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  button: {
-    fontFamily: "SemiBold",
-    fontSize: 16,
-    color: colors.primary,
-    alignSelf: "flex-end",
-    paddingVertical: 10,
   },
 });
