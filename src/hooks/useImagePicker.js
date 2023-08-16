@@ -1,22 +1,23 @@
 import * as ImagePicker from "expo-image-picker";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-native";
-import { listFiles, uploadToFirebase } from "../firebase/firebaseConfig";
+import { uploadToFirebase } from "../firebase/firebaseConfig";
 
 const useImagePicker = () => {
   const [files, setFiles] = useState([]);
-  const [imageURL, setImageURL] = useState([]);
+  const [imageURL, setImageURL] = useState("");
+
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    listFiles().then((listResp) => {
-      const files = listResp.map((value) => {
-        return { name: value.fullPath };
-      });
+  // useEffect(() => {
+  //   listFiles().then((listResp) => {
+  //     const files = listResp.map((value) => {
+  //       return { name: value.fullPath };
+  //     });
 
-      setFiles(files);
-    });
-  }, []);
+  //     setFiles(files);
+  //   });
+  // }, []);
 
   const takePhoto = async () => {
     if (imageURL?.length) return;
@@ -35,14 +36,15 @@ const useImagePicker = () => {
         const uploadResp = await uploadToFirebase(uri, fileName, (v) =>
           console.log(v)
         );
+        setImageURL(uploadResp);
 
-        listFiles().then((listResp) => {
-          const files = listResp.map((value) => {
-            return { name: value.fullPath };
-          });
-          setImageURL((prevUrls) => [...prevUrls, uploadResp.downloadUrl]);
-          setFiles(files);
-        });
+        // listFiles().then((listResp) => {
+        //   const files = listResp.map((value) => {
+        //     return { name: value.fullPath };
+        //   });
+        //   setImageURL((prevUrls) => [...prevUrls, uploadResp.downloadUrl]);
+        //   setFiles(files);
+        // });
       }
     } catch (e) {
       Alert.alert("Error Uploading Image " + e.message);
@@ -51,7 +53,7 @@ const useImagePicker = () => {
     }
   };
 
-  return { files, imageURL, loading, takePhoto };
+  return { imageURL, loading, takePhoto };
 };
 
 export default useImagePicker;

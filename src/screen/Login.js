@@ -20,17 +20,22 @@ import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 
 const Login = () => {
-  const { userData, setToken, loading, setLoading } = useAuth();
+  const { userData, setToken, loading, setLoading, token } = useAuth();
+  console.log("🚀 ~ file: Login.js:24 ~ Login ~ userData:", userData?.data);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState({});
+  const [error, setError] = useState({
+    email: "",
+    password: "",
+    message: "",
+  });
   const navigation = useNavigation();
   const router = useRoute();
 
   const onSignInPressed = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const response = await axios.post(
         "https://musfiqeen-backend.vercel.app/api/v1/users/login",
         {
@@ -43,19 +48,21 @@ const Login = () => {
       setToken(response.data.accessToken);
       // AsyncStorage.setItem("token", response.data.accessToken);
     } catch (error) {
-      if (error.message === "Request failed with status code 402") {
-        navigation.navigate(NavStr.VERIFYCODE, (state = { email }));
-      }
-      if (
-        error.message !== "Request failed with status code 402" &&
-        error.response.data.message
-      ) {
-        alert(
-          error.message !== "Request failed with status code 402" &&
-            error.response.data.message
-        );
-      } else if (error.response.data.error) {
-        alert(error.response.data.error);
+      console.log(error.response.data);
+      if (error.response && error.response.data && error.response.data.error) {
+        const backendError = error.response.data.error;
+
+        const errorState = {};
+
+        if (backendError?.toLowerCase().includes("password")) {
+          errorState.password = backendError;
+        } else if (backendError?.toLowerCase().includes("email")) {
+          errorState.email = backendError;
+        } else {
+          errorState.message = backendError;
+        }
+
+        setError(errorState);
       }
     } finally {
       setLoading(false);
@@ -63,13 +70,13 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (userData?.data && userData?.data?.role !== "inactive") {
+    if (userData?.data && userData?.data?.status !== "inactive") {
       // navigation.navigate(router?.params?.from || NavStr.HOME);
       navigation.navigate(NavStr.HOME);
     } else if (userData?.data?.status === "inactive") {
       navigation.navigate(NavStr.VERIFYCODE);
     }
-  }, [navigation, userData?.data?.role]);
+  }, [navigation, userData?.data?.status, token]);
 
   return (
     <SubContainer>
@@ -99,13 +106,20 @@ const Login = () => {
         secureTextEntry={true}
         error={error.password}
       />
+      {error?.message && (
+        <Text
+          style={{ color: "red", alignSelf: "flex-start", paddingLeft: 20 }}
+        >
+          {error?.message}
+        </Text>
+      )}
 
       <CustomButton
         text="Login"
         onPress={onSignInPressed}
         type="primary"
         loading={loading}
-        disabled={loading}
+        disabled={loading || !email || !password}
         style={{ alignSelf: "center", marginTop: 30 }}
       />
       <TouchableOpacity

@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext(null);
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children, navigation }) => {
   const [refetch, setRefetch] = useState(false);
   const [bayanRefetch, setBayanRefetch] = useState(false);
   const [updateRefetch, setUpdateRefetch] = useState(false);

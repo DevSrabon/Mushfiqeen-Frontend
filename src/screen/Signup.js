@@ -1,26 +1,26 @@
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
-  StatusBar,
 } from "react-native";
+import NavStr from "../Nav/NavStr";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
+import Row from "../components/row";
+import SubContainer from "../components/subContainer";
+import Title from "../components/title";
 import { useAuth } from "../contexts/useAuth";
 import useImagePicker from "../hooks/useImagePicker";
 import colors from "../theme/Colors";
-import NavStr from "../Nav/NavStr";
-import { MaterialIcons } from "@expo/vector-icons";
-import SubContainer from "../components/subContainer";
-import { AntDesign } from "@expo/vector-icons";
-import Row from "../components/row";
-import Title from "../components/title";
 
 const Signup = () => {
   const { loading, setLoading, setToken } = useAuth();
@@ -30,8 +30,15 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [designation, setDesignation] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const apiUrl = "http://localhost:5000/api/v1/users/signup";
+  const [error, setError] = useState({
+    image: "",
+    email: "",
+    password: "",
+    fullName: "",
+    designation: "",
+    message: "",
+  });
+
   const fullName = firstName + " " + lastName;
 
   const { imageURL, loading: imgLoading, takePhoto } = useImagePicker();
@@ -46,7 +53,7 @@ const Signup = () => {
           password,
           confirmPassword: password,
           fullName,
-          imageURL: imageURL?.[0],
+          imageURL: imageURL,
           designation,
         }
       );
@@ -55,18 +62,32 @@ const Signup = () => {
         navigation.navigate(NavStr.VERIFYCODE, (state = { email }));
       }
     } catch (error) {
-      console.log(error.response.data.error);
-      switch (error) {
-        case error.toLowerCase.includes("email"):
-          setError();
-
-        default:
-          break;
-      }
-      if (error.response.data.message) {
-        alert(error.response.data.message);
-      } else if (error.response.data.error) {
-        alert(error.response.data.error);
+      console.log(error.response.data);
+      if (error.response && error.response.data && error.response.data.error) {
+        if (error.response.data.error.includes("duplicate")) {
+          return setError((prev) => ({
+            ...prev,
+            email: "Email already in used.",
+          }));
+        }
+        const backendErrors = error.response.data.error;
+        const errorState = backendErrors.reduce((acc, errorMessage) => {
+          if (errorMessage.includes("Image")) {
+            acc.image = errorMessage;
+          } else if (errorMessage?.toLowerCase().includes("email")) {
+            acc.email = errorMessage;
+          } else if (errorMessage?.toLowerCase().includes("password")) {
+            acc.password = errorMessage;
+          } else if (errorMessage?.toLowerCase().includes("name")) {
+            acc.fullName = errorMessage;
+          } else if (errorMessage?.toLowerCase().includes("designation")) {
+            acc.designation = errorMessage;
+          } else {
+            acc.message = errorMessage;
+          }
+          return acc;
+        }, {});
+        setError(errorState);
       }
     } finally {
       setLoading(false);
@@ -86,7 +107,7 @@ const Signup = () => {
 
       <ScrollView>
         <View style={{ alignItems: "center" }}>
-          {!imageURL.length ? (
+          {!imageURL ? (
             <>
               <TouchableOpacity
                 onPress={takePhoto}
@@ -99,24 +120,28 @@ const Signup = () => {
                     </View>
                   </>
                 ) : (
-                  <View
-                    style={{
-                      height: "auto",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderWidth: 2,
-                      borderColor: colors.primary,
-                      padding: 20,
-                      borderRadius: 50,
-                    }}
-                  >
-                    <MaterialIcons
-                      name="photo-camera"
-                      size={50}
-                      color={colors.lightGray}
-                    />
-                    {error && <Text style={{ color: "red" }}>{error}</Text>}
-                  </View>
+                  <>
+                    <View
+                      style={{
+                        height: "auto",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderWidth: 2,
+                        borderColor: colors.primary,
+                        padding: 20,
+                        borderRadius: 50,
+                      }}
+                    >
+                      <MaterialIcons
+                        name="photo-camera"
+                        size={50}
+                        color={colors.lightGray}
+                      />
+                    </View>
+                    {error?.image && (
+                      <Text style={{ color: "red" }}>{error?.image}</Text>
+                    )}
+                  </>
                 )}
               </TouchableOpacity>
             </>
@@ -124,8 +149,14 @@ const Signup = () => {
             <View style={{ height: 80 }}>
               {imageURL?.length && (
                 <Image
-                  style={{ height: 60, width: 60, borderRadius: 50 }}
-                  source={{ uri: imageURL?.[imageURL.length - 1] }}
+                  style={{
+                    height: 70,
+                    width: 70,
+                    borderRadius: 50,
+                    borderWidth: 2,
+                    borderColor: colors.primary,
+                  }}
+                  source={{ uri: imageURL }}
                 />
               )}
             </View>
@@ -136,19 +167,20 @@ const Signup = () => {
           placeholder="Your First Name"
           value={firstName}
           setValue={setFirstName}
-          error={error.firstName}
+          error={error.fullName}
         />
 
         <InputField
           placeholder="Your Last Name"
           value={lastName}
           setValue={setLastName}
-          error={error.lastName}
+          error={error.fullName}
         />
         <InputField
-          placeholder="Occupation"
+          placeholder="Designation"
           value={designation}
           setValue={setDesignation}
+          error={error.designation}
         />
         <InputField
           placeholder="Your Email"
@@ -165,6 +197,13 @@ const Signup = () => {
           secureTextEntry={true}
           error={error.password}
         />
+        {error?.message && (
+          <Text
+            style={{ color: "red", alignSelf: "flex-start", paddingLeft: 20 }}
+          >
+            {error?.message}
+          </Text>
+        )}
         <View
           style={{
             marginVertical: 15,
@@ -191,7 +230,15 @@ const Signup = () => {
         <CustomButton
           text="Signup"
           loading={loading || imgLoading}
-          disabled={loading || imgLoading}
+          disabled={
+            loading ||
+            imgLoading ||
+            !fullName ||
+            !email ||
+            !password ||
+            !designation ||
+            !imageURL
+          }
           onPress={onSignup}
           type="primary"
           style={{ alignSelf: "center" }}

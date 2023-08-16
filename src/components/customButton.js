@@ -18,6 +18,7 @@ const CustomButton = ({
   style,
   loading = false,
 }) => {
+  console.log("🚀 ~ file: customButton.js:21 ~ disabled:", disabled);
   const [scaleValue] = useState(new Animated.Value(1));
 
   const animateButton = () => {
@@ -47,6 +48,7 @@ const CustomButton = ({
           style,
           styles[`container_${type}`],
           bgColor ? { backgroundColor: bgColor } : {},
+          // disabled ? { backgroundColor: colors.lightBg } : {},
           { transform: [{ scale: scaleValue }] },
         ]}
       >
@@ -56,6 +58,7 @@ const CustomButton = ({
               styles.text,
               styles[`text_${type}`],
               fgColor ? { color: fgColor } : {},
+              disabled ? { color: colors.lightGray } : {},
             ]}
           >
             {text}
@@ -100,6 +103,9 @@ const styles = StyleSheet.create({
   text_tertiary: {
     color: colors.white,
     // color: "white",
+  },
+  disabledColor: {
+    color: colors.primary,
   },
 });
 

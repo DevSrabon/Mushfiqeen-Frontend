@@ -102,7 +102,7 @@ const InputField = ({
 };
 
 const styles = StyleSheet.create({
-  error: { color: "red" },
+  error: { color: "red", alignSelf: "flex-start", paddingLeft: 20 },
   input: {
     width: "90%",
     alignItems: "center",

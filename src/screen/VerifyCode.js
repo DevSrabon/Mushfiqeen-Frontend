@@ -1,34 +1,61 @@
+import { AntDesign } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
+import NavStr from "../Nav/NavStr";
 import { Container } from "../components";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
+import Row from "../components/row";
 import { useAuth } from "../contexts/useAuth";
+import colors from "../theme/Colors";
 
-const VerifyCode = () => {
+const VerifyCode = ({ navigation }) => {
   const router = useRoute();
-  const { setToken } = useAuth();
-  const [email, setEmail] = useState("");
+  const { setToken, userData } = useAuth();
+  const [email, setEmail] = useState("" || userData?.data?.email);
   const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const onVerify = async () => {
+    setLoading((prev) => !prev);
     try {
       const res = await axios.get(
         `https://musfiqeen-backend.vercel.app/api/v1/users/confirm/${
           email || router?.params?.email
         }/code/${code}`
       );
+      if (res.data.accessToken) {
+        navigation.navigate(NavStr.HOME);
+      }
 
       setToken(res.data.accessToken);
     } catch (error) {
-      console.log(error);
+      if (error.response.data.message) {
+        alert(error.response.data.message);
+      } else if (error.response.data.error) {
+        alert(error.response.data.error);
+      } else {
+        alert(error.message);
+      }
+    } finally {
+      setLoading((prev) => !prev);
     }
   };
   return (
     <Container>
-      <Header>Verify Your Email</Header>
+      <Row style={{ paddingTop: StatusBar.currentHeight }}>
+        <AntDesign
+          name="arrowleft"
+          size={30}
+          color={colors.secondary}
+          onPress={() => navigation.goBack()}
+        />
+
+        <Header>Verify Your Email</Header>
+      </Row>
       <InputField
         value={email || router?.params?.email}
         setValue={setEmail}
@@ -39,8 +66,9 @@ const VerifyCode = () => {
       <CustomButton
         text={"Verify"}
         type={"primary"}
-        style={styles.text}
+        style={[styles.text, { alignSelf: "center" }]}
         onPress={onVerify}
+        loading={loading}
       />
     </Container>
   );
