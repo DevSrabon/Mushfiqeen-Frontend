@@ -14,7 +14,7 @@ import NavStr from "../Nav/NavStr";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
 import Input from "./TextInput";
-import { HorizantalBar } from "./horizontalBar";
+import HorizantalBar from "./horizontalBar";
 import NormalText from "./normalText";
 import Replies from "./reply";
 import Row from "./row";

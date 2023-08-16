@@ -3,21 +3,21 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
+  StatusBar,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  StatusBar,
-  StyleSheet,
 } from "react-native";
 import NavStr from "../Nav/NavStr";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
+import Row from "../components/row";
 import SubContainer from "../components/subContainer";
+import Title from "../components/title";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-import Row from "../components/row";
-import Title from "../components/title";
 
 const Login = () => {
   const { userData, setToken, loading, setLoading } = useAuth();
@@ -64,8 +64,8 @@ const Login = () => {
 
   useEffect(() => {
     if (userData?.data && userData?.data?.role !== "inactive") {
-      // navigation.navigate(router?.params?.from || "parent");
-      navigation.navigate(NavStr.PARENT);
+      // navigation.navigate(router?.params?.from || NavStr.HOME);
+      navigation.navigate(NavStr.HOME);
     } else if (userData?.data?.status === "inactive") {
       navigation.navigate(NavStr.VERIFYCODE);
     }
