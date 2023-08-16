@@ -18,7 +18,6 @@ const CustomButton = ({
   style,
   loading = false,
 }) => {
-  console.log("🚀 ~ file: customButton.js:21 ~ disabled:", disabled);
   const [scaleValue] = useState(new Animated.Value(1));
 
   const animateButton = () => {

@@ -21,7 +21,6 @@ import colors from "../theme/Colors";
 
 const Login = () => {
   const { userData, setToken, loading, setLoading, token } = useAuth();
-  console.log("🚀 ~ file: Login.js:24 ~ Login ~ userData:", userData?.data);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
