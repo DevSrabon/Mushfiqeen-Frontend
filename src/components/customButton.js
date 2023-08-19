@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
@@ -20,7 +20,7 @@ const CustomButton = ({
 }) => {
   const [scaleValue] = useState(new Animated.Value(1));
 
-  const animateButton = () => {
+  const animateButton = useCallback(() => {
     Animated.timing(scaleValue, {
       toValue: 0.85,
       duration: 200,
@@ -32,12 +32,13 @@ const CustomButton = ({
         useNativeDriver: true,
       }).start();
     });
-  };
-  const handlePress = () => {
+  }, [scaleValue]);
+
+  const handlePress = useCallback(() => {
     // Call both functions
     animateButton();
     onPress();
-  };
+  }, [animateButton, onPress]);
 
   return (
     <TouchableWithoutFeedback onPress={handlePress} disabled={disabled}>
@@ -108,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomButton;
+export default React.memo(CustomButton);

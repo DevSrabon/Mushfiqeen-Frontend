@@ -23,7 +23,6 @@ const StackNavigation = () => {
           animationEnabled: true,
         }}
       >
-
         <Stack.Screen name={NavStr.PARENT} component={Parent} />
         {/* <Stack.Screen name="AnimationTest" component={AnimationTest} /> */}
         <Stack.Group

@@ -3,7 +3,13 @@ import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import React, { useCallback, useState } from "react";
 
-import { Image, Pressable, StyleSheet, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import icons from "../../assets/icons";
 import NavStr from "../Nav/NavStr";
 import {
@@ -74,6 +80,7 @@ const HomeCard = ({ post }) => {
 
   const onEdit = useCallback(
     async (post) => {
+      setIsHidden((prev) => !prev);
       navigation.navigate(NavStr.POST, (state = { post }));
     },
     [post]
@@ -90,6 +97,7 @@ const HomeCard = ({ post }) => {
           `https://musfiqeen-backend.vercel.app/api/v1/posts/delete/${id}`,
           { headers }
         );
+        setIsHidden((prev) => !prev);
         setRefetch((prev) => !prev);
       } catch (error) {
         if (error.response.data.message) {
@@ -135,30 +143,24 @@ const HomeCard = ({ post }) => {
         {post?.user?._id === userData?.data?._id ? (
           <View style={styles.threeDots}>
             {isHidden && (
-              <View
-                style={{
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  borderRadius: 5,
-                  backgroundColor: colors.lightBg,
-                  gap: 2,
-                }}
-              >
-                <Pressable onPress={() => onEdit(post)}>
-                  <TextSmall>Edit</TextSmall>
-                </Pressable>
+              <View style={styles.options}>
+                <TouchableOpacity onPress={() => onEdit(post)}>
+                  <TextSmall style={{ fontSize: 13 }}>Edit</TextSmall>
+                </TouchableOpacity>
                 <HorizantalBar />
-                <Pressable onPress={() => onDelete(post?._id)}>
-                  <TextSmall>Delete</TextSmall>
-                </Pressable>
+                <TouchableOpacity onPress={() => onDelete(post?._id)}>
+                  <TextSmall style={{ fontSize: 13 }}>Delete</TextSmall>
+                </TouchableOpacity>
               </View>
             )}
-            <MaterialCommunityIcons
-              name="dots-vertical"
-              size={20}
-              color={colors.primary}
-              onPress={handelToggle}
-            />
+            {/* Three dot icons */}
+            <TouchableOpacity onPress={handelToggle}>
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                size={20}
+                color={colors.primary}
+              />
+            </TouchableOpacity>
           </View>
         ) : (
           <Row>
@@ -236,12 +238,29 @@ const HomeCard = ({ post }) => {
 const styles = StyleSheet.create({
   threeDots: {
     flexDirection: "row",
+    position: "relative",
   },
   container: {
     backgroundColor: colors.bg,
     width: "100%",
 
     marginBottom: 10,
+  },
+  options: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 5,
+    borderWidth: 1,
+    backgroundColor: colors.bg,
+    borderColor: colors.lightGray,
+    gap: 2,
+    position: "absolute",
+    right: 18,
+    top: 0,
+    shadowColor: colors.secondary,
+    shadowRadius: 15,
+    shadowOffset: 10,
+    elevation: 10,
   },
   userImg: {
     height: 40,

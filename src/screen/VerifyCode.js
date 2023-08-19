@@ -15,7 +15,7 @@ import colors from "../theme/Colors";
 const VerifyCode = ({ navigation }) => {
   const router = useRoute();
   const { setToken, userData } = useAuth();
-  const [email, setEmail] = useState("" || userData?.data?.email);
+  const [email, setEmail] = useState("" || email || router?.params?.email);
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -62,12 +62,18 @@ const VerifyCode = ({ navigation }) => {
         placeholder={"Email"}
         // defaultValue={router?.params?.email}
       />
-      <InputField value={code} placeholder={"Code"} setValue={setCode} />
+      <InputField
+        value={code}
+        placeholder={"Code"}
+        keyboardType={"numeric"}
+        setValue={setCode}
+      />
       <CustomButton
         text={"Verify"}
         type={"primary"}
         style={[styles.text, { alignSelf: "center" }]}
         onPress={onVerify}
+        disabled={loading || !email || code.length <= 4}
         loading={loading}
       />
     </Container>

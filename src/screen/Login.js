@@ -39,7 +39,7 @@ const Login = () => {
         "https://musfiqeen-backend.vercel.app/api/v1/users/login",
         {
           email,
-          password,
+          password: password.trim().toLowerCase(),
         }
       );
 
@@ -84,7 +84,7 @@ const Login = () => {
           name="arrowleft"
           size={30}
           color={colors.secondary}
-          onPress={() => navigation.navigate(NavStr.HOME)}
+          onPress={() => navigation.navigate(NavStr.PARENT)}
         />
         <Header>Login</Header>
       </Row>
@@ -93,6 +93,7 @@ const Login = () => {
         style={{ marginTop: 50 }}
         placeholder="Your Email"
         value={email}
+        autoCapitalize="none"
         setValue={setEmail}
         keyboardType="email-address"
         error={error.email}
@@ -102,6 +103,7 @@ const Login = () => {
         placeholder="Your Password"
         value={password}
         setValue={setPassword}
+        autoCapitalize="none"
         secureTextEntry={true}
         error={error.password}
       />

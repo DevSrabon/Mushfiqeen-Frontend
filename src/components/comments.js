@@ -70,12 +70,12 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
         alert(error.response.data.error);
       }
     } finally {
-      setValue("");
+      setEditValue("");
       setCommentEdit((prev) => !prev);
       setRefetch((prev) => !prev);
       setLoading((prev) => !prev);
     }
-  }, [postId, comment?._id, config]);
+  }, [postId, comment?._id, config, editValue]);
 
   const onReply = useCallback(async () => {
     setRefetch((prev) => !prev);
@@ -137,39 +137,39 @@ const Comments = ({ comment, postId, config, setRefetch }) => {
             <View style={{ padding: 10 }}>
               <Row style={{ padding: 0 }}>
                 <SubTitle>{comment?.userId?.fullName}</SubTitle>
-                <Row style={{ padding: 0 }}>
+                <Row style={{ padding: 0, position: "relative" }}>
                   {Visible && (
-                    <View
-                      style={{
-                        paddingHorizontal: 10,
-                        paddingVertical: 5,
-                        borderRadius: 5,
-                        backgroundColor: colors.lightBg,
-                        gap: 2,
-                      }}
-                    >
-                      <Pressable
+                    <View style={styles.options}>
+                      <TouchableOpacity
                         onPress={() => (
                           setCommentEdit((prev) => !prev),
+                          setVisible((prev) => !prev),
                           setEditValue(comment?.comment)
                         )}
                       >
-                        <TextSmall>Edit</TextSmall>
-                      </Pressable>
+                        <TextSmall style={{ fontSize: 13 }}>Edit</TextSmall>
+                      </TouchableOpacity>
                       <HorizantalBar />
-                      <Pressable onPress={() => onCommentDelete()}>
-                        <TextSmall>Delete</TextSmall>
-                      </Pressable>
+                      <TouchableOpacity
+                        onPress={() => (
+                          onCommentDelete(), setVisible((prev) => !prev)
+                        )}
+                      >
+                        <TextSmall style={{ fontSize: 13 }}>Delete</TextSmall>
+                      </TouchableOpacity>
                     </View>
                   )}
                   {/*========== three dot =========== */}
                   {userData?.data?._id === comment?.userId?._id && (
-                    <MaterialCommunityIcons
-                      name="dots-vertical"
-                      size={20}
-                      color={colors.primary}
+                    <TouchableOpacity
                       onPress={() => setVisible((prev) => !prev)}
-                    />
+                    >
+                      <MaterialCommunityIcons
+                        name="dots-vertical"
+                        size={20}
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
                   )}
                 </Row>
               </Row>
@@ -251,6 +251,22 @@ const styles = StyleSheet.create({
   subContainer: {
     backgroundColor: colors.bg,
     marginLeft: 40,
+  },
+  options: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 5,
+    borderWidth: 1,
+    backgroundColor: colors.bg,
+    borderColor: colors.lightGray,
+    gap: 2,
+    position: "absolute",
+    right: 18,
+    top: 0,
+    shadowColor: colors.secondary,
+    shadowRadius: 15,
+    shadowOffset: 10,
+    elevation: 10,
   },
   commentBox: {
     backgroundColor: colors.lightBg,

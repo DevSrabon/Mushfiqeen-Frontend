@@ -3,6 +3,7 @@ import { useIsFocused, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StatusBar, StyleSheet } from "react-native";
+
 import { Protect } from "../Nav/ProtectedRoute";
 import { Comments, Reactions, Row, SubContainer } from "../components";
 import Input from "../components/TextInput";

@@ -19,7 +19,7 @@ export function Protect(Component) {
           setScreenLoading(false);
         }
       }
-    }, [loading, userData?.data?.role, navigation, router, screenLoading]);
+    }, [loading, userData?.data?.status, navigation, router, screenLoading]);
 
     if (screenLoading) {
       return <Loading />;

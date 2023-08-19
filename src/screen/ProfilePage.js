@@ -191,17 +191,17 @@ const ProfilePage = () => {
 
           <Row>
             <View style={styles.infoDiv}>
-              <SubTitle>{profile?.followers?.length + 1 || "0"}</SubTitle>
+              <SubTitle>{profile?.followers?.length || "0"}</SubTitle>
               <SubTitle>Followers</SubTitle>
             </View>
 
             <View style={styles.infoDiv}>
-              <SubTitle>{profile?.following?.length + 1 || "0"}</SubTitle>
+              <SubTitle>{profile?.following?.length || "0"}</SubTitle>
               <SubTitle>Followings</SubTitle>
             </View>
 
             <View style={styles.infoDiv}>
-              <SubTitle>{profile?.posts?.length + 1 || "0"}</SubTitle>
+              <SubTitle>{profile?.posts?.length || "0"}</SubTitle>
               <SubTitle>Posts</SubTitle>
             </View>
           </Row>

@@ -1,6 +1,7 @@
 import { AntDesign, MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
+import * as SecureStore from "expo-secure-store";
+
 import {
   Image,
   Pressable,
@@ -26,7 +27,7 @@ function CustomDrawer(props) {
   const onLogOut = async () => {
     try {
       setLoading(true);
-      await AsyncStorage.removeItem("token");
+      await SecureStore.deleteItemAsync("token");
       setToken(null);
       setUserData(null);
     } catch (error) {

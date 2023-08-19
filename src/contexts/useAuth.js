@@ -1,6 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { createContext, useContext, useEffect, useState } from "react";
-
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children, navigation }) => {
@@ -10,6 +9,7 @@ const AuthProvider = ({ children, navigation }) => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
+  console.log("🚀 ~ file: useAuth.js:12 ~ AuthProvider ~ token:", token);
   const [postId, setPostId] = useState(null);
   const [bayan, setBayan] = useState({});
   const [profile, setProfile] = useState({});
@@ -47,7 +47,7 @@ const AuthProvider = ({ children, navigation }) => {
     const retrieveToken = async () => {
       try {
         setLoading(true);
-        const storedToken = await AsyncStorage.getItem("token");
+        const storedToken = await SecureStore.getItemAsync("token");
         if (storedToken) {
           setToken(storedToken);
         }
@@ -66,10 +66,10 @@ const AuthProvider = ({ children, navigation }) => {
       try {
         setLoading(true);
         if (token !== null) {
-          await AsyncStorage.setItem("token", token);
-          // await AsyncStorage.removeItem("token");
+          await SecureStore.setItemAsync("token", token);
+          // await SecureStore.deleteItemAsync("token");
         } else {
-          await AsyncStorage.removeItem("token");
+          await SecureStore.deleteItemAsync("token");
         }
       } catch (error) {
         console.error("Error storing token in AsyncStorage:", error);

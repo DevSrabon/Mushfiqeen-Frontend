@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import NavStr from "../Nav/NavStr";
+import { Loading } from "../components";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
@@ -50,7 +51,7 @@ const Signup = () => {
         "https://musfiqeen-backend.vercel.app//api/v1/users/signup",
         {
           email,
-          password,
+          password: password.trim().toLowerCase(),
           confirmPassword: password,
           fullName,
           imageURL: imageURL,
@@ -93,6 +94,8 @@ const Signup = () => {
       setLoading(false);
     }
   };
+
+  if (imgLoading) return <Loading />;
   return (
     <SubContainer>
       <Row style={{ paddingTop: StatusBar.currentHeight }}>
@@ -188,6 +191,7 @@ const Signup = () => {
           setValue={setEmail}
           keyboardType="email-address"
           error={error.email}
+          autoCapitalize="none"
         />
 
         <InputField
@@ -196,6 +200,7 @@ const Signup = () => {
           setValue={setPassword}
           secureTextEntry={true}
           error={error.password}
+          autoCapitalize="none"
         />
         {error?.message && (
           <Text

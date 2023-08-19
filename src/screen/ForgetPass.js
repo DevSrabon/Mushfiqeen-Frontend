@@ -20,7 +20,7 @@ const ForgetPass = (props) => {
   const { email: emails } = props?.route?.params;
   const { navigation } = props;
   const [email, setEmail] = useState("" || emails);
-  const [code, setCode] = useState(null);
+  const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,13 +54,12 @@ const ForgetPass = (props) => {
     }
   };
   const onReset = async () => {
-    if (password.length <= 5) return alert("Password must be 6 Characters");
     try {
       setLoading(true);
       const response = await axios.post(
         `https://musfiqeen-backend.vercel.app/api/v1/users/reset-password/${code}`,
         {
-          password,
+          password: password.trim().toLowerCase(),
         }
       );
 
@@ -103,6 +102,7 @@ const ForgetPass = (props) => {
             value={email}
             setValue={setEmail}
             keyboardType="email-address"
+            autoCapitalize="none"
           />
           <CustomButton
             text={"Send Reset Request"}
@@ -130,13 +130,14 @@ const ForgetPass = (props) => {
             setValue={setPassword}
             secureTextEntry={true}
             // error={error.email}
+            autoCapitalize="none"
           />
           <CustomButton
             text={"Reset Password"}
             onPress={() => onReset()}
             type="primary"
             loading={loading}
-            disabled={loading || !code || !password}
+            disabled={loading || code <= 4 || password.length <= 5}
             style={{ alignSelf: "center", marginTop: 20 }}
           />
           <View style={{ width: "100%", alignItems: "flex-end" }}>
