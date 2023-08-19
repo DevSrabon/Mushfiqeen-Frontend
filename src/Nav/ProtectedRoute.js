@@ -7,19 +7,19 @@ import NavStr from "./NavStr";
 export function Protect(Component) {
   return function ProtectedComponent(props) {
     const [screenLoading, setScreenLoading] = useState(true);
-    const { userData, loading, token } = useAuth();
+    const { loading, token } = useAuth();
     const navigation = useNavigation();
     const router = useRoute();
 
     useEffect(() => {
       if (!loading) {
-        if (userData?.data?.status === "inactive" || !token) {
+        if (!token) {
           navigation.navigate(NavStr.LOGIN, { from: router.name });
         } else {
           setScreenLoading(false);
         }
       }
-    }, [loading, userData?.data?.status, navigation, router, screenLoading]);
+    }, [loading, navigation, router, screenLoading]);
 
     if (screenLoading) {
       return <Loading />;

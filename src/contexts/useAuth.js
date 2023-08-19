@@ -12,7 +12,6 @@ const AuthProvider = ({ children, navigation }) => {
   const [postId, setPostId] = useState(null);
   const [bayan, setBayan] = useState({});
   const [profile, setProfile] = useState({});
-  const user = userData.data;
 
   const fetchUserData = async () => {
     try {
@@ -99,7 +98,7 @@ const AuthProvider = ({ children, navigation }) => {
     postId,
     setPostId,
     bayanRefetch,
-    user,
+
     setBayanRefetch,
     fetchUserData,
     updateRefetch,

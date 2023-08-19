@@ -75,7 +75,7 @@ const Login = () => {
     } else if (userData?.data?.status === "inactive") {
       navigation.navigate(NavStr.VERIFYCODE);
     }
-  }, [navigation, userData?.data?.status, token]);
+  }, [navigation, userData?.data?.status, userData?.data]);
 
   return (
     <SubContainer>
