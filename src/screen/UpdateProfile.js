@@ -1,8 +1,9 @@
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState } from "react";
+import moment from "moment";
+import React, { useRef, useState } from "react";
 import {
   Image,
   Platform,
@@ -11,15 +12,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import PhoneInput from "react-native-phone-number-input";
 import NavStr from "../Nav/NavStr";
-import { Loading, Row, SubContainer } from "../components";
+import { HorizantalBar, Loading, Row, SubContainer } from "../components";
 import CustomButton from "../components/customButton";
 import Header from "../components/header";
 import InputField from "../components/inpuField";
 import { useAuth } from "../contexts/useAuth";
 import colors from "../theme/Colors";
-
 const UpdateProfile = ({ navigation }) => {
   const { userData, fetchUserData, setUpdateRefetch } = useAuth();
   const [selectedImage, setSelectedImage] = useState(
@@ -38,7 +38,7 @@ const UpdateProfile = ({ navigation }) => {
     userData?.data?.designation || ""
   );
   const [contactNumber, setContactNumber] = useState(
-    userData?.data?.contactNumber || "1234567890"
+    "" || userData?.data?.contactNumber
   );
 
   const navigations = useNavigation();
@@ -52,7 +52,9 @@ const UpdateProfile = ({ navigation }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [selectDate, setSelectDate] = useState("");
-  const dateOfBirth = selectDate;
+
+  const phoneRef = useRef(null);
+  const dateOfBirth = moment(selectDate, "DD/MM/YYYY").toDate();
 
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -76,7 +78,16 @@ const UpdateProfile = ({ navigation }) => {
 
   const handleSaveChanges = async () => {
     setLoading(true);
+    let checkValid = false;
+
+    if (phoneRef.current) {
+      checkValid = phoneRef.current.isValidNumber(contactNumber);
+    }
+
     try {
+      if (!checkValid) {
+        throw new Error("Please provide a valid phone number");
+      }
       setUpdateRefetch((prev) => !prev);
       const body = {
         name,
@@ -147,13 +158,7 @@ const UpdateProfile = ({ navigation }) => {
                   right: 10,
                   zIndex: 9999,
                 }}
-              >
-                {/* <MaterialIcons
-                name="photo-camera"
-                size={32}
-                color={colors.primary}
-              /> */}
-              </View>
+              ></View>
             </TouchableOpacity>
           </View>
 
@@ -172,12 +177,39 @@ const UpdateProfile = ({ navigation }) => {
               />
             </View>
             <View>
-              <InputField
+              {/* <InputField
                 placeholder="Mobile"
                 value={contactNumber}
                 setValue={handleInputChange}
                 type="number"
+              /> */}
+              <PhoneInput
+                containerStyle={{
+                  width: "90%",
+                  backgroundColor: colors.bg,
+                  alignSelf: "center",
+                }}
+                codeTextStyle={{
+                  backgroundColor: colors.bg,
+                  color: colors.secondary,
+                }}
+                textContainerStyle={{
+                  backgroundColor: colors.bg,
+                }}
+                placeholder="Phone Number"
+                textInputStyle={{ color: colors.secondary }}
+                ref={phoneRef}
+                defaultValue={contactNumber.substring(4)}
+                defaultCode="BD"
+                layout="second"
+                onChangeText={(text) => {
+                  setContactNumber(text);
+                }}
+                onChangeFormattedText={(text) => {
+                  setContactNumber(text);
+                }}
               />
+              <HorizantalBar style={{ width: "90%" }} />
             </View>
             <View>
               <InputField
@@ -204,34 +236,13 @@ const UpdateProfile = ({ navigation }) => {
             />
           </View>
 
-          <GooglePlacesAutocomplete
-            placeholder="Your Address"
-            fetchDetails={true}
-            onPress={(data, details = null) => {
-              // 'details' is provided when fetchDetails = true
-              setAddress(data.description);
-            }}
-            query={{
-              key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
-              language: "en",
-            }}
-            textInputProps={{
-              placeholderTextColor: colors.white,
-              returnKeyType: "search",
-            }}
-            styles={{
-              textInputContainer: {
-                width: "90%",
-                alignSelf: "center",
-                marginTop: 10,
-              },
-              textInput: {
-                backgroundColor: colors.lightBg,
-                color: colors.white,
-              },
-            }}
+          <InputField
+            placeholder={"Your Address"}
+            value={address}
+            setValue={setAddress}
+            multiline={true}
+            numberOfLines={10}
           />
-
           {/* Date of Birth */}
 
           <CustomButton

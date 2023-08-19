@@ -28,7 +28,7 @@ const VerifyCode = ({ navigation }) => {
         }/code/${code}`
       );
       if (res.data.accessToken) {
-        navigation.navigate(NavStr.HOME);
+        navigation.navigate(NavStr.PARENT);
       }
 
       setToken(res.data.accessToken);

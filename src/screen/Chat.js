@@ -37,14 +37,12 @@ const Chat = ({ navigation, route }) => {
     );
     setSound(sound);
 
-    // console.log("Playing Sound");
     await sound.playAsync();
   };
 
   useEffect(() => {
     return () => {
       if (sound) {
-        // console.log("Unloading Sound");
         sound.unloadAsync();
       }
     };
@@ -86,7 +84,6 @@ const Chat = ({ navigation, route }) => {
   useEffect(() => {
     if (combinedId) {
       const unsub = onSnapshot(chatRef, (doc) => {
-        // console.log("Current data: ", doc.data());
         const data = doc.data();
         doc.exists() && setMessages(data?.messages);
       });

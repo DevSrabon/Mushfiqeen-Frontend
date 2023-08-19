@@ -14,7 +14,7 @@ export function Protect(Component) {
     useEffect(() => {
       if (!loading) {
         if (userData?.data?.status === "inactive" || !token) {
-          navigation.replace(NavStr.LOGIN, { from: router.name });
+          navigation.navigate(NavStr.LOGIN, { from: router.name });
         } else {
           setScreenLoading(false);
         }
