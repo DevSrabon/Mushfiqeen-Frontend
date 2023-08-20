@@ -47,7 +47,6 @@ const Login = () => {
       setToken(response.data.accessToken);
       // AsyncStorage.setItem("token", response.data.accessToken);
     } catch (error) {
-      console.log(error.response.data);
       if (error.response && error.response.data && error.response.data.error) {
         const backendError = error.response.data.error;
 
